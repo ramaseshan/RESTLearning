@@ -1,0 +1,26 @@
+/*!CK:2539151079!*//*1380064664,178142805*/
+
+.pluginCountBox{background:#fff;border:1px solid #d3d3d3;font-size:13px;height:24px;margin:0;min-width:35px;padding:6px 1px 2px 3px;text-align:center;white-space:nowrap}
+.pluginCountBoxIcon{position:relative;top:2px;left:-3px}
+.pluginCountBoxNub{position:relative;z-index:2;bottom:1px;height:7px;left:7px;width:0}
+.pluginCountBoxNub s, .pluginCountBoxNub i{border-color:#D3D3D3 transparent transparent;border-right:5px solid transparent;border-style:solid;border-width:5px;display:block;position:relative}
+.pluginCountBoxNub i{left:0;top:-12px;border-top-color:#fff}
+.pluginCountBoxDark{border-color:#c7c7c7;background:#c7c7c7;color:#333}
+.pluginCountBoxDarkNub s{border-top-color:#c7c7c7}
+.pluginCountBoxDarkNub i{display:none}
+.pluginCountButton{background:#fff;border:1px solid #c1c1c1;height:14px;line-height:14px;margin-left:6px;min-width:15px;padding:1px 2px;text-align:center;white-space:nowrap}
+.pluginCountButton.blueButton{background:white;border:1px solid #898f9c;border-radius:2px;color:#6a7180;display:inline-block;font-family:Helvetica;font-size:12px;font-weight:bold;height:auto;line-height:18px;padding:0 3px}
+.pluginCountButtonNub{height:0;left:2px;position:relative;top:-14px;width:5px;z-index:2}
+.pluginCountButtonNub.pluginCountBlueButtonNub{top:-15px}
+.pluginCountButtonNub s, .pluginCountButtonNub i{border-color:transparent #D7D7D7 transparent;border-style:solid;border-width:4px 5px 4px 0;display:block;position:relative;top:1px}
+.pluginCountButtonNub i{border-right-color:#fff;left:2px;top:-7px}
+.pluginCountButtonDark{background:#d7d7d7;border-color:#d7d7d7;color:#333}
+.pluginCountButtonDarkNub i{display:none}
+.pluginCountButtonNub.pluginCountBlueButtonNub s, .pluginCountButtonNub.pluginCountBlueButtonNub i{border-color:transparent #6a7180 transparent}
+.pluginCountButtonNub.pluginCountBlueButtonNub i{border-right-color:#fff}
+.pluginCountTextConnected,
+.pluginCountConnected .pluginCountTextDisconnected{display:none}
+.pluginCountConnected .pluginCountTextConnected{display:inline}
+
+#bootloader_e124M { height: 42px; }
+.bootloader_e124M { display:block !important; }

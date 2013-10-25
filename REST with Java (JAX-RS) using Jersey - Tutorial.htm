@@ -1,0 +1,2047 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+      <title>REST with Java (JAX-RS) using Jersey - Tutorial</title>
+      <script async="" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/cbgapi.loaded_1"></script><script async="" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/cbgapi.loaded_0"></script><script src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/A.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="RESTful Webservices with Java (Jersey / JAX-RS) This tutorial explains how to develop RESTful web services in Java with the JAX-RS reference implementation Jersey. In this tutorial Eclipse 4.2 (Juno), Java 1.6, Tomcat 6.0 and JAX-RS 1.1. (Jersey 1.5) is used.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+   <script src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/a_002.js" async="" type="text/javascript"></script><script src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/a.js" async="" type="text/javascript"></script></head>
+   <body alink="#0000FF" bgcolor="white" link="#0000FF" text="black" vlink="#840084">
+      
+      
+      <!-- Jennifers Analytics -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_trackPageview']);_gaq.push(['_trackPageLoadTime']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      <script src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/flattr.js" type="text/javascript"></script>
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/jquery.js"></script> 
+      
+      <!-- jQuery Up Button -->
+      <script type="text/javascript">//<![CDATA[
+$(document).ready(function(){$("#back-top").hide();$(function(){$(window).scroll(function(){if($(this).scrollTop()>2000){$('#back-top').fadeIn();}else{$('#back-top').fadeOut();}});$('#back-top a').click(function(){$('body,html').animate({scrollTop:0},800);return false;});});});
+//]]></script>
+      
+      
+      
+      
+      <!-- Lake Quincy Ads -->
+      <script type="text/javascript">function _dmBootstrap(file){var _dma=document.createElement('script');_dma.type='text/javascript';_dma.async=true;_dma.src=('https:'==document.location.protocol?'https://':'http://')+file;(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(_dma);}
+function _dmFollowup(file){if(typeof DMAds==='undefined')_dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+(function(){_dmBootstrap('cdn1.DeveloperMedia.com/a.min.js');setTimeout(_dmFollowup,2000);})();</script>
+      
+      <div id="headerpart">
+         	
+         <div id="topnav">
+            	  
+            <ul id="home" class="topnav">
+               		
+               <li>
+                  			<a class="homebutton" title="Home" href="http://www.vogella.com/">vogella.com</a>
+                  		
+               </li>
+               		
+               <li>
+                  			<a title="Tutorials" href="http://www.vogella.com/tutorials.html"> Tutorials
+                     			</a>
+                  		
+               </li>
+               		
+               		
+               <li>
+                  			<a title="Training" href="http://training.vogella.com/index.html">
+                     				Training
+                     			</a>
+                  		
+               </li>
+               		
+               <li>
+                  			<a title="Books" href="http://www.vogella.com/books.html">
+                     				Books
+                     			</a>
+                  		
+               </li>
+               		
+               <li>
+                  			<a title="Contact vogella GmbH" href="http://www.vogella.com/contact.html">
+                     				Contact us
+                     			</a>
+                  		
+               </li>
+               	
+            </ul>
+            
+            	
+         </div>
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com/">
+               			<img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/xvogella_current_logo.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="searchfixed">
+            
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               
+               <div id="searchwrapper">
+                  
+                  <input name="cx" value="partner-pub-3851443674951530:3991491935" type="hidden">
+                  <input name="cof" value="FORID:10" type="hidden">
+                  <input name="ie" value="UTF-8" type="hidden">
+                  <input placeholder="Search" id="search_field" name="q" size="55" type="text">
+                  <input src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAA5UlEQVQY03XQvyvEARjH8dcg58eAQZdy/gCbP+DERFFmm2RRN7MZiKSvRZbrLv4EBsluMElJHZtFLFfKDRY9hu/9+N7F51med5+np08fUo1ZcaRiR1FOj+bcivZcmu4268KbxKaqL+HJVMsccSdcyDd5Rk2otuxF4d145tusTw2FFA6E464kfa6EtRTOhY2eqGdCKV33hb0uc8CNsJrCsvBqNGMXfWuYSCHvQbg22U7+KNx3yplXF2p2lZz4aJZTMdQ6WPCSae3ZjxDKBjvlrDtVlljSL2kebvlTwypCSPyjnG2HCr90aE8uknwlPgAAAABJRU5ErkJggg==" id="search_button" name="sa" value="Search" type="image">
+                  
+               </div>
+               
+            </form>
+            
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      
+      
+      <div id="leftcol">
+         
+         	
+         <div class="sidebar">
+            		
+            <div id="intro">
+               		<br>
+               		
+               <!-- GooglePlus - Place this tag in your head or just before your close body tag -->
+               		<script gapi_processed="true" type="text/javascript" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/plusone.js"></script>
+               
+               		
+               <!-- Place this tag where you want the +1 button to render -->
+               		<div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px;"><iframe title="+1" data-gapiattached="true" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/fastbutton.htm" name="I0_1380417685939" id="I0_1380417685939" vspace="0" tabindex="0" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" marginwidth="0" marginheight="0" hspace="0" frameborder="0" scrolling="no" width="100%"></iframe></div>
+               
+               		
+            </div> 
+            <!--intro-->
+            
+            		
+            		
+            		<br>
+            		Free tutorial, donate to support
+            		<br><br>
+            		
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+               		<input name="cmd" value="_s-xclick" type="hidden">
+               		<input name="hosted_button_id" value="10463995" type="hidden">
+               		<input src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/btn_donateCC_LG.gif" name="submit" alt="Donation" border="0" type="image">
+               		<img alt="" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/pixel.gif" border="0" height="1" width="1">
+               				
+               		
+            </form>
+            		<br>
+            			
+            <div class="figure">
+               
+               
+               <p><a rel="author" href="http://www.vogella.com/people/larsvogel.html"> 
+                     		<img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/125x115xLarsVogelArticle_Small.png" alt="About Lars Vogel" height="115" width="125">
+                     	</a>
+                  	
+                  
+               </p>
+               
+               
+               <p>by Lars Vogel</p>
+               
+               
+            </div>
+            		
+            		
+            	
+         </div> 
+         <!--sidebar-->
+         	
+         
+         
+         <script type="text/javascript">google_ad_client="ca-pub-3851443674951530";google_ad_slot="6294971031";google_ad_width=160;google_ad_height=600;</script>
+         <script type="text/javascript" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/show_ads.js"></script>
+         
+         
+         <br>
+         <br>
+         <br>
+         <br>
+         
+         
+         
+         <!-- Lake Quincy-->
+         
+         <div class="lqm_ad" lqm_publisher="lqm.javaeclipseandroid.site" lqm_zone="ron" lqm_tags="Android%2cMobile%2cJava" lqm_format="160x600"></div>
+         
+         <p></p>
+         
+         
+         <p style="display: block;" id="back-top"><a href="#top"><span></span> Back to top </a>
+            
+         </p>
+         
+         
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      
+      
+      <div id="rightcol">
+         
+         
+         <p class="training-bg">
+            
+            <a class="image-z" href="http://training.vogella.com/index.html"> 
+               <img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/200x364xvogellatraining_ad.png" alt="vogella training" height="364" width="200">
+               	
+               </a>
+            <a class="btn-training button1" href="http://training.vogella.com/index.html">Training</a>
+            <a class="btn-training button2" href="http://www.vogella.com/books.html">Books</a>
+            
+         </p>
+         
+         
+         <div class="twitter">
+            
+            <div class="twitt">
+               <a href="http://www.twitter.com/vogella"> 
+                  <img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/xtwitter.png" alt="Follow me on twitter">  
+                  </a>
+               
+            </div>
+            
+            
+            <div class="googleplus">
+               <a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  <img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/xgoogle.png" alt="Lars Vogel on Google+"> 
+                  </a>
+               
+            </div>
+            
+         </div>
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d350847e1"></a>REST with Java (JAX-RS) using Jersey - Tutorial
+                     
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 2.2</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ©  2009,  2010,  2011,  2012  Lars Vogel</p>
+               </div>
+               <div>
+                  <p class="pubdate">06.12.2012</p>
+               </div>
+               <div>
+                  <div class="revhistory">
+                     <table summary="Revision History">
+                        <tbody><tr>
+                           <th colspan="4" align="left" valign="top"><b>Revision History</b></th>
+                        </tr>
+                        <tr>
+                           <td align="left">Revision 0.1</td>
+                           <td align="left">11.05.2009</td>
+                           <td align="left"><span class="firstname">Lars<br></span><span class="surname">Vogel<br></span></td>
+                           <td align="left">created </td>
+                        </tr>
+                        <tr>
+                           <td align="left">Revision 0.2 - 2.2</td>
+                           <td align="left">10.10.2009 - 06.12.2012</td>
+                           <td align="left"><span class="firstname">Lars<br></span><span class="surname">Vogel<br></span></td>
+                           <td align="left">bug fixes and enhancements</td>
+                        </tr>
+                     </tbody></table>
+                  </div>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>RESTful Webservices with Java (Jersey / JAX-RS)</b></p>
+                     <p> This tutorial explains how to develop RESTful web services in
+                        Java
+                        with the JAX-RS reference implementation Jersey.
+                        
+                     </p>
+                     <p>In this tutorial Eclipse 4.2 (Juno), Java 1.6, Tomcat 6.0 and
+                        JAX-RS
+                        1.1.
+                        (Jersey
+                        1.5) is used.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#rest">1. REST - Representational State Transfer</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#rest_overview">1.1. Overview</a></span></dt>
+                     <dt><span class="section"><a href="#rest_httpmethods">1.2. HTTP methods</a></span></dt>
+                     <dt><span class="section"><a href="#rest_webservices">1.3. RESTFul webservices</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#restjersey">2. JAX-RS with Jersey</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#restjersey_jaxrs">2.1. JAX-RS and Jersey</a></span></dt>
+                     <dt><span class="section"><a href="#restjersey_annotations">2.2. JAX-RS annotations</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#installation">3. Installation</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#installation_jersey">3.1. Jersey</a></span></dt>
+                     <dt><span class="section"><a href="#installation_eclipse">3.2. Eclipse and Tomcat</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#prerequisites">4. Prerequisites</a></span></dt>
+               <dt><span class="section"><a href="#first">5. Create your first RESTful Webservice</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#first_project">5.1. Create project with Jersey libraries</a></span></dt>
+                     <dt><span class="section"><a href="#first_class">5.2. Java Class</a></span></dt>
+                     <dt><span class="section"><a href="#first_servletdispatcher">5.3. Define Jersey Servlet dispatcher</a></span></dt>
+                     <dt><span class="section"><a href="#first_run">5.4. Run your rest service </a></span></dt>
+                     <dt><span class="section"><a href="#first_client">5.5. Create a client</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#jaxb">6. Restful webservices and JAXB</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#jaxb_project">6.1. Create project</a></span></dt>
+                     <dt><span class="section"><a href="#jaxb_client">6.2. Create a client</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#crud">7. CRUD RESTful webservice</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#crud_project">7.1. Project</a></span></dt>
+                     <dt><span class="section"><a href="#crud_webpage">7.2. Create a simple HTML form</a></span></dt>
+                     <dt><span class="section"><a href="#crud_class">7.3. Rest Service</a></span></dt>
+                     <dt><span class="section"><a href="#crud_run">7.4. Run </a></span></dt>
+                     <dt><span class="section"><a href="#crud_client">7.5. Create a client</a></span></dt>
+                     <dt><span class="section"><a href="#crud_html">7.6. Using the rest service via HTML page</a></span></dt>
+                     <dt><span class="section"><a href="#crud_lib">7.7. Using the rest service via X</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#thankyou">8. Thank you</a></span></dt>
+               <dt><span class="section"><a href="#questions">9. Questions and Discussion</a></span></dt>
+               <dt><span class="section"><a href="#resources">10. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">10.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#resources_rest">10.2. Rest Resources</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">10.3. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div> 
+         
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="rest"></a>1.&nbsp;REST - Representational State Transfer
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="rest_overview"></a>1.1.&nbsp;Overview
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> REST is an architectural style which is
+                  based on web-standards
+                  and the HTTP protocol. REST was first
+                  described
+                  by Roy Fielding in
+                  2000.
+                  
+               </p>
+               <p> In a REST based architecture everything is a resource. A
+                  resource is
+                  accessed via a common interface based on the HTTP standard
+                  methods.
+                  
+               </p>
+               <p>
+                  In a REST based architecture you typically have a REST server
+                  which
+                  provides access to the resources and a REST client which
+                  accesses and
+                  modify the REST resources.
+                  
+               </p>
+               <p>
+                  Every resource should support
+                  the HTTP
+                  common
+                  operations.
+                  Resources
+                  are
+                  identified by global
+                  IDs
+                  (which
+                  are
+                  typically
+                  URIs).
+                  
+               </p>
+               <p> REST allows that resources have different representations, e.g.
+                  text, xml, json etc. The rest client can ask for specific
+                  representation
+                  via the HTTP protocol
+                  (content
+                  negotiation).
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="rest_httpmethods"></a>1.2.&nbsp;HTTP methods
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The
+                  <em class="wordasword">PUT</em>,
+                  <em class="wordasword">GET</em>,
+                  <em class="wordasword">POST</em>
+                  and
+                  <em class="wordasword">DELETE</em>
+                  methods
+                  
+                  are typical used in REST based architectures.
+                  
+               </p>
+               <p>The following table gives an explanation of these operations.
+                  
+               </p>
+               <p>
+                  
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>GET defines a reading access of the resource without
+                           side-effects. The resource is never changed via a GET request,
+                           e.g. the request has no side effects (idempotent).
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>PUT
+                           creates a new resource, must also be idempotent.
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>DELETE
+                           removes the resources. The operations are idempotent,
+                           they
+                           can get
+                           repeated without leading to different results.
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>POST
+                           updates an existing resource or creates a new resource.
+                           
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="rest_webservices"></a>1.3.&nbsp;RESTFul webservices
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  A RESTFul webservices are based on the HTTP methods and the
+                  concept of
+                  REST. A RESTFul webservice typically defines the base URI
+                  for the services,
+                  the supported
+                  MIME-types (XML, Text, JSON,
+                  user-defined,..) and
+                  the
+                  set
+                  of operations (POST, GET, PUT, DELETE)
+                  which are supported.
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="restjersey"></a>2.&nbsp;JAX-RS with Jersey
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="restjersey_jaxrs"></a>2.1.&nbsp;JAX-RS and Jersey
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Java defines REST support via the Java Specification Request 311
+                  (JSR). This specificiation is called JAX-RS (The Java API for
+                  RESTful
+                  Web Services).
+                  JAX-RS uses annotations to define the REST relevance of
+                  Java classes.
+                  
+               </p>
+               <p>
+                  <em class="wordasword">Jersey</em>
+                  is the reference
+                  implementation for this specification.
+                  Jersey contains
+                  basically a REST server and a REST client.
+                  The core client can be used
+                  provides a library to communicate with the
+                  server.
+                  
+               </p>
+               <p>
+                  On the server side Jersey uses a servlet which scans predefined
+                  classes to identify RESTful resources.
+                  Via the
+                  <code class="filename">web.xml</code>
+                  configuration file for your web application,
+                  registers this servlet
+                  which is provided by the
+                  Jersey distribution
+                  
+               </p>
+               <p> The base
+                  URL
+                  of this servlet is:
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">http:<em class="hl-comment" style="color: #080">//your_domain:port/display-name/url-pattern/path_from_rest_class </em></pre><p>
+                  
+               </p>
+               <p>
+                  This servlet analyzes the incoming HTTP request and
+                  selects
+                  the
+                  correct class and method to respond to this request. This
+                  selection
+                  is
+                  based on annotations in the class and methods.
+                  
+               </p>
+               <p>
+                  A REST web application consists therefore out of data classes (resources)
+                  and
+                  services. These two types are typically maintained in different
+                  packages as the Jersey servlet will be instructed via the
+                  <code class="filename">web.xml</code>
+                  to
+                  scan certain packages for data classes.
+                  
+               </p>
+               <p>
+                  
+                  JAX-RS
+                  supports the creation of XML and JSON via
+                  the Java
+                  Architecture for
+                  XML Binding (JAXB).
+                  
+               </p>
+               <p>
+                  JAXB is described in the
+                  <a class="ulink" href="http://www.vogella.com/articles/JAXB/article.html" target="_top">
+                     JAXB Tutorial
+                     </a>.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="restjersey_annotations"></a>2.2.&nbsp;JAX-RS annotations
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The most important
+                  annotations in JAX-RS are listed in the following
+                  table.
+                  
+                  
+               </p>
+               <div class="table"><a name="d350847e170"></a><p class="title"><b>Table&nbsp;1.&nbsp;JAX-RS annotations</b></p>
+                  <div class="table-contents">
+                     <table summary="JAX-RS annotations" border="1">
+                        <colgroup>
+                           <col class="c1" align="left">
+                           <col class="c2" align="left">
+                        </colgroup>
+                        <thead>
+                           <tr>
+                              <th align="left">Annotation</th>
+                              <th align="left">Description</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <td align="left">@PATH(your_path)</td>
+                              <td align="left">Sets the path to base URL + /your_path. The base URL is
+                                 based on your application name, the servlet and the URL pattern
+                                 from the web.xml" configuration file.
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@POST</td>
+                              <td align="left">Indicates that the following method will answer to a HTTP
+                                 POST
+                                 request
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@GET</td>
+                              <td align="left">Indicates that the following method will answer to a HTTP
+                                 GET
+                                 request
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@PUT</td>
+                              <td align="left">Indicates that the following method will answer to a HTTP
+                                 PUT
+                                 request
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@DELETE</td>
+                              <td align="left">Indicates that the following method will answer to a HTTP
+                                 DELETE
+                                 request
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@Produces(MediaType.TEXT_PLAIN [, more-types ])</td>
+                              <td align="left">@Produces defines which MIME type is delivered by a method
+                                 annotated with @GET. In the example text ("text/plain") is
+                                 produced. Other examples would be "application/xml" or
+                                 "application/json".
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@Consumes(type [, more-types ])</td>
+                              <td align="left">@Consumes defines which MIME type is consumed by this
+                                 method.
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@PathParam</td>
+                              <td align="left">Used to inject values from the URL into a method
+                                 parameter.
+                                 This way you inject for example the ID of a resource
+                                 into the method to get the correct object.
+                                 
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p><br class="table-break">
+                  
+               </p>
+               <p>The complete path to a resource is basd on the base
+                  URL and the
+                  @PATh annotation in your class.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">http:<em class="hl-comment" style="color: #080">//your_domain:port/display-name/url-pattern/path_from_rest_class </em></pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="installation"></a>3.&nbsp;Installation
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="installation_jersey"></a>3.1.&nbsp;Jersey
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Download Jersey from the
+                  Jersey Homepage.
+                  
+               </p>
+               <p> 
+                  
+               </p><pre class="programlisting">http:<em class="hl-comment" style="color: #080">//jersey.java.net/ </em></pre><p>
+                  
+               </p>
+               <p>
+                  As of the time of writing the file is called
+                  <em class="wordasword">
+                     A zip of Jersey
+                     containing the Jersey jars, core
+                     dependencies (it does
+                     not provide
+                     dependencies for third party jars
+                     beyond the those for
+                     JSON support)
+                     and JavaDoc.
+                     </em>
+                  Download this zip; it contains the jar
+                  files required
+                  for the REST
+                  functionality.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="installation_eclipse"></a>3.2.&nbsp;Eclipse and Tomcat
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is using
+                  <a class="ulink" href="http://www.vogella.com/articles/ApacheTomcat/article.html" target="_top"> Tomcat
+                     </a>
+                  as servlet container and Eclipse
+                  WTP as
+                  a development environment.
+                  Please see
+                  <a class="ulink" href="http://www.vogella.com/articles/EclipseWTP/article.html" target="_top">Eclipse WTP  </a>
+                  and
+                  <a class="ulink" href="http://www.vogella.com/articles/ApacheTomcat/article.html" target="_top"> Apache Tomcat
+                     </a>
+                  for instructions on how to install and use Eclipse WTP and Apache
+                  Tomcat.
+                  
+               </p>
+               <p>
+                  Alternative you could also use the
+                  <a class="ulink" href="http://www.vogella.com/articles/GoogleAppEngineJava/article.html" target="_top"> Google App Engine</a>
+                  for running the server part of the following REST examples. If you
+                  use the Google App Engine you do not have to setup Tomcat. If you are
+                  using GAE/J you have to create App Engine projects instead of
+                  <em class="wordasword">Dynamic Web Project</em>.
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="prerequisites"></a>4.&nbsp;Prerequisites
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               The following description assumes that you are familiar with creating
+               web applications in Eclipse.
+               See
+               <a class="ulink" href="http://www.vogella.com/articles/EclipseWTP/article.html" target="_top">Eclipse WTP development  </a>
+               for an introduction into creating web applications with Eclipse.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="first"></a>5.&nbsp;Create your first RESTful Webservice
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="first_project"></a>5.1.&nbsp;Create project with Jersey libraries
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a new
+                  <em class="wordasword">Dynamic Web Project</em>
+                  called
+                  <em class="wordasword">de.vogella.jersey.first</em>.
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <div class="mediaobject"><img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/xproject10.png"></div>
+               <p>
+                  
+               </p>
+               <p>
+                  Copy all jars from your Jersey download into the
+                  <code class="filename">WEB-INF/lib</code>
+                  folder.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="first_class"></a>5.2.&nbsp;Java Class
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Create the following class.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.first;
+
+<span class="hl-keyword">import</span> javax.ws.rs.GET;
+<span class="hl-keyword">import</span> javax.ws.rs.Path;
+<span class="hl-keyword">import</span> javax.ws.rs.Produces;
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+
+<em class="hl-comment" style="color: #080">// Plain old Java Object it does not extend as class or implements </em>
+<em class="hl-comment" style="color: #080">// an interface</em>
+
+<em class="hl-comment" style="color: #080">// The class registers its methods for the HTTP GET request using the @GET annotation. </em>
+<em class="hl-comment" style="color: #080">// Using the @Produces annotation, it defines that it can deliver several MIME types,</em>
+<em class="hl-comment" style="color: #080">// text, XML and HTML. </em>
+
+<em class="hl-comment" style="color: #080">// The browser requests per default the HTML MIME type.</em>
+
+<em class="hl-comment" style="color: #080">//Sets the path to base URL + /hello</em>
+<em><span class="hl-annotation" style="color: gray">@Path("/hello")</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Hello {
+
+  <em class="hl-comment" style="color: #080">// This method is called if TEXT_PLAIN is request</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_PLAIN)</span></em>
+  <span class="hl-keyword">public</span> String sayPlainTextHello() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"Hello Jersey"</span>;
+  }
+
+  <em class="hl-comment" style="color: #080">// This method is called if XML is request</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_XML)</span></em>
+  <span class="hl-keyword">public</span> String sayXMLHello() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"&lt;?xml version=\"1.0\"?&gt;"</span> + <span class="hl-string" style="color:blue">"&lt;hello&gt; Hello Jersey"</span> + <span class="hl-string" style="color:blue">"&lt;/hello&gt;"</span>;
+  }
+
+  <em class="hl-comment" style="color: #080">// This method is called if HTML is request</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_HTML)</span></em>
+  <span class="hl-keyword">public</span> String sayHtmlHello() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"&lt;html&gt; "</span> + <span class="hl-string" style="color:blue">"&lt;title&gt;"</span> + <span class="hl-string" style="color:blue">"Hello Jersey"</span> + <span class="hl-string" style="color:blue">"&lt;/title&gt;"</span>
+        + <span class="hl-string" style="color:blue">"&lt;body&gt;&lt;h1&gt;"</span> + <span class="hl-string" style="color:blue">"Hello Jersey"</span> + <span class="hl-string" style="color:blue">"&lt;/body&gt;&lt;/h1&gt;"</span> + <span class="hl-string" style="color:blue">"&lt;/html&gt; "</span>;
+  }
+
+} </pre><p>
+                  
+               </p>
+               <p>
+                  This class
+                  register itself as a get
+                  resource via the @GET
+                  annotation.
+                  Via the
+                  @Produces annotation it
+                  defines that it delivers
+                  the
+                  <em class="wordasword">text</em>
+                  and the
+                  <em class="wordasword">HTML</em>
+                  MIME types. It also defines via the
+                  <code class="code">@Path</code>
+                  annotation that its service
+                  is available under the <code class="code">hello</code> URL.
+                  
+               </p>
+               <p>
+                  The browser will always request the html MIME type. To see the
+                  text
+                  version you can use tool like
+                  <a class="ulink" href="http://www.vogella.com/articles/Ubuntu/article.html#network_curl" target="_top"> curl </a>.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="first_servletdispatcher"></a>5.3.&nbsp;Define Jersey Servlet dispatcher
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  You need to register Jersey as the servlet dispatcher for REST
+                  requests. Open the file
+                  <code class="filename">web.xml</code>
+                  and modify the file to the
+                  following.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">&lt;?xml version=<span class="hl-string" style="color:blue">"1.0"</span> encoding=<span class="hl-string" style="color:blue">"UTF-8"</span>?&gt;
+&lt;web-app xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span> xmlns=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee"</span> xmlns:web=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span> xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span> id=<span class="hl-string" style="color:blue">"WebApp_ID"</span> version=<span class="hl-string" style="color:blue">"2.5"</span>&gt;
+  &lt;display-name&gt;de.vogella.jersey.first&lt;/display-name&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;servlet-<span class="hl-keyword">class</span>&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-<span class="hl-keyword">class</span>&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;
+      &lt;param-value&gt;de.vogella.jersey.first&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;<span class="hl-number">1</span>&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/rest<em class="hl-comment" style="color: #080">/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt; </em></pre><p>
+                  
+               </p>
+               <p>
+                  The
+                  parameter "com.sun.jersey.config.property.package"
+                  defines in
+                  which
+                  package jersey will look for the web service classes.
+                  This
+                  property must point to your resources classes. The URL pattern
+                  defines part of the base URL your application will be placed.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="first_run"></a>5.4.&nbsp;Run your rest service 
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Run you web application in Eclipse. See
+                  <a class="ulink" href="http://www.vogella.com/articles/EclipseWTP/article.html" target="_top"> Eclipse WTP</a>
+                  for details on how to run dynamic web applications.
+                  
+               </p>
+               <p>
+                  Test your REST service under:
+                  "http://localhost:8080/de.vogella.jersey.first/rest/hello". This name
+                  is derived from the "display-name" defined in the
+                  <code class="filename">web.xml</code>
+                  file,
+                  augmented with the servlet-mapping url-pattern and the "hello"
+                  @Path
+                  annotation from your class file.
+                  You
+                  should get
+                  the message "Hello
+                  Jersey".
+                  
+               </p>
+               <p>The browser requests the HTML representation of your resource.
+                  In the next chapter we are going to write a client which will read
+                  the XML representation.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="first_client"></a>5.5.&nbsp;Create a client
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Jersey contains a REST client library which can be used for
+                  testing or
+                  to build a real client in Java. Alternative you could use
+                  <a class="ulink" href="http://www.vogella.com/articles/ApacheHttpClient/article.html" target="_top"> Apache HttpClient</a>
+                  to create a client.
+                  
+               </p>
+               <p>
+                  Create a new Java "de.vogella.jersey.first.client" and add the
+                  jersey jars to the project and the project build path. Create the
+                  following test class.
+                  
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.first.client;
+
+<span class="hl-keyword">import</span> java.net.URI;
+
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hl-keyword">import</span> javax.ws.rs.core.UriBuilder;
+
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.Client;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.ClientResponse;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.WebResource;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Test {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ClientConfig config = <span class="hl-keyword">new</span> DefaultClientConfig();
+    Client client = Client.create(config);
+    WebResource service = client.resource(getBaseURI());
+    <em class="hl-comment" style="color: #080">// Fluent interfaces</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"hello"</span>).accept(MediaType.TEXT_PLAIN).get(ClientResponse.<span class="hl-keyword">class</span>).toString());
+    <em class="hl-comment" style="color: #080">// Get plain text</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"hello"</span>).accept(MediaType.TEXT_PLAIN).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get XML</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"hello"</span>).accept(MediaType.TEXT_XML).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// The HTML</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"hello"</span>).accept(MediaType.TEXT_HTML).get(String.<span class="hl-keyword">class</span>));
+
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> URI getBaseURI() {
+    <span class="hl-keyword">return</span> UriBuilder.fromUri(<span class="hl-string" style="color:blue">"http://localhost:8080/de.vogella.jersey.first"</span>).build();
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div> 
+         <script type="text/javascript">google_ad_client="pub-3851443674951530";google_ad_slot="8639282357";google_ad_width=728;google_ad_height=90;</script>
+         <script type="text/javascript" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/show_ads.js"></script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="jaxb"></a>6.&nbsp;Restful webservices and JAXB
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               JAX-RS supports the automatic creation of XML and JSON via JAXB. For
+               an introduction into XML please see
+               <a class="ulink" href="http://www.vogella.com/articles/JavaXML/article.html" target="_top">Java and XML - Tutorial
+                  </a>. For an introduction into JAXB please see
+               <a class="ulink" href="http://www.vogella.com/articles/JAXB/article.html" target="_top"> JAXB</a>. You can continue this tutorial without reading these tutorials but
+               they contain more background information.
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jaxb_project"></a>6.1.&nbsp;Create project
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a new
+                  <em class="wordasword">Dynamic Web Project</em>
+                  called
+                  <em class="wordasword">de.vogella.jersey.jaxb</em>
+                  and
+                  copy all
+                  jersey jars into the
+                  <code class="filename">WEB-INF/lib</code>
+                  folder.
+                  
+               </p>
+               <p> Create your domain class.</p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.jaxb.model;
+
+<span class="hl-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+
+<em><span class="hl-annotation" style="color: gray">@XmlRootElement</span></em>
+<em class="hl-comment" style="color: #080">// JAX-RS supports an automatic mapping from JAXB annotated class to XML and JSON</em>
+<em class="hl-comment" style="color: #080">// Isn't that cool?</em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Todo {
+  <span class="hl-keyword">private</span> String summary;
+  <span class="hl-keyword">private</span> String description;
+  <span class="hl-keyword">public</span> String getSummary() {
+    <span class="hl-keyword">return</span> summary;
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setSummary(String summary) {
+    <span class="hl-keyword">this</span>.summary = summary;
+  }
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+
+  
+} </pre><p>
+                  
+               </p>
+               <p> Create the following resource class. This class simply return
+                  an instance of the Todo class.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.jaxb;
+
+<span class="hl-keyword">import</span> javax.ws.rs.GET;
+<span class="hl-keyword">import</span> javax.ws.rs.Path;
+<span class="hl-keyword">import</span> javax.ws.rs.Produces;
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+
+<span class="hl-keyword">import</span> de.vogella.jersey.jaxb.model.Todo;
+
+<em><span class="hl-annotation" style="color: gray">@Path("/todo")</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> TodoResource {
+  <em class="hl-comment" style="color: #080">// This method is called if XMLis request</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })</span></em>
+  <span class="hl-keyword">public</span> Todo getXML() {
+    Todo todo = <span class="hl-keyword">new</span> Todo();
+    todo.setSummary(<span class="hl-string" style="color:blue">"This is my first todo"</span>);
+    todo.setDescription(<span class="hl-string" style="color:blue">"This is my first todo"</span>);
+    <span class="hl-keyword">return</span> todo;
+  }
+  
+  <em class="hl-comment" style="color: #080">// This can be used to test the integration with the browser</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces({ MediaType.TEXT_XML })</span></em>
+  <span class="hl-keyword">public</span> Todo getHTML() {
+    Todo todo = <span class="hl-keyword">new</span> Todo();
+    todo.setSummary(<span class="hl-string" style="color:blue">"This is my first todo"</span>);
+    todo.setDescription(<span class="hl-string" style="color:blue">"This is my first todo"</span>);
+    <span class="hl-keyword">return</span> todo;
+  }
+
+} </pre><p>
+                  
+               </p>
+               <p>
+                  Change
+                  <code class="filename">web.xml</code>
+                  to the following.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">&lt;?xml version=<span class="hl-string" style="color:blue">"1.0"</span> encoding=<span class="hl-string" style="color:blue">"UTF-8"</span>?&gt;
+&lt;web-app xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  xmlns=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee"</span> xmlns:web=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span>
+  xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span>
+  id=<span class="hl-string" style="color:blue">"WebApp_ID"</span> version=<span class="hl-string" style="color:blue">"2.5"</span>&gt;
+  &lt;display-name&gt;de.vogella.jersey.jaxb&lt;/display-name&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;servlet-<span class="hl-keyword">class</span>&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-<span class="hl-keyword">class</span>&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;
+      &lt;param-value&gt;de.vogella.jersey.jaxb&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;<span class="hl-number">1</span>&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/rest<em class="hl-comment" style="color: #080">/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt; </em></pre><p>
+                  
+               </p>
+               <p>
+                  Run you web application in Eclipse and validate that you can
+                  access
+                  your service. Your application should be available under the
+                  following
+                  URL.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">http:<em class="hl-comment" style="color: #080">//localhost:8080/de.vogella.jersey.jaxb/rest/todo </em></pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jaxb_client"></a>6.2.&nbsp;Create a client
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a new Java "de.vogella.jersey.jaxb.client" and add the
+                  jersey jars to the project and the project build path. Create the
+                  following test class.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.jaxb.client;
+
+
+<span class="hl-keyword">import</span> java.net.URI;
+
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hl-keyword">import</span> javax.ws.rs.core.UriBuilder;
+
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.Client;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.WebResource;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Test {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ClientConfig config = <span class="hl-keyword">new</span> DefaultClientConfig();
+    Client client = Client.create(config);
+    WebResource service = client.resource(getBaseURI());
+    <em class="hl-comment" style="color: #080">// Get XML</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todo"</span>).accept(MediaType.TEXT_XML).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get XML for application</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todo"</span>).accept(MediaType.APPLICATION_JSON).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get JSON for application</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todo"</span>).accept(MediaType.APPLICATION_XML).get(String.<span class="hl-keyword">class</span>));
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> URI getBaseURI() {
+    <span class="hl-keyword">return</span> UriBuilder.fromUri(<span class="hl-string" style="color:blue">"http://localhost:8080/de.vogella.jersey.jaxb"</span>).build();
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <!-- Lake Quincy Ads -->
+         <div class="lqm_ad" lqm_publisher="lqm.javaeclipseandroid.site" lqm_tags="Java%20Mobile%20Android" lqm_zone="ron" lqm_format="728x90"></div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="crud"></a>7.&nbsp;CRUD RESTful webservice
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>This section creates a CRUD (Create, Read, Update, Delete)
+               restful web service. It will allow to maintain a list of todos in your
+               web application via HTTP calls.
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_project"></a>7.1.&nbsp;Project
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a new dynamic project called
+                  <em class="wordasword">de.vogella.jersey.todo</em>
+                  and add
+                  the jersey libs. Change the
+                  <code class="filename">web.xml</code>
+                  file to the following.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">&lt;?xml version=<span class="hl-string" style="color:blue">"1.0"</span> encoding=<span class="hl-string" style="color:blue">"UTF-8"</span>?&gt;
+&lt;web-app xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span> xmlns=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee"</span> xmlns:web=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span> xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span> id=<span class="hl-string" style="color:blue">"WebApp_ID"</span> version=<span class="hl-string" style="color:blue">"2.5"</span>&gt;
+  &lt;display-name&gt;de.vogella.jersey.todo&lt;/display-name&gt;
+  &lt;servlet&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;servlet-<span class="hl-keyword">class</span>&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/servlet-<span class="hl-keyword">class</span>&gt;
+    &lt;init-param&gt;
+      &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;
+      &lt;param-value&gt;de.vogella.jersey.todo.resources&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;<span class="hl-number">1</span>&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/rest<em class="hl-comment" style="color: #080">/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+&lt;/web-app&gt; </em></pre><p>
+                  
+               </p>
+               <p>
+                  Create the following data model and a
+                  <a class="ulink" href="http://www.vogella.com/articles/DesignPatternSingleton/article.html" target="_top"> Singleton </a>
+                  which serves as the data provider for the model. We use the
+                  implementation based on an enumeration. Please see the link for
+                  details. The Todo class is
+                  annotated with a JAXB annotation. See
+                  <a class="ulink" href="http://www.vogella.com/articles/JavaXML/article.html" target="_top">Java and XML  </a>
+                  to learn about JAXB.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.todo.model;
+
+
+<span class="hl-keyword">import</span> javax.xml.bind.annotation.XmlRootElement;
+
+<em><span class="hl-annotation" style="color: gray">@XmlRootElement</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Todo {
+  <span class="hl-keyword">private</span> String id;
+  <span class="hl-keyword">private</span> String summary;
+  <span class="hl-keyword">private</span> String description;
+  
+  <span class="hl-keyword">public</span> Todo(){
+    
+  }
+  <span class="hl-keyword">public</span> Todo (String id, String summary){
+    <span class="hl-keyword">this</span>.id = id;
+    <span class="hl-keyword">this</span>.summary = summary;
+  }
+  <span class="hl-keyword">public</span> String getId() {
+    <span class="hl-keyword">return</span> id;
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setId(String id) {
+    <span class="hl-keyword">this</span>.id = id;
+  }
+  <span class="hl-keyword">public</span> String getSummary() {
+    <span class="hl-keyword">return</span> summary;
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setSummary(String summary) {
+    <span class="hl-keyword">this</span>.summary = summary;
+  }
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+  
+  
+} </pre><p>
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.todo.dao;
+
+<span class="hl-keyword">import</span> java.util.HashMap;
+<span class="hl-keyword">import</span> java.util.Map;
+
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.model.Todo;
+
+<span class="hl-keyword">public</span> enum TodoDao {
+  instance;
+  
+  <span class="hl-keyword">private</span> Map&lt;String, Todo&gt; contentProvider = <span class="hl-keyword">new</span> HashMap&lt;String, Todo&gt;();
+  
+  <span class="hl-keyword">private</span> TodoDao() {
+    
+    Todo todo = <span class="hl-keyword">new</span> Todo(<span class="hl-string" style="color:blue">"1"</span>, <span class="hl-string" style="color:blue">"Learn REST"</span>);
+    todo.setDescription(<span class="hl-string" style="color:blue">"Read http://www.vogella.com/articles/REST/article.html"</span>);
+    contentProvider.put(<span class="hl-string" style="color:blue">"1"</span>, todo);
+    todo = <span class="hl-keyword">new</span> Todo(<span class="hl-string" style="color:blue">"2"</span>, <span class="hl-string" style="color:blue">"Do something"</span>);
+    todo.setDescription(<span class="hl-string" style="color:blue">"Read complete http://www.vogella.com"</span>);
+    contentProvider.put(<span class="hl-string" style="color:blue">"2"</span>, todo);
+    
+  }
+  <span class="hl-keyword">public</span> Map&lt;String, Todo&gt; getModel(){
+    <span class="hl-keyword">return</span> contentProvider;
+  }
+  
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_webpage"></a>7.2.&nbsp;Create a simple HTML form
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The rest service can be used via HTML forms. The following HTML
+                  form
+                  will allow to post new data to the service. Create the following
+                  page
+                  called
+                  <code class="filename">create_todo.html</code>
+                  in the
+                  <code class="filename">WebContent</code>
+                  folder.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;Form to create a <span class="hl-keyword">new</span> resource&lt;/title&gt;
+ &lt;/head&gt;
+&lt;body&gt;
+  &lt;form action=<span class="hl-string" style="color:blue">"../de.vogella.jersey.todo/rest/todos"</span> method=<span class="hl-string" style="color:blue">"POST"</span>&gt;
+  &lt;label <span class="hl-keyword">for</span>=<span class="hl-string" style="color:blue">"id"</span>&gt;ID&lt;/label&gt;
+  &lt;input name=<span class="hl-string" style="color:blue">"id"</span> /&gt;
+  &lt;br/&gt;
+  &lt;label <span class="hl-keyword">for</span>=<span class="hl-string" style="color:blue">"summary"</span>&gt;Summary&lt;/label&gt;
+  &lt;input name=<span class="hl-string" style="color:blue">"summary"</span> /&gt;
+  &lt;br/&gt;
+  Description:
+  &lt;TEXTAREA NAME=<span class="hl-string" style="color:blue">"description"</span> COLS=<span class="hl-number">40</span> ROWS=<span class="hl-number">6</span>&gt;&lt;/TEXTAREA&gt;
+  &lt;br/&gt;
+  &lt;input type=<span class="hl-string" style="color:blue">"submit"</span> value=<span class="hl-string" style="color:blue">"Submit"</span> /&gt;
+  &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt; </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_class"></a>7.3.&nbsp;Rest Service
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Create the following classes which will be used as REST
+                  resources.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.todo.resources;
+
+<span class="hl-keyword">import</span> javax.ws.rs.Consumes;
+<span class="hl-keyword">import</span> javax.ws.rs.DELETE;
+<span class="hl-keyword">import</span> javax.ws.rs.GET;
+<span class="hl-keyword">import</span> javax.ws.rs.PUT;
+<span class="hl-keyword">import</span> javax.ws.rs.Produces;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Context;
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Request;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hl-keyword">import</span> javax.ws.rs.core.UriInfo;
+<span class="hl-keyword">import</span> javax.xml.bind.JAXBElement;
+
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.model.Todo;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> TodoResource {
+  <em><span class="hl-annotation" style="color: gray">@Context</span></em>
+  UriInfo uriInfo;
+  <em><span class="hl-annotation" style="color: gray">@Context</span></em>
+  Request request;
+  String id;
+  <span class="hl-keyword">public</span> TodoResource(UriInfo uriInfo, Request request, String id) {
+    <span class="hl-keyword">this</span>.uriInfo = uriInfo;
+    <span class="hl-keyword">this</span>.request = request;
+    <span class="hl-keyword">this</span>.id = id;
+  }
+  
+  <em class="hl-comment" style="color: #080">//Application integration     </em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})</span></em>
+  <span class="hl-keyword">public</span> Todo getTodo() {
+    Todo todo = TodoDao.instance.getModel().get(id);
+    <span class="hl-keyword">if</span>(todo==null)
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(<span class="hl-string" style="color:blue">"Get: Todo with "</span> + id +  <span class="hl-string" style="color:blue">" not found"</span>);
+    <span class="hl-keyword">return</span> todo;
+  }
+  
+  <em class="hl-comment" style="color: #080">// For the browser</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_XML)</span></em>
+  <span class="hl-keyword">public</span> Todo getTodoHTML() {
+    Todo todo = TodoDao.instance.getModel().get(id);
+    <span class="hl-keyword">if</span>(todo==null)
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(<span class="hl-string" style="color:blue">"Get: Todo with "</span> + id +  <span class="hl-string" style="color:blue">" not found"</span>);
+    <span class="hl-keyword">return</span> todo;
+  }
+  
+  <em><span class="hl-annotation" style="color: gray">@PUT</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Consumes(MediaType.APPLICATION_XML)</span></em>
+  <span class="hl-keyword">public</span> Response putTodo(JAXBElement&lt;Todo&gt; todo) {
+    Todo c = todo.getValue();
+    <span class="hl-keyword">return</span> putAndGetResponse(c);
+  }
+  
+  <em><span class="hl-annotation" style="color: gray">@DELETE</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> deleteTodo() {
+    Todo c = TodoDao.instance.getModel().remove(id);
+    <span class="hl-keyword">if</span>(c==null)
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(<span class="hl-string" style="color:blue">"Delete: Todo with "</span> + id +  <span class="hl-string" style="color:blue">" not found"</span>);
+  }
+  
+  <span class="hl-keyword">private</span> Response putAndGetResponse(Todo todo) {
+    Response res;
+    <span class="hl-keyword">if</span>(TodoDao.instance.getModel().containsKey(todo.getId())) {
+      res = Response.noContent().build();
+    } <span class="hl-keyword">else</span> {
+      res = Response.created(uriInfo.getAbsolutePath()).build();
+    }
+    TodoDao.instance.getModel().put(todo.getId(), todo);
+    <span class="hl-keyword">return</span> res;
+  }
+  
+  
+
+} </pre><p>
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.todo.resources;
+
+
+<span class="hl-keyword">import</span> java.io.IOException;
+<span class="hl-keyword">import</span> java.net.URI;
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">import</span> javax.servlet.http.HttpServletResponse;
+<span class="hl-keyword">import</span> javax.ws.rs.Consumes;
+<span class="hl-keyword">import</span> javax.ws.rs.FormParam;
+<span class="hl-keyword">import</span> javax.ws.rs.GET;
+<span class="hl-keyword">import</span> javax.ws.rs.POST;
+<span class="hl-keyword">import</span> javax.ws.rs.Path;
+<span class="hl-keyword">import</span> javax.ws.rs.PathParam;
+<span class="hl-keyword">import</span> javax.ws.rs.Produces;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Context;
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Request;
+<span class="hl-keyword">import</span> javax.ws.rs.core.Response;
+<span class="hl-keyword">import</span> javax.ws.rs.core.UriInfo;
+
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.dao.TodoDao;
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.model.Todo;
+
+
+<em class="hl-comment" style="color: #080">// Will map the resource to the URL todos</em>
+<em><span class="hl-annotation" style="color: gray">@Path("/todos")</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> TodosResource {
+
+  <em class="hl-comment" style="color: #080">// Allows to insert contextual objects into the class, </em>
+  <em class="hl-comment" style="color: #080">// e.g. ServletContext, Request, Response, UriInfo</em>
+  <em><span class="hl-annotation" style="color: gray">@Context</span></em>
+  UriInfo uriInfo;
+  <em><span class="hl-annotation" style="color: gray">@Context</span></em>
+  Request request;
+
+
+  <em class="hl-comment" style="color: #080">// Return the list of todos to the user in the browser</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_XML)</span></em>
+  <span class="hl-keyword">public</span> List&lt;Todo&gt; getTodosBrowser() {
+    List&lt;Todo&gt; todos = <span class="hl-keyword">new</span> ArrayList&lt;Todo&gt;();
+    todos.addAll(TodoDao.instance.getModel().values());
+    <span class="hl-keyword">return</span> todos; 
+  }
+  
+  <em class="hl-comment" style="color: #080">// Return the list of todos for applications</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})</span></em>
+  <span class="hl-keyword">public</span> List&lt;Todo&gt; getTodos() {
+    List&lt;Todo&gt; todos = <span class="hl-keyword">new</span> ArrayList&lt;Todo&gt;();
+    todos.addAll(TodoDao.instance.getModel().values());
+    <span class="hl-keyword">return</span> todos; 
+  }
+  
+  
+  <em class="hl-comment" style="color: #080">// retuns the number of todos</em>
+  <em class="hl-comment" style="color: #080">// Use http://localhost:8080/de.vogella.jersey.todo/rest/todos/count</em>
+  <em class="hl-comment" style="color: #080">// to get the total number of records</em>
+  <em><span class="hl-annotation" style="color: gray">@GET</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Path("count")</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_PLAIN)</span></em>
+  <span class="hl-keyword">public</span> String getCount() {
+    <span class="hl-keyword">int</span> count = TodoDao.instance.getModel().size();
+    <span class="hl-keyword">return</span> String.valueOf(count);
+  }
+  
+  <em><span class="hl-annotation" style="color: gray">@POST</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Produces(MediaType.TEXT_HTML)</span></em>
+  <em><span class="hl-annotation" style="color: gray">@Consumes(MediaType.APPLICATION_FORM_URLENCODED)</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> newTodo(<em><span class="hl-annotation" style="color: gray">@FormParam("id")</span></em> String id,
+      <em><span class="hl-annotation" style="color: gray">@FormParam("summary")</span></em> String summary,
+      <em><span class="hl-annotation" style="color: gray">@FormParam("description")</span></em> String description,
+      <em><span class="hl-annotation" style="color: gray">@Context</span></em> HttpServletResponse servletResponse) <span class="hl-keyword">throws</span> IOException {
+    Todo todo = <span class="hl-keyword">new</span> Todo(id,summary);
+    <span class="hl-keyword">if</span> (description!=null){
+      todo.setDescription(description);
+    }
+    TodoDao.instance.getModel().put(id, todo);
+    
+    servletResponse.sendRedirect(<span class="hl-string" style="color:blue">"../create_todo.html"</span>);
+  }
+  
+  
+  <em class="hl-comment" style="color: #080">// Defines that the next path parameter after todos is</em>
+  <em class="hl-comment" style="color: #080">// treated as a parameter and passed to the TodoResources</em>
+  <em class="hl-comment" style="color: #080">// Allows to type http://localhost:8080/de.vogella.jersey.todo/rest/todos/1</em>
+  <em class="hl-comment" style="color: #080">// 1 will be treaded as parameter todo and passed to TodoResource</em>
+  <em><span class="hl-annotation" style="color: gray">@Path("{todo}")</span></em>
+  <span class="hl-keyword">public</span> TodoResource getTodo(<em><span class="hl-annotation" style="color: gray">@PathParam("todo")</span></em> String id) {
+    <span class="hl-keyword">return</span> <span class="hl-keyword">new</span> TodoResource(uriInfo, request, id);
+  }
+  
+} </pre><p>
+                  
+               </p>
+               <p>
+                  This TodosResource uses the
+                  <code class="code">@PathParam</code>
+                  "annotation to define that the
+                  <em class="parameter"><code>id</code></em>
+                  is inserted as parameter.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_run"></a>7.4.&nbsp;Run 
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Run you web application in Eclipse and test the availability of
+                  your REST service under:
+                  "http://localhost:8080/de.vogella.jersey.todo/rest/todos". You should
+                  see the XML representation of your Todo items.
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <div class="mediaobject"><img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/xtodoserver10.png"></div>
+               <p>
+                  
+               </p>
+               <p> To see the count of Todo items use
+                  "http://localhost:8080/de.vogella.jersey.todo/rest/todos/count" to
+                  see an exiting todo use
+                  "http://localhost:8080/de.vogella.jersey.todo/rest/todos/{id}", e.g.
+                  "http://localhost:8080/de.vogella.jersey.todo/rest/todos/1" to see
+                  the todo with ID 1. We currently have only todos with the id's 1 and
+                  2, all other requests will result an HTTP error code.
+                  
+               </p>
+               <p>
+                  Please note that with the browser you can only issue HTTP GET
+                  requests. The next chapter will use the jersey client libraries to
+                  issue get, post and delete.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_client"></a>7.5.&nbsp;Create a client
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a new Java project called
+                  <em class="wordasword">de.vogella.jersey.todo.client</em>. Create a
+                  <code class="filename">lib </code>
+                  folder and place all jersey libs in this folder. Add the jars to
+                  the
+                  classpath of the project.
+                  
+               </p>
+               <p>Create the following class.</p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jersey.todo.client;
+
+<span class="hl-keyword">import</span> java.net.URI;
+
+<span class="hl-keyword">import</span> javax.ws.rs.core.MediaType;
+<span class="hl-keyword">import</span> javax.ws.rs.core.UriBuilder;
+
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.Client;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.ClientResponse;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.WebResource;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.ClientConfig;
+<span class="hl-keyword">import</span> com.sun.jersey.api.client.config.DefaultClientConfig;
+<span class="hl-keyword">import</span> com.sun.jersey.api.representation.Form;
+
+<span class="hl-keyword">import</span> de.vogella.jersey.todo.model.Todo;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Tester {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ClientConfig config = <span class="hl-keyword">new</span> DefaultClientConfig();
+    Client client = Client.create(config);
+    WebResource service = client.resource(getBaseURI());
+    <em class="hl-comment" style="color: #080">// Create one todo</em>
+    Todo todo = <span class="hl-keyword">new</span> Todo(<span class="hl-string" style="color:blue">"3"</span>, <span class="hl-string" style="color:blue">"Blabla"</span>);
+    ClientResponse response = service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .path(todo.getId()).accept(MediaType.APPLICATION_XML)
+        .put(ClientResponse.<span class="hl-keyword">class</span>, todo);
+    <em class="hl-comment" style="color: #080">// Return code should be 201 == created resource</em>
+    System.out.println(response.getStatus());
+    <em class="hl-comment" style="color: #080">// Get the Todos</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .accept(MediaType.TEXT_XML).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get JSON for application</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .accept(MediaType.APPLICATION_JSON).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get XML for application</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .accept(MediaType.APPLICATION_XML).get(String.<span class="hl-keyword">class</span>));
+
+    <em class="hl-comment" style="color: #080">// Get the Todo with id 1</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos/1"</span>)
+        .accept(MediaType.APPLICATION_XML).get(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// get Todo with id 1</em>
+    service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos/1"</span>).delete();
+    <em class="hl-comment" style="color: #080">// Get the all todos, id 1 should be deleted</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .accept(MediaType.APPLICATION_XML).get(String.<span class="hl-keyword">class</span>));
+
+    <em class="hl-comment" style="color: #080">// Create a Todo</em>
+    Form form = <span class="hl-keyword">new</span> Form();
+    form.add(<span class="hl-string" style="color:blue">"id"</span>, <span class="hl-string" style="color:blue">"4"</span>);
+    form.add(<span class="hl-string" style="color:blue">"summary"</span>, <span class="hl-string" style="color:blue">"Demonstration of the client lib for forms"</span>);
+    response = service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .type(MediaType.APPLICATION_FORM_URLENCODED)
+        .post(ClientResponse.<span class="hl-keyword">class</span>, form);
+    System.out.println(<span class="hl-string" style="color:blue">"Form response "</span> + response.getEntity(String.<span class="hl-keyword">class</span>));
+    <em class="hl-comment" style="color: #080">// Get the all todos, id 4 should be created</em>
+    System.out.println(service.path(<span class="hl-string" style="color:blue">"rest"</span>).path(<span class="hl-string" style="color:blue">"todos"</span>)
+        .accept(MediaType.APPLICATION_XML).get(String.<span class="hl-keyword">class</span>));
+
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> URI getBaseURI() {
+    <span class="hl-keyword">return</span> UriBuilder.fromUri(<span class="hl-string" style="color:blue">"http://localhost:8080/de.vogella.jersey.todo"</span>).build();
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_html"></a>7.6.&nbsp;Using the rest service via HTML page
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> The above example contains a form which calls a post method of
+                  your rest service.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="crud_lib"></a>7.7.&nbsp;Using the rest service via X
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Usually every programming language provide somewhere libraries
+                  for
+                  creating HTTP get, post, put and delete requests. For Java the
+                  project
+                  <a class="ulink" href="http://www.vogella.com/articles/ApacheHttpClient/article.html" target="_top"> Apache HttpClient</a>.
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="thankyou"></a>8.&nbsp;Thank you
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               
+               	
+            </p>
+            <p></p>
+            <p>
+               	Please help me to support this article:
+               	
+            </p>
+            <table>
+               <tbody><tr>
+                  			
+                  <td>
+                     				<a href="http://flattr.com/thing/49772/Tutorials-for-Eclipse-Java-Android-and-Webprogramming" target="_blank">
+                        					<img src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0">
+                        				</a>
+                     			
+                  </td>
+                  
+                  			
+                  <td>
+                     				
+                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                        					<input name="cmd" value="_s-xclick" type="hidden">
+                        					<input name="hosted_button_id" value="10463995" type="hidden">
+                        					<input src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/btn_donateCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" border="0" type="image">
+                        					<img alt="" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/pixel.gif" border="0" height="1" width="1">
+                        				
+                     </form>
+                     			
+                  </td>
+                  		
+               </tr>
+            </tbody></table>
+            <p>
+               
+               
+               
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="questions"></a>9.&nbsp;Questions and Discussion
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               If you find errors in this tutorial, please notify me (see the top of
+               the page). Please note that due to the high volume of feedback I
+               receive, I cannot answer questions to your implementation. Ensure you
+               have read the
+               <a class="ulink" href="http://www.vogella.com/faq.html" target="_top"> vogella FAQ</a> as
+               I don't answer questions answered there already.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>10.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>10.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/index.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_rest"></a>10.2.&nbsp;Rest Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://jersey.java.net/" target="_top">Jersey Homepage</a>
+                  
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://jcp.org/aboutJava/communityprocess/final/jsr311/index.html" target="_top">JSR 311</a>
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/library/wa-aj-tomcat/" target="_top">
+                     http://www.ibm.com/developerworks/library/wa-aj-tomcat/
+                     </a>
+                  IBM Article about Rest with Tomcat and Jersey
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>10.3.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://training.vogella.com/index.html" target="_top"> vogella Training </a>Android and Eclipse Training from the vogella team
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/articles/Android/article.html" target="_top"> Android Tutorial
+                     </a> Introduction to Android Programming
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/articles/GWT/article.html" target="_top"> GWT Tutorial
+                     </a> Program in Java and compile to JavaScript and HTML
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/articles/EclipseRCP/article.html" target="_top"> Eclipse RCP Tutorial
+                     </a> Create native applications in Java
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/articles/JUnit/article.html" target="_top"> JUnit Tutorial
+                     </a> Test your application
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/articles/Git/article.html" target="_top"> Git Tutorial
+                     </a> Put everything you have under distributed version control system
+                  
+               </p>
+            </div>
+         </div>
+      </div>
+      
+      
+      
+   <script>//<![CDATA[
+(function(){var c=window,e="",f="&",l="&b_cdr=",m="&b_cihrl=",n="&b_cii=",q="&b_cilrl=",r="&b_ncdl=",s="&b_ncii=",t="&b_ncini=",u="&b_ncl=",v="&cces=",w="&ccis=",x="&ccos=",y="&ccrl=",z="&ccul=",A="&exptid=",B="&ft=",C="&hft=",D="&htmlAt=",E="&ifr=0",F="&ifr=1",G="&nrp=",H="&r",I="&url=",J="=",K="?",L="beforeunload",M="ets=",N="load",O="load:",P="on",Q="unload:";c.pagespeed=c.pagespeed||{};var R=c.pagespeed,S=function(a,b,d,g,h,k){this.f=a;this.a=b;this.c=d;this.d=g;this.b=h;this.g=k;this.h=e};R.beaconUrl=R.h;
+S.prototype.e=function(){var a=this.f,b=c.mod_pagespeed_start,d=Number(new Date)-b,a=a+(-1==a.indexOf(K)?K:f),a=a+M+(this.a==N?O:Q),a=a+d,a=a+(H+this.a+J);c.performance?(d=c.performance.timing,b=d.navigationStart,a+=d.loadEventStart-b):a+=d;this.a==L&&c.mod_pagespeed_loaded||(a+=c.parent!=c?F:E,this.a==N&&(c.mod_pagespeed_loaded=!0,(d=c.mod_pagespeed_num_resources_prefetched)&&(a+=G+d),(d=c.mod_pagespeed_prefetch_start)&&(a+=D+(b-d))),R.panelLoader&&(b=R.panelLoader.getCsiTimings().time,a+=l+b.CRITICAL_DATA_RECEIVED+
+n+b.CRITICAL_IMAGES_INLINED+q+b.CRITICAL_IMAGES_LOW_RES_LOADED+m+b.CRITICAL_IMAGES_HIGH_RES_LOADED+r+b.NON_CACHEABLE_DATA_LOADED+u+b.NON_CRITICAL_LOADED,b=R.panelLoader.getCriticalImagesInfo(),a+=s+b.NUM_CRITICAL_IMAGES_INLINED+t+b.NUM_CRITICAL_IMAGES_NOT_INLINED),R.criticalCss&&(b=R.criticalCss,a+=w+b.total_critical_inlined_size+v+b.total_original_external_size+x+b.total_overhead_size+y+b.num_replaced_links+z+b.num_unreplaced_links),this.c!=e&&(a+=C+this.c),this.d!=e&&(a+=B+this.d),this.b!=e&&(a+=
+A+this.b),a+=I+encodeURIComponent(this.g),R.beaconUrl=a,(new Image).src=a)};R.i=function(a,b,d,g,h,k){var p=new S(a,b,d,g,h,k);c.addEventListener?c.addEventListener(b,function(){p.e()},!1):c.attachEvent(P+b,function(){p.e()})};R.addInstrumentationInit=R.i;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', '', '', 'http://www.vogella.com/articles/REST/article.html');
+//]]></script>
+<iframe style="width: 1px; height: 1px; position: absolute; top: -100px;" src="REST%20with%20Java%20%28JAX-RS%29%20using%20Jersey%20-%20Tutorial_files/postmessageRelay.htm" id="oauth2relay475882766" name="oauth2relay475882766"></iframe></body></html>

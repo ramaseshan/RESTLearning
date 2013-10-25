@@ -1,0 +1,5 @@
+@media only screen and (min-width: 768px) {
+.two-col-left-1000 #main-sidebar-container { width: 100%; }
+.two-col-left-1000 #main-sidebar-container #main { width: 65%; }
+.two-col-left-1000 #main-sidebar-container #sidebar { width: 30%; }
+}

@@ -1,0 +1,471 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>RESTful Web Service - JAX-RS Annotations</title>
+    <script async="" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/cbgapi.loaded_1"></script><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/widgets.js" async="" type="text/javascript"></script><script async="" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/cbgapi.loaded_0"></script><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/ga.js" async="" type="text/javascript"></script><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/jquery-1.js"></script>
+    <script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/shCore.js"></script>
+    <script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/shBrushJava.js"></script>
+    <link rel="StyleSheet" href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/jquery-ui-1.css" type="text/css"> 
+    <link href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/shCore.css" rel="stylesheet" type="text/css">
+	<link href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/shThemeDefault.css" rel="stylesheet" type="text/css">
+	<link href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/article.css" rel="stylesheet" type="text/css">
+	<script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/jquery.js" type="text/javascript"></script>
+	<script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/jquery_002.js" type="text/javascript"></script>
+	<link href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/validation.css" rel="stylesheet" type="text/css">
+	<link rel="Shortcut Icon" href="http://www.techferry.com/images/favicon.ico" type="image/x-icon">
+
+<meta name="keywords" content="Restful Web Service - JAX-RS Annotations Tutorial, Jersey Annotations, Restful Web Service - JAX-RS annotation - code examples">
+<meta name="keyphrases" content="Restful Web Service - JAX-RS Annotations Tutorial, Jersey Annotations, Restful Web Service - JAX-RS annotation - code examples">
+<meta name="description" content="Restful Web Service - JAX-RS Annotations: This tutorial is part 3 of 5-part tutorial on JEE annotations. 
+It contains usage instructions, code examples and tips on Restful Web Service - JAX-RS annotations.">	
+	
+	<script type="text/javascript">
+     SyntaxHighlighter.all()
+	</script>
+	<script>
+	    $(document).ready(function(){
+	    	var hc = $($.ajax({url: "header.html", async: false}).responseText);
+	    	$('#header').html(hc);
+            var fc = $($.ajax({url: "footer.html", async: false}).responseText);
+            $('#footer').html(fc);
+	    });
+    </script>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27684656-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/nonSecureAnonymousFramework"></script><style type="text/css">* html #li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link{height:1% !important;}#li_ui_li_gen_1380417708559_0{position:relative !important;overflow:visible !important;display:block !important;}#li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link{border:0 !important;height:20px !important;text-decoration:none !important;padding:0 !important;margin:0 !important;display:inline-block !important;}#li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link:link, #li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link:visited, #li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link:hover, #li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link:active{border:0 !important;text-decoration:none !important;}#li_ui_li_gen_1380417708559_0 a#li_ui_li_gen_1380417708559_0-link:after{content:"." !important;display:block !important;clear:both !important;visibility:hidden !important;line-height:0 !important;height:0 !important;}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-logo{background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) 0px -276px no-repeat !important;cursor:pointer !important;border:0 !important;text-indent:-9999em !important;overflow:hidden !important;padding:0 !important;margin:0 !important;position:absolute !important;left:0px !important;top:0px !important;display:block !important;width:20px !important;height:20px !important;float:right !important;}#li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-logo{background-position:-20px -276px !important;}#li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-logo, #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-logo{background-position:-40px -276px !important;}.IN-shadowed #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-logo{}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title{color:#333 !important;cursor:pointer !important;display:block !important;white-space:nowrap !important;float:left !important;margin-left:1px !important;vertical-align:top !important;overflow:hidden !important;text-align:center !important;height:18px !important;padding:0 4px 0 23px !important;border:1px solid #000 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;border-left:0 !important;text-shadow:#FFFFFF -1px 1px 0 !important;line-height:20px !important;border-radius:0 !important;-moz-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}#li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title{border:1px solid #000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;border-left:0 !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}#li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title, #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title{color:#666 !important;border:1px solid #000 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;border-left:0 !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.IN-shadowed #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title{}.IN-shadowed #li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title{}.IN-shadowed #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title, .IN-shadowed #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title{}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text, #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text *{color:#333 !important;font-size:11px !important;font-family:Arial, sans-serif !important;font-weight:bold !important;font-style:normal !important;display:inline-block !important;background:transparent none !important;vertical-align:baseline !important;height:18px !important;line-height:20px !important;float:none !important;}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text strong{font-weight:bold !important;}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text em{font-style:italic !important;}#li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title-text, #li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title-text *{color:#000 !important;}#li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title-text, #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title-text, #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title-text *, #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title-text *{color:#666 !important;}#li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title #li_ui_li_gen_1380417708559_0-mark{display:inline-block !important;width:0px !important;overflow:hidden !important;}.success #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title{color:#333 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}.success #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text, .success #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title-text *{color:#333 !important;}.IN-shadowed .success #li_ui_li_gen_1380417708559_0 #li_ui_li_gen_1380417708559_0-title{}.success #li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title{color:#000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}.success #li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title-text, .success #li_ui_li_gen_1380417708559_0.hovered #li_ui_li_gen_1380417708559_0-title-text *{color:#000 !important;}.success #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title, .success #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title{color:#666 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.success #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title-text, .success #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title-text, .success #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title-text *, .success #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title-text *{color:#666 !important;}.IN-shadowed .success #li_ui_li_gen_1380417708559_0.clicked #li_ui_li_gen_1380417708559_0-title, .IN-shadowed .success #li_ui_li_gen_1380417708559_0.down #li_ui_li_gen_1380417708559_0-title{}#li_ui_li_gen_1380417708577_1-container.IN-top {display:inline-block !important;overflow:visible !important;position:relative !important;height:42px !important;line-height:1px !important;cursor:pointer !important;}#li_ui_li_gen_1380417708577_1.IN-top {display:inline-block !important;height:42px !important;width:57px !important;text-align:center !important;background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) -150px top no-repeat !important;}#li_ui_li_gen_1380417708577_1-content.IN-top {display:inline !important;font-size:16px !important;color:#04558B !important;font-weight:bold !important;font-family:Arial, sans-serif !important;line-height:34px !important;}#li_ui_li_gen_1380417708577_1-container.IN-hovered #li_ui_li_gen_1380417708577_1.IN-top, #li_ui_li_gen_1380417708577_1-container.IN-clicked #li_ui_li_gen_1380417708577_1.IN-top, #li_ui_li_gen_1380417708577_1-container.IN-down #li_ui_li_gen_1380417708577_1.IN-top {background-position-x:-210px !important;}#li_ui_li_gen_1380417708577_1-container.IN-empty #li_ui_li_gen_1380417708577_1-inner.IN-top {background:url(http://s.c.lnkd.licdn.com/scds/common/u/img/sprite/sprite_connect_v13.png) 0px -20px no-repeat !important;overflow:hidden !important;margin:5px auto 0 auto !important;width:26px !important;height:26px !important;display:block !important;}#li_ui_li_gen_1380417708577_1-container.IN-empty #li_ui_li_gen_1380417708577_1-content.IN-top {text-indent:-999px !important;display:inline-block !important;}#li_ui_li_gen_1380417708577_1-container.IN-hidden #li_ui_li_gen_1380417708577_1 {display:none !important;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
+.fb_invisible{display:none}
+.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}
+.fb_reset > div{overflow:hidden}
+.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}
+.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.fb_dialog_content{background:#fff;color:#333}
+.fb_dialog_close_icon{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px;top:8px\9;right:7px\9}
+.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}
+.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}
+.fb_dialog_close_icon:hover{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_close_icon:active{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}
+.fb_dialog_top_left,
+.fb_dialog_top_right,
+.fb_dialog_bottom_left,
+.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}
+.fb_dialog_top_left{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}
+.fb_dialog_top_right{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}
+.fb_dialog_bottom_left{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}
+.fb_dialog_bottom_right{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right,
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right{width:10px;height:100%}
+.fb_dialog_vert_left{margin-left:-10px}
+.fb_dialog_vert_right{right:0;margin-right:-10px}
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{width:100%;height:10px}
+.fb_dialog_horiz_top{margin-top:-10px}
+.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}
+.fb_dialog_iframe{line-height:0}
+.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}
+.fb_dialog_content .dialog_title > span{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif)
+no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
+body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
+}
+.fb_dialog.fb_dialog_mobile.loading{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif)
+white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
+.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
+#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}
+#fb-root #fb_dialog_ipad_overlay.hidden{display:none}
+.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
+.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
+.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
+}
+.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
+color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
+rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
+.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}
+.fb_dialog_content .dialog_content{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}
+.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}
+#fb_dialog_loader_close{float:left}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}
+.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}
+.fb_iframe_widget iframe{position:absolute}
+.fb_iframe_widget_lift{z-index:1}
+.fb_hide_iframes iframe{position:relative;left:-10000px}
+.fb_iframe_widget_loader{position:relative;display:inline-block}
+.fb_iframe_widget_fluid{display:inline}
+.fb_iframe_widget_fluid span{width:100%}
+.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}
+.fb_iframe_widget_loader .FB_Loader{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_connect_bar_container div,
+.fb_connect_bar_container span,
+.fb_connect_bar_container a,
+.fb_connect_bar_container img,
+.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}
+.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}
+.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}
+.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}
+.fb_connect_bar a:hover{color:#fff}
+.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}
+.fb_connect_bar div a,
+.fb_connect_bar span,
+.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}
+.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fb_edge_widget_with_comment{position:relative;*z-index:1000}
+.fb_edge_widget_with_comment span.fb_edge_comment_widget{position:absolute}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget{z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget .FB_Loader{left:0;top:1px;margin-top:6px;margin-left:0;background-position:50% 50%;background-color:#fff;height:150px;width:394px;border:1px #666 solid;border-bottom:2px solid #283e6c;z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.dark .FB_Loader{background-color:#000;border-bottom:2px solid #ccc}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.siderender
+.FB_Loader{margin-top:0}
+.fbpluginrecommendationsbarleft,
+.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}
+.fbpluginrecommendationsbarleft{left:10px}
+.fbpluginrecommendationsbarright{right:10px}</style></head>
+
+<body data-twttr-rendered="true">
+<center>
+<table width="1000px"><tbody><tr><td>
+<div id="header">
+    
+<table cellpadding="0" cellspacing="0" width="1000px">
+		<tbody><tr>
+			<td align="left">
+			<a href="http://www.techferry.com/">
+			<img style="border:0" alt="TechFerry Logo" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/logo.png">
+			</a></td>
+		<td align="right" valign="top">
+          <div id="container" style="display: block;"><link href="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/front.css" rel="stylesheet" type="text/css">   
+
+
+
+
+
+            <div id="topnav">
+                <a href="#" class="feedback"><span>Feedback</span></a> <a href="#" class="signin"><span>
+                    Subscribe</span></a>
+            </div>
+            <fieldset id="feedback_menu">
+                <form method="post" id="feedback">
+                <p>
+                    <label for="name"><font color="red">*</font>
+                        Name</label>
+                    <input id="name" name="name" title="name" class="validate[requireds] text-input" type="text">
+                </p>
+                <p>
+                    <label for="email"><font color="red">*</font>
+                        Email</label>
+                    <input id="email" name="email" title="email" class="validate[requireds,custom[email]] text-input" type="text">
+                </p>
+                <p>
+                    <label for="contactNumber">
+                        Contact Number</label>
+                    <input id="contactNumber" name="contactNumber" title="number" type="text">
+                </p>
+                <p>
+                    <label for="feedbackComments"><font color="red">*</font>
+                        Feedback Comments</label>
+                    <textarea id="feedbackComments" name="feedbackComments" title="comments" class="validate[requireds] text-input" rows="3" cols="24"></textarea>
+                </p>
+                <p class="remember">
+                    <input id="feedback_submit" value="Submit" type="submit">
+                    <input id="callMe" name="callMe" value="1" type="checkbox">
+                    <label for="callMe">Call Required?</label>
+                </p>
+                </form>
+            </fieldset>
+            <fieldset id="signin_menu">
+                <form method="post" id="signin" action="#">
+                <p>
+                Subscribe to email alerts for newly published articles. <br><br>
+                </p>
+                <p>
+                    <label for="email">
+                        <font color="red">*</font> Email</label>
+                    <input id="email" name="email" title="email" class="validate[requireds,custom[email]] text-input" type="text">
+                </p>
+                <p class="remember">
+                    <input id="signin_submit" value="Subscribe" type="submit">
+                </p>
+                </form>
+            </fieldset></div>
+		</td>
+		</tr>
+</tbody></table></div>
+<div class="topbar">
+<a href="http://www.techferry.com/" title="TechFerry: Your ferry to success">Home</a> 
+&gt; <a href="http://www.techferry.com/articles/" title="TechFerry Articles">Articles</a>
+&gt; <a href="http://www.techferry.com/articles/RESTful-web-services-JAX-RS-annotations.html" title="RESTful Web Service - JAX-RS Annotations">RESTful Web Service - JAX-RS Annotations</a>
+</div>
+
+<table align="right" width="290px">
+<tbody><tr><td>
+		
+		<div style="background-color:#e0e0e0; height:527px;margin: 27px 0 0 20px;border:1px solid #e0e0e0">
+                  <p style="margin:24px 0 0 0">
+                   </p><center>
+                      <a title="NodeJS vs J2EE Stack A Performance Comparison Study" href="http://www.techferry.com/eBooks.html" target="_blank"> 
+                       <strong>
+                       <span style="font-size:27px; color: #bf0000;">NodeJS vs J2EE Stack<br></span>
+                       </strong> <br>
+                       <span style="color:blue;display:inline-block">A Performance Comparison Study</span><br> 
+                       </a>
+                    <br> 
+                  <a href="http://www.techferry.com/eBooks.html" target="_blank"> 
+                     <img src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/NodeBook.png" alt="" title="NodeJS vs J2EE Stack A Performance Comparison Study" height="240"></a>
+                    </center>
+                   <p></p> 
+                   
+                 <p style="margin:24px 0 0 0">
+<a title="NodeJS vs J2EE Stack A Performance Comparison Study" href="http://www.techferry.com/eBooks.html" target="_blank"> 
+                      <strong> <span style="color:#bf0000;display:inline-block">
+            		<em> &nbsp; &gt;&gt;  Download 
+            		<span style="color:#000000;display:inline-block">your FREE Copy…</span>
+            		</em>
+                	</span></strong>
+                	</a> 
+                  </p>
+                  
+                  <p style="background-color:lightgrey;padding:3px 0 3px 0;">
+									<strong><font color="#bf0000" size="3"> &nbsp; More eBooks:</font></strong>
+					</p>
+								<ul style="line-height: 1.5;">
+									<li><font size="3">
+										<a style="color:blue" href="http://www.techferry.com/eBooks.html">Usability - Beyond RIA</a></font></li>
+								</ul>
+      </div>
+</td></tr>
+</tbody></table>
+
+<h2>Part 3: RESTful Web Service - JAX-RS Annotations</h2>
+<p align="justify">
+This tutorial is part 3 of 5-part tutorial on JEE annotations. 
+We recommend that you read <a href="http://www.techferry.com/articles/JEE-annotations.html#Prerequisite">Prerequisite</a> section first, 
+review the <a href="http://www.techferry.com/articles/JEE-annotations.html#abstract">abstract</a> and 
+<a href="http://www.techferry.com/articles/JEE-annotations.html#exampleApp">Example Application</a> to understand the context. 
+You can also jump to other parts by clicking on the links below.
+</p>
+
+    <div class="ui-widget">
+    <table class="ui-widget ui-widget-content" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr class="ui-widget-header ">
+                <th>Annotation Tutorial: Contents</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr><td>
+        <a href="http://www.techferry.com/articles/JEE-annotations.html" title="JEE Annotations"> JEE Annotations </a> &nbsp;
+        <font size="-2">( 
+                <a href="http://www.techferry.com/articles/JEE-annotations.html#abstract"> Abstract </a> &nbsp;
+                <a href="http://www.techferry.com/articles/JEE-annotations.html#exampleApp"> Example Application </a> &nbsp;
+                <a href="http://www.techferry.com/articles/JEE-annotations.html#references"> References </a> )
+        </font>
+        <ul style="margin-top:7;margin-bottom:7">
+        	<li><a href="http://www.techferry.com/articles/spring-annotations.html" title="Spring Annotations">Part 1: Spring Annotations </a></li>
+        	<li><a href="http://www.techferry.com/articles/hibernate-jpa-annotations.html" title="Hibernate - JPA Annotations">Part 2: Hibernate - JPA Annotations </a></li>
+        	<li><a href="http://www.techferry.com/articles/RESTful-web-services-JAX-RS-annotations.html" title="RESTful Web Service - JAX-RS Annotations">Part 3: RESTful Web Service - JAX-RS Annotations </a></li>
+        	<li><a href="http://www.techferry.com/articles/jaxb-annotations.html" title="JAXB Annotations">Part 4: JAXB Annotations </a></li>
+        	<li><a href="http://www.techferry.com/articles/spring-jUnit-annotations.html" title="Spring - jUnit Annotations">Part 5: Spring - jUnit Annotations </a></li>
+        </ul>     
+        </td></tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>RESTful Web Service - JAX-RS Annotations - Contents:</h2>
+<table style="background-color:#e0e0e0" border="1" cellpadding="3">
+<tbody><tr><th>Annotation</th><th>Package Detail/Import statement </th></tr>
+<tr><td><a href="#GET" title="Jersey Annotation @GET">@GET</a></td><td>import javax.ws.rs.GET;</td></tr>
+<tr><td><a href="#Produces" title="Jersey Annotation @Produces">@Produces</a></td><td>import javax.ws.rs.Produces;</td></tr>
+<tr><td><a href="#Path" title="Jersey Annotation @Path">@Path</a></td><td>import javax.ws.rs.Path;</td></tr>
+<tr><td><a href="#PathParam" title="Jersey Annotation @PathParam">@PathParam</a></td><td>import javax.ws.rs.PathParam;</td></tr>
+<tr><td><a href="#QueryParam" title="Jersey Annotation @QueryParam">@QueryParam</a></td><td>import javax.ws.rs.QueryParam;</td></tr>
+<tr><td><a href="#POST" title="Jersey Annotation @POST">@POST</a></td><td>import javax.ws.rs.POST;</td></tr>
+<tr><td><a href="#Consumes" title="Jersey Annotation @Consumes">@Consumes</a></td><td>import javax.ws.rs.Consumes;</td></tr>
+<tr><td><a href="#FormParam" title="Jersey Annotation @FormParam">@FormParam</a></td><td>import javax.ws.rs.FormParam;</td></tr>
+<tr><td><a href="#PUT" title="Jersey Annotation @PUT">@PUT</a></td><td>import javax.ws.rs.PUT;</td></tr>
+<tr><td><a href="#DELETE" title="Jersey Annotation @DELETE">@DELETE</a></td><td>import javax.ws.rs.DELETE;</td></tr>
+
+</tbody></table>
+
+<br>
+
+As stated earlier in <a href="http://www.techferry.com/articles/JEE-annotations.html#exampleApp">Example Application</a>, we are 
+using Jersey for RESTful Web services and JAX-RS annotations.
+<br><br>
+<table class="tips"><tbody><tr><td>
+<img src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/tips.gif" alt="Jersey Annotation Tip" title="Jersey Annotation Tip"> </td><td>
+REST follows one-to-one mapping between create, read, update, and delete (CRUD) operations and HTTP methods.
+<ul>
+<li>To create a resource on the server, use POST.</li>
+<li>To retrieve a resource, use GET.</li>
+<li>To change the state of a resource or to update it, use PUT.</li>
+<li>To remove or delete a resource, use DELETE.</li>
+</ul>
+</td></tr></tbody></table>
+
+
+
+<a name="GET"></a>
+<h3 title="Jersey Annotation @GET">@GET</h3>
+
+Annotate your Get request methods with @GET.
+
+<div><div id="highlighter_900601" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java keyword">public</code> <code class="java plain">String getHTML() {</code></div><div class="line number3 index2 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">...</code></div><div class="line number4 index3 alt1"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="Produces"></a>
+<h3 title="Jersey Annotation @Produces">@Produces</h3>
+@Produces annotation specifies the type of output this method (or web service) will produce.
+<div><div id="highlighter_591776" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/xml"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java keyword">public</code> <code class="java plain">Contact getXML() {</code></div><div class="line number4 index3 alt1"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">...</code></div><div class="line number5 index4 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<div><div id="highlighter_993754" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java keyword">public</code> <code class="java plain">Contact getJSON() {</code></div><div class="line number4 index3 alt1"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">...</code></div><div class="line number5 index4 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="Path"></a>
+<h3 title="Jersey Annotation @Path">@Path</h3>
+@Path annotation specify the URL path on which this method will be invoked.
+<div><div id="highlighter_62041" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/xml"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"xml/{firstName}"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">Contact getXML() {</code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">...</code></div><div class="line number6 index5 alt1"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="PathParam"></a>
+<h3 title="Jersey Annotation @PathParam">@PathParam</h3>
+We can bind REST-style URL parameters to method arguments using @PathParam annotation as shown below.
+<div><div id="highlighter_961567" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/xml"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"xml/{firstName}"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">Contact getXML(</code><code class="java color1">@PathParam</code><code class="java plain">(</code><code class="java string">"firstName"</code><code class="java plain">) String firstName) {</code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">Contact contact = contactService.findByFirstName(firstName);</code></div><div class="line number6 index5 alt1"><code class="java spaces">&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">contact;</code></div><div class="line number7 index6 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<div><div id="highlighter_402920" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"json/{firstName}"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">Contact getJSON(</code><code class="java color1">@PathParam</code><code class="java plain">(</code><code class="java string">"firstName"</code><code class="java plain">) String firstName) {</code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">Contact contact = contactService.findByFirstName(firstName);</code></div><div class="line number6 index5 alt1"><code class="java spaces">&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">contact;</code></div><div class="line number7 index6 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<a name="QueryParam"></a>
+<h3 title="Jersey Annotation @QueryParam">@QueryParam</h3>
+Request parameters in query string can be accessed using @QueryParam annotation as shown below. 
+<div><div id="highlighter_172078" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@GET</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"json/companyList"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">CompanyList getJSON(</code><code class="java color1">@QueryParam</code><code class="java plain">(</code><code class="java string">"start"</code><code class="java plain">) </code><code class="java keyword">int</code> <code class="java plain">start, </code><code class="java color1">@QueryParam</code><code class="java plain">(</code><code class="java string">"limit"</code><code class="java plain">) </code><code class="java keyword">int</code> <code class="java plain">limit) {</code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">CompanyList list = </code><code class="java keyword">new</code> <code class="java plain">CompanyList(companyService.listCompanies(start, limit));</code></div><div class="line number6 index5 alt1"><code class="java spaces">&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">list;</code></div><div class="line number7 index6 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+The example above returns a list of companies (with server side 
+pagination) which can be displayed with rich clients implemented using 
+Ext-js or jQuery.
+You can read more more about setting up
+<a href="http://blog.techferry.com/2012/01/25/extjs-grid-panel-with-remote-sorting-and-pagination-using-hibernate/">ExtJS grid panel with remote sorting and pagination using Hibernate</a>.
+<a name="POST"></a>
+<h3 title="Jersey Annotation @POST">@POST</h3>
+Annotate POST request methods with @POST.
+
+<div><div id="highlighter_43179" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@POST</code></div><div class="line number2 index1 alt1"><code class="java color1">@Consumes</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">RestResponse&lt;Contact&gt; create(Contact contact) {</code></div><div class="line number5 index4 alt2"><code class="java plain">...</code></div><div class="line number6 index5 alt1"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="Consumes"></a>
+<h3 title="Jersey Annotation @Consumes">@Consumes</h3>
+
+The @Consumes annotation is used to specify the MIME media types a REST resource can consume. 
+
+<div><div id="highlighter_960878" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@PUT</code></div><div class="line number2 index1 alt1"><code class="java color1">@Consumes</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"{contactId}"</code><code class="java plain">)</code></div><div class="line number5 index4 alt2"><code class="java keyword">public</code> <code class="java plain">RestResponse&lt;Contact&gt; update(Contact contact) {</code></div><div class="line number6 index5 alt1"><code class="java plain">...</code></div><div class="line number7 index6 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="FormParam"></a>
+<h3 title="Jersey Annotation @FormParam">@FormParam</h3>
+The REST resources will usually consume XML/JSON for the complete Entity Bean. 
+Sometimes, you may want to read parameters sent in POST requests directly and you can do that using @FormParam annotation. 
+GET Request query parameters can be accessed using <a href="#QueryParam" title="Jersey Annotation @QueryParam">@QueryParam</a> annotation.
+<div><div id="highlighter_104817" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@POST</code></div><div class="line number2 index1 alt1"><code class="java keyword">public</code> <code class="java plain">String save(</code><code class="java color1">@FormParam</code><code class="java plain">(</code><code class="java string">"firstName"</code><code class="java plain">) String firstName,</code></div><div class="line number3 index2 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@FormParam</code><code class="java plain">(</code><code class="java string">"lastName"</code><code class="java plain">) String lastName) {</code></div><div class="line number4 index3 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">...</code></div><div class="line number5 index4 alt2"><code class="java spaces">&nbsp;&nbsp;</code><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<a name="PUT"></a>
+<h3 title="Jersey Annotation @PUT">@PUT</h3>
+Annotate PUT request methods with @PUT.
+<div><div id="highlighter_917168" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@PUT</code></div><div class="line number2 index1 alt1"><code class="java color1">@Consumes</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"{contactId}"</code><code class="java plain">)</code></div><div class="line number5 index4 alt2"><code class="java keyword">public</code> <code class="java plain">RestResponse&lt;Contact&gt; update(Contact contact) {</code></div><div class="line number6 index5 alt1"><code class="java plain">...</code></div><div class="line number7 index6 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<a name="DELETE"></a>
+<h3 title="Jersey Annotation @DELETE">@DELETE</h3>
+Annotate DELETE request methods with @DELETE.
+
+<div><div id="highlighter_213492" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java color1">@DELETE</code></div><div class="line number2 index1 alt1"><code class="java color1">@Produces</code><code class="java plain">(</code><code class="java string">"application/json"</code><code class="java plain">)</code></div><div class="line number3 index2 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"{contactId}"</code><code class="java plain">)</code></div><div class="line number4 index3 alt1"><code class="java keyword">public</code> <code class="java plain">RestResponse&lt;Contact&gt; delete(</code><code class="java color1">@PathParam</code><code class="java plain">(</code><code class="java string">"contactId"</code><code class="java plain">) </code><code class="java keyword">int</code> <code class="java plain">contactId) {</code></div><div class="line number5 index4 alt2"><code class="java plain">...</code></div><div class="line number6 index5 alt1"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+
+<h2>References</h2>
+
+<ol>
+<li><a target="_blank" href="https://wikis.oracle.com/display/Jersey/Overview+of+JAX-RS+1.0+Features" title="Jersey JAX-RS Annotations">Jersey JAX-RS Annotations</a>: https://wikis.oracle.com/display/Jersey/Overview+of+JAX-RS+1.0+Features </li>
+</ol><br>
+<table align="center" width="85%"><tbody><tr>
+<td align="center" width="33%"> <a href="http://www.techferry.com/articles/JEE-annotations.html" title="JEE Annotations" style="text-decoration:none"><input value="JEE Annotations" style="width:250px" onclick="window.location.href='JEE-annotations.html'" type="button"></a></td>
+<td align="center" width="33%"><a href="http://www.techferry.com/articles/spring-annotations.html" title="Spring Annotations" style="text-decoration:none"><input value="Spring Annotations" style="width:250px" onclick="window.location.href='spring-annotations.html'" type="button"></a></td>
+<td align="center" width="33%"><a href="http://www.techferry.com/articles/hibernate-jpa-annotations.html" title="Hibernate Annotations" style="text-decoration:none"><input value="Hibernate JPA Annotations" style="width:250px" onclick="window.location.href='hibernate-jpa-annotations.html'" type="button"></a></td>
+</tr><tr>
+<td align="center" width="33%"><a href="http://www.techferry.com/articles/RESTful-web-services-JAX-RS-annotations.html" title="Jersey Annotations" style="text-decoration:none"><input value="REST - JAXRS Annotations" style="width:250px" onclick="window.location.href='RESTful-web-services-JAX-RS-annotations.html'" type="button"></a></td>
+<td align="center" width="33%"><a href="http://www.techferry.com/articles/jaxb-annotations.html" title="JAXB Annotations" style="text-decoration:none"><input value="JAXB Annotations" style="width:250px" onclick="window.location.href='jaxb-annotations.html'" type="button"></a></td>
+<td align="center" width="33%"><a href="http://www.techferry.com/articles/spring-jUnit-annotations.html" title="Spring jUnit Annotations" style="text-decoration:none"><input value="Spring jUnit Annotations" style="width:250px" onclick="window.location.href='spring-jUnit-annotations.html'" type="button"></a></td>
+</tr>
+</tbody></table><br>
+<div id="footer">
+    
+<table width="1000">
+<tbody><tr>
+<td align="left" width="54%">	
+	<form method="post" id="contactForm">
+	<div class="ui-widget">
+	<table class="ui-widget ui-widget-content" cellpadding="3" width="100%">
+	<tbody><tr class="ui-widget-header ">
+	<th align="left">Leave us a reply</th>
+	</tr><tr><td>
+	<div id="thankYou">
+	<table cellpadding="3">
+		<tbody><tr><td colspan="2">Your email address will not be published. Required fields are marked *.</td></tr>
+	<tr>
+	<td align="right">
+	<font color="red">* </font>Name: </td>
+	<td><input name="name" id="name" title="name" class="validate[requireds] text-input" style="width: 250px" type="text">
+	</td></tr>
+	<tr><td align="right">
+	<font color="red">* </font>Email: </td>
+	<td> 
+	<input name="email" id="email" title="email" class="validate[custom[email]] text-input" style="width: 250px" type="text">
+	</td></tr>
+	<tr><td align="right">
+	 Phone: </td>
+	<td><input name="phone" style="width: 250px" type="text">
+	</td></tr>
+	<tr><td align="right">
+	<font color="red">* </font>Message: </td>
+	<td>
+	<textarea id="message" name="message" rows="4" cols="31" title="message" class="validate[requireds] text-input" style="width: 250px"></textarea>
+	</td></tr>
+	<tr><td align="right">
+	</td>
+	<td>
+	<input id="contactSubmit" value="Submit" type="submit">
+	</td></tr>
+	</tbody></table>
+	</div>
+	</td></tr>
+	</tbody></table>
+	</div>
+	</form>
+</td></tr></tbody></table>
+
+<div style="background:#37647d;">
+
+<table width="1000px"><tbody><tr>
+<td align="left"><font color="#fff" size="-1">© 2011 TechFerry Infotech Pvt. Ltd., All Rights Reserved.</font></td>
+<td align="right"><a style="text-decoration:none;color:#fff" href="http://www.techferry.com/sitemap.html"><font size="-1"><u>SiteMap</u></font></a></td>
+</tr>
+</tbody></table>
+</div></div>
+</td></tr></tbody></table>
+</center>
+<div id="pageshare" title="Share This With Your Friends">
+	<div class="sbutton" id="gb"><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/all.js"></script><fb:like class="fb_edge_widget_with_comment fb_iframe_widget" fb-xfbml-state="rendered" layout="box_count" show_faces="false" font=""><span style="height: 62px; width: 45px;"><iframe src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/like.htm" class="fb_ltr" title="Like this content on Facebook." style="border: medium none; overflow: hidden; height: 62px; width: 45px;" name="f1ce6aaea1bae2" id="f17bca8ef7261ae" scrolling="no"></iframe></span></fb:like></div>
+	<div class="sbutton" id="gplusone"><script gapi_processed="true" type="text/javascript" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/plusone.js"></script><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;"><iframe title="+1" data-gapiattached="true" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/fastbutton.htm" name="I0_1380417709813" id="I0_1380417709813" vspace="0" tabindex="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" marginwidth="0" marginheight="0" hspace="0" frameborder="0" scrolling="no" width="100%"></iframe></div></div>
+	<div class="sbutton" id="su"><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/hostedbadge.htm"></script><iframe id="iframe-stmblpn-widget-1" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/a.htm" style="overflow: hidden; margin: 0px; padding: 0px; border: 0px none;" allowtransparency="true" frameborder="0" height="60" scrolling="no" width="50"></iframe> <script type="text/javascript">   (function() {     var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;     li.src = window.location.protocol + '//platform.stumbleupon.com/1/widgets.js';     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);   })(); </script></div>
+	<div class="sbutton" id="rt"><iframe data-twttr-rendered="true" title="Twitter Tweet Button" style="width: 58px; height: 62px;" class="twitter-share-button twitter-count-vertical" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/tweet_button.htm" allowtransparency="true" frameborder="0" scrolling="no"></iframe><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/widgets_002.js" type="text/javascript"></script></div>
+	<div class="floatbutton" id="linkedin"><script src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/in.js" type="text/javascript"></script>
+	<span class="IN-widget" style="line-height: 1; vertical-align: baseline; display: inline-block; text-align: center;"><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span id="li_ui_li_gen_1380417708577_1-container" class="IN-top IN-empty"><span id="li_ui_li_gen_1380417708577_1" class="IN-top"><span id="li_ui_li_gen_1380417708577_1-inner" class="IN-top"><span id="li_ui_li_gen_1380417708577_1-content" class="IN-top">0</span></span></span></span></span><br><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span id="li_ui_li_gen_1380417708559_0"><a id="li_ui_li_gen_1380417708559_0-link" href="javascript:void(0);"><span id="li_ui_li_gen_1380417708559_0-logo">in</span><span id="li_ui_li_gen_1380417708559_0-title"><span id="li_ui_li_gen_1380417708559_0-mark"></span><span id="li_ui_li_gen_1380417708559_0-title-text">Share</span></span></a></span></span></span><script type="IN/Share+init" data-counter="top"></script></div>
+</div><div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/xd_arbiter.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_http" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0" scrolling="no"></iframe><iframe src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/xd_arbiter_002.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_https" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0" scrolling="no"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+
+<iframe style="width: 1px; height: 1px; position: absolute; top: -100px;" src="RESTful%20Web%20Service%20-%20JAX-RS%20Annotations_files/postmessageRelay.htm" id="oauth2relay833774065" name="oauth2relay833774065"></iframe></body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!------------------------------------------------------------------------------
+ ! Copyright (c) 2000, 2004 IBM Corporation and others.
+ ! All rights reserved. This program and the accompanying materials 
+ ! are made available under the terms of the Eclipse Public License v1.0
+ ! which accompanies this distribution, and is available at
+ ! http://www.eclipse.org/legal/epl-v10.html
+ ! 
+ ! Contributors:
+ !     IBM Corporation - initial API and implementation
+ ------------------------------------------------------------------------------->
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Help</title>
+
+<style type="text/css">
+
+HTML {
+	border-left:1px solid ThreeDShadow;
+	background:ButtonFace;
+}
+
+</style>
+
+<script language="JavaScript">
+var isMozilla = navigator.userAgent.indexOf('Mozilla') != -1 && parseInt(navigator.appVersion.substring(0,1)) >= 5;
+var isMozilla10 = isMozilla && navigator.userAgent.indexOf('rv:1') != -1;
+var isIE = navigator.userAgent.indexOf('MSIE') != -1;
+
+/**
+ * Views can call this to set the title on the content toolbar
+ */
+function setContentToolbarTitle(title)
+{
+	if(parent.ContentFrame.ContentToolbarFrame && parent.ContentFrame.ContentToolbarFrame.setTitle ){
+		parent.ContentFrame.ContentToolbarFrame.setTitle(title);
+	}
+}
+
+/**
+ * Shows specified view. Called from actions that switch the view
+ */
+function showView(view)
+{
+	// Note: assumes the same id shared by tabs and iframes
+	ViewsFrame.showView(view);
+	TabsFrame.showTab(view);
+}
+
+var temp;
+var tempActiveId;
+var tempView = "";
+
+/**
+ * Shows the TOC frame, loads appropriate TOC, and selects the topic
+ */
+function displayTocFor(topic)
+{
+	tempView = ViewsFrame.lastView;
+	
+	/******** HARD CODED VIEW NAME *********/
+	showView("toc");
+	
+	var tocView = ViewsFrame.toc.tocViewFrame;
+
+	if (tocView.selectTopic && tocView.selectTopic(topic))
+		return;
+	else {
+		var advIndex=window.location.href.indexOf("/advanced/nav.jsp");
+		if(advIndex < 0)
+			return;
+
+		var tocURL = window.location.href.substr(0, advIndex) + "/advanced/tocView.jsp";
+		// uat4i00000008
+        var indexAnchor=topic.indexOf('#');
+		
+		if (indexAnchor!=-1)
+		 {
+		 var anchor=topic.substr(indexAnchor+1);
+		 topic=topic.substr(0,indexAnchor);
+		 //tocView.location.replace(tocURL + "?topic="+topic+"&anchor="+anchor+"&synch=yes");	
+		 tocView.syncFrame.test("?topic="+topic+"&anchor="+anchor+"&synch=yes");
+		 }
+		else {
+		 //tocView.location.replace(tocURL + "?topic="+topic+"&synch=yes");
+		 tocView.syncFrame.test("?topic="+topic+"&synch=yes");
+		 }
+		// end of uat4i00000008
+	  }
+}
+
+function saveNavigation()
+{
+	/**** HARD CODED VIEW NAME *********/
+	var tocView = ViewsFrame.toc.tocViewFrame;
+	
+	if (tocView.oldActive) {
+		tempActiveId = tocView.oldActive.id;
+		tocView.oldActive.className = tocView.oldActiveClass;
+		tocView.oldActive = null;
+	}
+		
+	if (isIE)
+		temp = tocView.document.body.innerHTML;
+	else if (isMozilla)
+		temp = tocView.document.documentElement.innerHTML;
+}
+
+function restoreNavigation(errorMessage)
+{	
+	// switch to saved view
+	showView(tempView);
+	window.status=errorMessage;	
+}
+
+var isIndexLoaded = false;
+</script>
+</head>
+
+<frameset onload="showView('toc')" id="navFrameset" rows="*,21" framespacing="0" border="0" frameborder="0" scrolling="no">
+   <frame name="ViewsFrame" title="Layout frame: ViewsFrame" src="nav_data/views.htm" marginwidth="0" marginheight="0" frameborder="0" resize="yes" scrolling="no">
+   <frame name="TabsFrame" title="Selection of Navigation Views" src="nav_data/tabs.htm" marginwidth="0" marginheight="0" frameborder="0" noresize="noresize" scrolling="no">
+</frameset>
+
+</html>

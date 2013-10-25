@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 //EN">
+<!--
+	For grouped search result 
+	uat4i00000025 1/2
+ -->
+<!--
+	end of For grouped search result 
+	uat4i00000025 1/2
+ -->
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+
+<title>Search Results</title>
+
+<style type="text/css">
+BODY {
+	background-color: Window;
+	color:WindowText;
+	font: icon;
+	margin-top:5px;
+	margin-left:5px;
+	padding:0;
+	border:0;
+	cursor:default;
+}
+A {
+	text-decoration:none; 
+	padding:0px;
+	white-space: nowrap;
+}
+
+A:hover {
+	text-decoration:underline; 
+}
+
+A.highlight{ 
+	background:Highlight;
+	color:HighlightText;
+}
+.active { 
+	background:Highlight;
+	color:HighlightText;
+	width:100%;
+	height:100%;
+}
+A.grouptype {
+	text-decoration:none; 
+	color:WindowText;
+	padding-right:2px;
+	/* this works in ie5.5, but not in ie5.0  */
+	white-space: nowrap;
+}
+		
+A.grouptype:hover {
+	text-decoration:none; 
+	color:WindowText;
+	padding-right:2px;
+	/* this works in ie5.5, but not in ie5.0  */
+	white-space: nowrap;
+}
+
+
+
+IMG {
+	border:0px;
+	margin:0px;
+	padding:0px;
+	margin-right:4px;
+}
+
+TABLE {
+	background-color: Window;
+	font: icon;
+	width:100%;
+}
+
+.list {
+	background-color: Window;
+	padding:2px;
+}
+
+.label {
+	margin-left:4px;
+}
+
+.score {
+	padding-right:5px;
+}
+#detailinfo{
+	text-decoration:underline; 
+}
+
+</style>
+
+
+
+
+<!-- base href="http://publib.boulder.ibm.com/infocenter/ieduasst/v1r1m0/advanced/searchView.jsp?view=search&topic=/com.ibm.iea.was_v8/was/8.0/ProgramingModel/WASV8_JAXRS/player.html" -->
+
+<script language="JavaScript" src="searchView_data/list.js"></script>
+ 
+<script language="JavaScript">		
+function showWindowStatus(arg) {
+	try {
+		var statusText = "";
+		if (isIE)
+			statusText = arg.innerText;
+		else if (isMozilla)
+			statusText = arg.lastChild.nodeValue;
+		if (statusText != arg.title) {
+			statusText += " - " + arg.title;
+		}
+		window.status = statusText;
+	} catch (e) {
+	}
+
+}
+function clearWindowStatus() {
+	window.status="";
+}
+function refresh() 
+{ 
+	window.location.replace("searchView.jsp?view\u003Dsearch\u0026topic\u003D\u002Fcom\u002Eibm\u002Eiea\u002Ewas\u005Fv\u0038\u002Fwas\u002F\u0038\u002E\u0030\u002FProgramingModel\u002FWASV\u0038\u005FJAXRS\u002Fplayer\u002Ehtml");
+}
+function changeGroup(arg)
+{
+	var selectedGroup = arg;
+	var query = "view\u003Dsearch\u0026topic\u003D\u002Fcom\u002Eibm\u002Eiea\u002Ewas\u005Fv\u0038\u002Fwas\u002F\u0038\u002E\u0030\u002FProgramingModel\u002FWASV\u0038\u005FJAXRS\u002Fplayer\u002Ehtml";
+	var index = query.indexOf("group");
+	var detail = query.indexOf("detail");
+	var url;
+	if(index==-1)
+		url = "searchView.jsp?" + query + "&group=" + selectedGroup;
+	else {
+		url = "searchView.jsp?" + query.substr(0, index - 1) + "&group=" + selectedGroup;
+		if(detail != -1 && detail > index)
+			url += "&detail=true";
+	}
+	window.location.replace(url);
+}
+function details() {
+	var query = "view\u003Dsearch\u0026topic\u003D\u002Fcom\u002Eibm\u002Eiea\u002Ewas\u005Fv\u0038\u002Fwas\u002F\u0038\u002E\u0030\u002FProgramingModel\u002FWASV\u0038\u005FJAXRS\u002Fplayer\u002Ehtml";
+	var index = query.indexOf("detail");
+	var url;
+	if(index==-1) {
+		url = "searchView.jsp?" + query + "&detail=true";
+		}
+	else {
+		url = "searchView.jsp?" + query.substr(0, index - 1) + query.substr(index + 11, query.length);
+	}
+	window.location.replace(url);
+}
+
+</script>
+
+
+</head>
+
+<body tabindex="0" dir="ltr">
+
+
+To search the documentation, type a query in the Search field. The search results will be shown in this view.
+
+<script language="JavaScript">
+<!--uat4i00000002-->
+
+top.HelpFrame.NavFrame.showView("search");
+
+<!--end of uat4i00000002-->
+
+//selectTopicById('');
+
+</script>
+
+
+
+</body></html>

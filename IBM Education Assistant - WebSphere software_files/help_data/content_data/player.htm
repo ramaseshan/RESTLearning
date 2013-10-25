@@ -1,0 +1,671 @@
+<html><head>
+<!-- saved from url=(0014)about:internet -->
+<!-- Created using Articulate Presenter 5.0.1 - http://www.articulate.com  -->
+<!-- version: 5.10.174 -->
+
+<!-- Modified for use by IBM Education Assistant -->
+<title>
+Java API for RESTful web services (JAX-RS)
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="imagetoolbar" content="no">
+<meta http-equiv="imagetoolbar" content="false">
+<meta name="keywords" content="IBM, Education, Assistant, IBM Education Assistant, Education Assistant, IEA, Presentation, Flash, ">
+
+<script language="JavaScript">
+<!-- Articulate Presenter Lives In Here
+
+// START DEBUG CODE
+/*
+var g_bDebug = true;
+
+	if (g_bDebug)
+	{
+		false = true;
+		false = false;
+		false = false;
+		false = false;
+		true = true;
+		"6c6c6c" = "6c6c6c";
+	}
+*/
+// END DEBUG CODE
+
+// Browser Detection
+var IE6Above = false;
+var strVersion = navigator.appVersion;
+var nIndex1 = strVersion.indexOf("MSIE") + 5;
+var nIndex2 = strVersion.indexOf(".", nIndex1)
+if (nIndex1 >= 0 && nIndex2 > nIndex1) { IE6Above = (Number(strVersion.substring(nIndex1, nIndex2)) >= 6); }
+var NS4 = (navigator.appName.indexOf("Netscape")>=0 && parseFloat(navigator.appVersion) >= 4 && parseFloat(navigator.appVersion) < 5)? true : false;
+var IE4 = (document.all)? true : false;
+var NS6plus = (parseFloat(navigator.appVersion) >= 5 && navigator.appName.indexOf("Netscape")>=0 )? true: false;
+var isMac = (navigator.appVersion.indexOf("Mac")!=-1) ? true : false;
+var IEmac = ((document.all) && (isMac)) ? true : false;
+var IE4plus = (document.all) ? true : false;
+var IE5 = ((document.all)&&(navigator.appVersion.indexOf("MSIE 5.")!=-1)) ? true : false;
+var IE6 = IE6Above;
+var IE7 = ((document.all)&&(navigator.appVersion.indexOf("MSIE 7.")!=-1)) ? true : false;
+var Safari = (isMac &&(navigator.appVersion.indexOf("Safari")!=-1)) ? true : false;
+
+var Opera7plus = ((document.all)&&(navigator.userAgent.indexOf("Opera 7")!=-1)) ? true : false;
+var FF1 = (navigator.userAgent.indexOf("Firefox\/1")!=-1) ? true : false;
+var Opera = (navigator.userAgent.indexOf("Opera")!=-1) ? true : false;
+var Mozilla = (NS6plus && (navigator.userAgent.indexOf("Netscape") < 0));
+
+var NS7_2Plus = false;
+var Mozilla1_7Plus = false;
+
+var isLinux = (navigator.userAgent.indexOf("Linux") != -1);
+var isWindows = (!isMac && !isLinux)
+
+
+// Find the version of NS or Mozilla
+if (NS6plus)
+{
+	var nPos = 0;
+	var strUserAgent = navigator.userAgent;
+	var nReleaseDate = 0;
+	
+	strUserAgent = strUserAgent.toLowerCase();
+	nPos = strUserAgent.indexOf("gecko/");
+
+	if(nPos >= 0)
+	{
+		var strTemp = strUserAgent.substr(nPos + 6);
+		nReleaseDate = parseFloat(strTemp);
+	}
+
+	if (strUserAgent.indexOf("netscape") >= 0)
+	{
+		if (nReleaseDate >= 20040804)
+		{
+			NS7_2Plus = true;
+		} 
+	}
+	else
+	{
+		if (nReleaseDate >= 20040616)
+		{
+			Mozilla1_7Plus = true;
+		} 		
+	}
+}
+
+//windows sp2:
+var IESP2 = false;
+if ((window.navigator.userAgent.indexOf("MSIE")) && window.navigator.userAgent.indexOf("SV1") > window.navigator.userAgent.indexOf("MSIE")) 
+{
+	IESP2 = true;
+}
+
+// Template Vars
+var g_bFillScreen 	= false;
+var g_bResizeOptimal 	= false;
+var g_bLMS 		= false;
+var g_bWebObject 	= false;
+var g_bScaleSwf		= true;
+var g_strBgColor	= "6c6c6c";
+
+if (g_bFillScreen && g_bResizeOptimal)
+{
+	g_bOptimal = false;
+}
+
+if (!(IE5 || IE6 || IE7 || FF1 || NS7_2Plus || Mozilla1_7Plus) || Opera || isLinux)
+{
+	g_bWebObject = false;
+}
+
+
+// Init
+var g_nWidth;		// was aw
+var g_nHeight;		// was ah
+var g_bIs800 = false;
+var currentDisplayMode = "1"; //displaymode
+
+g_nWidth=screen.availWidth;
+g_nHeight=screen.availHeight;
+
+if (g_nWidth < 820) 
+{
+	g_bIs800 = true;
+	g_bFillScreen = true;
+	g_bScaleSwf = true;
+}
+
+function debug()
+{
+}
+
+// Reposition the window
+function reposition() {
+	var x = 0;
+	var y = 0;
+
+	if (!g_bFillScreen)
+	{
+		g_nWidth = 980;
+		g_nHeight = 640;
+
+		x = (screen.availWidth - g_nWidth) / 2;
+		y = (screen.availHeight - g_nHeight) / 2;
+
+		if (!g_bScaleSwf)
+		{
+			g_nWidth += 20;
+			g_nHeight += 5;
+		}
+	}
+
+	if (x < 0)
+	{
+		x = 0;
+	}
+	if (y < 0)
+	{
+		y = 0;
+	}
+
+	if (g_nWidth > screen.availWidth)
+	{
+		g_nWidth = screen.availWidth;
+	}
+	if (g_nHeight > screen.availHeight)
+	{
+		g_nHeight = screen.availHeight;
+	}
+
+
+
+	top.window.moveTo(x, y);
+	top.window.resizeTo(g_nWidth,g_nHeight);
+	top.window.focus();
+}
+
+// This function is used to make sure the document height and not the 
+function reposition2() 
+{
+	var nW = 0;
+	var nH = 0;
+	var nNewWidth = 0;
+	var nNewHeight = 0;
+	var x = 0;
+	var y = 0;
+
+	if (document.body.clientWidth && !isNaN(document.body.clientWidth) && !Mozilla)
+	{
+		nW = document.body.clientWidth;
+		nH = document.body.clientHeight;
+	}
+	else
+	{
+		nW = window.innerWidth;
+		nH = window.innerHeight;
+	}
+	
+	nNewWidth = g_nWidth + (g_nWidth - nW);
+	nNewHeight = g_nHeight + (g_nHeight - nH);
+
+	if (!g_bScaleSwf && NS6plus && !NS7_2Plus && !Mozilla)
+	{
+		nNewWidth +=15;
+	}
+
+	if (Mozilla)
+	{
+		nNewWidth += 20;
+	}
+
+	if (nNewWidth > screen.availWidth)
+	{
+		nNewWidth = screen.availWidth;
+	}
+	if (nNewHeight > screen.availHeight)
+	{
+		nNewHeight = screen.availHeight;
+	}
+
+	x = (screen.availWidth - nNewWidth) / 2;
+	y = (screen.availHeight - nNewHeight) / 2;
+
+	if (x < 0)
+	{
+		x = 0;
+	}
+	if (y < 0)
+	{
+		y = 0;
+	}
+
+
+	if (nNewHeight - g_nHeight > 20)
+	{
+		g_nWidth = nNewWidth;
+		g_nHeight = nNewHeight;
+		top.window.moveTo(x, y);
+		top.window.resizeTo(nNewWidth, nNewHeight);
+	}
+
+}
+
+if (g_bResizeOptimal || g_bFillScreen)
+{
+	// Call to reposition
+	reposition();
+}
+
+if (g_bResizeOptimal)
+{
+	// Call Reposition2
+	window.onload = reposition2;
+}
+
+// -->
+</script>
+
+
+<!-- fscommand processing -->
+
+<script language="JavaScript1.2">
+<!--
+	if (g_bLMS)
+	{
+		document.write("<SCR" + "IPT LANGUAGE='JavaScript1.2' SRC='lms/lms.js' TYPE='text/javascript'><\/SCR" + "IPT>");
+	}
+// -->
+</script>
+
+<script language="JavaScript1.2" src="player_data/flashcommand.txt" type="text/javascript"></script>
+<script language="VBScript">
+<!--
+// Catch FS Commands in IE, and pass them to the corresponding JavaScript function.
+Sub player_FSCommand(ByVal command, ByVal args)
+    call player_DoFSCommand(command, args)
+end sub
+// -->
+</script>
+
+
+<script language="JavaScript">
+<!--
+function thisMovie(movieName) 
+{
+	// IE and Netscape refer to the movie object differently for our ongoing pleasure.
+	//usage: thisMovie('player').SetVariable('_root.mcMyNotes.vMySlideNotes',  str );
+
+	if (navigator.appName.indexOf ("Microsoft") !=-1) 
+	{
+		return window[movieName]  
+	}
+	else 
+	{
+		return document[movieName]
+	}
+}
+//-->
+</script>
+
+
+<script language="JavaScript" src="banner_data/icscript.js"></script><script type="text/javascript" src="banner_data/stats.js"></script>
+
+<script>if( self == top ){ window.location.replace( "../../../../../../?topic=/com.ibm.iea.was_v8/was/8.0/ProgramingModel/WASV8_JAXRS/player.html");}</script>
+</head>
+
+
+<body topmargin="0" leftmargin="0" alink="#ffff00" bgcolor="#6c6c6c" link="#000088" marginheight="0" marginwidth="0" text="#999999" vlink="#000088">
+
+<script language="JavaScript">
+<!--
+	// Change the BgColor
+	SetBgColor(g_strBgColor);	
+
+//-->
+</script>
+
+
+
+<script language="JavaScript">
+<!--
+	// Get the "slide=" value from the querystring URL of this document. (v3)
+	var slidenum = 1;
+	var _search = document.location.search;
+	var nStartPos = 0;
+	var nEndPos = 0;
+
+	nStartPos = _search.indexOf("slide=");
+	nEndPos = _search.indexOf("&",nStartPos);
+	if (nEndPos < 0)
+	{
+		nEndPos = _search.indexOf("%",nStartPos); 
+	}
+	if (nEndPos < 0) 
+	{
+		nEndPos = _search.length;
+	}
+
+	//just get the digits part. (+6 starts right of string "slide=")
+	if (nStartPos >= 0 && nEndPos >= 0)
+	{
+		slidenum = _search.substring((nStartPos+6),(nEndPos-0));
+	}
+//-->
+</script>
+
+
+<!-- Playercode: -->
+
+<script language="JavaScript">
+
+	//Formulate url to give to player for use in Forward, to pass it into flash. (Default is ./ in current url folder.)
+	var thislink = document.location.href;
+	thislink = thislink.substring(0,(thislink.lastIndexOf("/")+1));
+
+	// Create FlashVars
+	var strFlashVars = "";
+	strFlashVars += "vBgColor=0x" + g_strBgColor;
+
+	// FSCommand?
+	strFlashVars += "&vFSCommand="
+	if (!(IE5 || IE6 || IE7 || FF1 || NS7_2Plus || Mozilla1_7Plus) || Opera || isLinux || isMac)
+	{
+		strFlashVars += "false";	 
+	}
+	else
+	{
+		strFlashVars += "true"
+	}
+
+	// LMS Info
+	if (g_bLMS)
+	{
+		if (g_bAPIPresent)
+		{
+			RetrieveStateData();
+			strFlashVars += "&vResumeSlide=" + String(g_SlideLastViewed);
+			strFlashVars += "&vStateData=" + String(g_strResumeData);
+			strFlashVars += "&vLMSPresent=" + String(g_bLMSPresent);
+		}
+	}
+
+	// Get the browsers width and height
+	var strSwfWidth = "100%";
+	var strSwfHeight = "100%";
+	
+	var strScale = "show all";
+
+	if (!g_bScaleSwf)
+	{
+		strSwfWidth = 992;
+		strSwfHeight = 652;
+		strScale = "noscale"
+	}
+
+	var strTransparent = "";
+
+	if (g_bWebObject)
+	{
+		strTransparent = "wmode='transparent'";
+	}
+
+	if (NS4)
+	{
+		strSwfWidth = g_nWidth;
+		strSwfHeight = g_nHeight-30;
+	}
+
+	if (Mozilla && isLinux)
+	{
+		strSwfWidth = "980";
+		strSwfHeight = "640";
+	}
+
+	if (g_bWebObject)
+	{
+		document.write("<div id='flasher' style='z-index:4;'>");
+	}
+	
+	document.write("<table width='100%' HEIGHT='100%' border=0 cellspacing=0 cellpadding=0>");
+	document.write("<tr><td valign='center' align='center'>");
+
+	strFlashVars += "&rqPresentationID=1F0n1XZ7DeIv3cC";
+	strFlashVars += "&rqStartSlide=" + slidenum;
+	strFlashVars += "&link="+ thislink;
+
+	WriteSwfObject("player/playershell.swf", strSwfWidth, strSwfHeight, strFlashVars, g_bWebObject, strTransparent, strScale); 
+
+	document.write("</td></tr>");
+	document.write("</table>");
+
+	if (g_bWebObject)
+	{
+		document.write("</div>");
+	}
+
+
+</script><table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%"><tbody><tr><td align="center" valign="center"><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,79,0" id="player" align="" height="100%" width="100%"> <param name="movie" value="player/playershell.swf"> <param name="quality" value="best"> <param name="scale" value="show all"> <param name="menu" value="false"><param name="FlashVars" value="vBgColor=0x6c6c6c&amp;vFSCommand=true&amp;rqPresentationID=1F0n1XZ7DeIv3cC&amp;rqStartSlide=1&amp;link=http://publib.boulder.ibm.com/infocenter/ieduasst/v1r1m0/topic/com.ibm.iea.was_v8/was/8.0/ProgramingModel/WASV8_JAXRS/"><embed src="player_data/playershell.txt" name="player" quality="best" scale="show all" flashvars="vBgColor=0x6c6c6c&amp;vFSCommand=true&amp;rqPresentationID=1F0n1XZ7DeIv3cC&amp;rqStartSlide=1&amp;link=http://publib.boulder.ibm.com/infocenter/ieduasst/v1r1m0/topic/com.ibm.iea.was_v8/was/8.0/ProgramingModel/WASV8_JAXRS/" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" swliveconnect="true" menu="false" align="" height="100%" width="100%"></object></td></tr></tbody></table>
+
+
+<script language="JavaScript">
+<!--
+	if (g_bWebObject)
+	{
+		document.write("<div id='eLayer1' style='position:absolute; left:240; top:-600px; width:100; height:100; visibility:hidden; z-index:3;' >");
+		document.write("<iframe id='eIFContent' style='width:100%; height:100%' src='player/blank.html' frameborder='10px' allowtransparency='true'></iframe></div>");
+	}
+
+	
+//-->
+</script>
+
+<!-- Email support [097] -->
+
+<div id="divQuiz" style="visibility:hidden"></div>
+
+<div style="z-index:0; visibility:hidden; display:none;">
+
+IBM WebSphere Application Server V8Java API for RESTful web services 
+(JAX-RS)
+IBM WebSphere Application Server V8  Java API for RESTful web services 
+(JAX-RS) 
+This presentation describes support for Java API for RESTful web 
+Services (JAX-RS) included in IBM WebSphere Application Server V8. 
+Table of contents
+Table of contents REST/JAX-RS (JSR-311) Overview Hello World Servlet 3.0
+ Integration Java EE Integration Enterprise JavaBeans (EJB) Integration 
+Java Contexts and Dependency Injection (JCDI) Integration JSR-250 
+Integration Summary References  
+This presentation provides an overview of the Java API for RESTful web 
+Services (JAX-RS) support in WebSphere Application Server V8.
+REST/JAX-RS (JSR-311) overview
+REST/JAX-RS (JSR-311) overview  Section 
+What will JAX-RS do for you?
+What is REST?
+What is REST? Representational State Transfer, an architectural style 
+described in Roy Fielding's doctoral  dissertation Manipulate resource 
+representations (nouns) defined at URIs with pre-defined methods (verbs)
+ Use HTTP to its full capability   
+REST stands for Representational State Transfer. The acronym was coined 
+by Roy Fielding in his Ph.D. dissertation, in which he lays out the 
+guiding principles for REST-style or RESTful web services. REST is an 
+architectural style in which resources are identified by URIs and 
+interconnected through hyperlinks. Not only does REST take advantage of 
+the transport properties of HTTP, but it also uses HTTP verbs to invoke 
+operations on resources. Each HTTP request for a resource includes a 
+verb to indicate what operation should be performed on the resource. The
+ standard HTTP verbs are POST, GET, PUT, and DELETE to represent the 
+standard database operations of create, read, update, and delete, 
+respectively. The HTTP response to a request is typically a standard 
+response code, such as 404 for resource not found or 200 for success, or
+ a MIME-typed representation of the resource, such as text/html.
+Why should you expose RESTful web services?
+Why should you expose RESTful web services?  Simpler programming model 
+for some consumers of web services Easier for “last leg” kinds of 
+clients (browsers, mobile devices, and so on) Re-use web development 
+knowledge  
+The RESTful approach tries to simplify web services by using 
+capabilities that are already built into HTTP, including uniform 
+operations, resources that are accessible using URIs, and resources that
+ are represented by media types. The transport layer with RESTful web 
+services is less complex than with SOAP-based web services. With REST, 
+each resource is transmitted in the body of an HTTP message, whereas a 
+SOAP message is encapsulated as the body of a transport message. REST 
+services are stateless and cacheable, and a client only needs to provide
+ a starting URL to invoke a web service. REST can work on any platform 
+that has an HTTP client, including web browsers and mobile devices.
+What is JAX-RS?
+What is JAX-RS? JSR-311, new to Java EE 6 Use annotations to declare 
+services (resources) with helper classes to build implementation Makes 
+servlet / web application development easier  
+The Java API for RESTful web Services, or JAX-RS, is an 
+annotations-based framework that is defined in JSR 311. JAX-RS is a Java
+ API designed to make it easy to develop applications that use the REST 
+architecture. The JAX-RS API uses Java programming language annotations 
+to simplify the development of RESTful web services. Developers use 
+annotations to define resources and the actions that can be performed on
+ those resources. The JAX-RS runtime will generate the helper classes 
+and artifacts for the resource, making web application development 
+easier.
+Hello world service using web.xml
+Hello world service using web.xml Section 
+The following charts will show an example of creating a Hello Word 
+service using a web.xml file.
+Hello world service (1 of 4)
+Hello world service (1 of 4) Want to expose a service at: 	http://<hostname>:<port>/<context root="">/<servlet mapping="">/hello/{name}
+  1. Create the implementation: package com.example;  
+@Path(“/hello/{name}”) public class HelloWorldResource {     	@GET     	
+@Produces(“text/plain”)     	public String getResourceRepresentation(   
+      		@PathParam(“name”) String name) {         		return “Hello “ + 
+name;     	} } 
+The first step is to create the implementation class for the 
+HelloWorldResource. The @Path annotation specifies the relative URI path
+ for the service, and the @GET and @Produces annotations indicate that 
+the service will process HTTP GET requests and return a media type of 
+“text/plain”.
+Hello world service (2 of 4)
+Hello world service (2 of 4) 2. Create a JAX-RS Application 
+configuration class:  package com.example;  public class 
+HelloWorldApplication extends Application {     @Override     public Set<class<?>&gt; getClasses() {         Set<class<?>&gt; classes = new HashSet<class<?>&gt;();
+     classes.add(HelloWorldResource.class);         return classes;     }
+ } 
+The second step is to create a JAX-RS application configuration class, 
+named HelloWorldApplication. This class implements the getClasses method
+ to return the set of resources and providers.
+Hello world service (3 of 4)
+Hello world service (3 of 4) 3. Create your web.xml:  
+The third step is to create the web.xml, which specifies the servlet 
+name and mapping information.
+Hello world service (4 of 4)
+Hello world service (4 of 4) 4. Install the WAR and give it a context 
+root. Visit the URL: http://<hostname>:<port>/<context root="">/<servlet mapping="">/hello/{name}
+ Context root configured during installation (or in EAR case, in 
+application.xml) Servlet mapping from web.xml (/rest/* in this example) 
+/hello/{name} from @Path annotation on class 
+Example:http://localhost:9080/myapp/rest/hello/JaneDoe  
+In Step 4, you install the WAR and provide the context root.
+Servlet 3.0 integration
+Servlet 3.0 integration Section 
+The next section discusses Servlet 3.0 integration.
+Servlet 3.0 integration (Option 1)
+Servlet 3.0 integration (Option 1)  Servlet 3.0 no longer requires a 
+web.xml file. Create an Application subclass with @ApplicationPath 
+annotation: @ApplicationPath(“/rest/”) public class 
+HelloWorldApplication extends Application {     // override getClasses 
+method to return list of providers     // and resources } The Servlet 
+3.0 compliant container will use the value of @ApplicationPath as the 
+servlet mapping.  
+The Servlet 3.0 specification no longer requires a web.xml file for a 
+web application. If the application subclass contains an 
+@ApplicationPath annotation, the Servlet 3.0-compliant container will 
+use the value of @ApplicationPath for the servlet mapping.
+Servlet 3.0 integration (Option 2)
+Servlet 3.0 integration (Option 2)  Servlet 3.0 no longer requires a 
+web.xml file. JAX-RS does not require a list of resources and providers 
+be returned from your Application subclass. Create an Application 
+subclass with @ApplicationPath annotation: @ApplicationPath(“/rest/”) 
+public class HelloWorldApplication extends Application {     // no need 
+to override getClasses method } The Servlet 3.0 compliant container will
+ use the value of @ApplicationPath as the servlet mapping. The JAX-RS 
+runtime will scan for and automatically add all of your JAX-RS providers
+ and resources to the application. Adding new resources is greatly 
+simplified; no change to existing code is required!  
+In addition, JAX-RS no longer requires the Application subclass to 
+override the getClasses method to return the list of resources and 
+providers. The JAX-RS runtime will automatically scan for annotations 
+and add the appropriate JAX-RS providers and resources to the 
+application.
+Java EE integration
+Java EE integration  Section 
+This section discusses Java EE integration.
+EJB integration
+EJB integration  
+The singleton EJB is a new feature in Java EE 6. The container will 
+maintain a single shared instance of an EJB Singleton. In this example, 
+the singleton Nickname will persist the EJB state. 
+JCDI integration (1 of 2)
+JCDI integration (1 of 2) 
+Java Contexts and Dependency Injection (JCDI) supports dependency 
+injection in managed beans. In this example, an instance of the Database
+ adapter type is injected into the dbAdapter field during runtime.
+JCDI integration (2 of 2)
+JCDI integration (2 of 2) To enable JCDI support, add a 
+WEB-INF/beans.xml file to your WAR: <!--?xml version="1.0" encoding="UTF-8"?--> <beans xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemelocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">  </beans>
+ 
+EJB support in a WAR is automatically enabled through annotation 
+scanning, but JCDI support requires the beans.xml file in order to start
+ the web beans engine for the WAR module.
+JSR-250 integration
+JSR-250 integration  
+The objective of the Java Specification Request (JSR) 250 is to define a
+ set of annotations that address common semantic concepts and therefore 
+can be used by many Java EE components. One example of a common 
+annotation is the @RolesAllowed annotation, which indicates that the 
+specified method or all methods in the EJB can be accessed by users 
+associated with the specified roles. This example indicates that the 
+delUserByName method can only be accessed by users with an administrator
+ role.
+Summary
+Summary Section 
+This section provides a summary of what you have learned in this 
+presentation.
+Summary
+Summary  Java API for RESTful web Services (JAX-RS) is supported in 
+WebSphere Application Server V8  Included are these: JAX-RS runtime 
+previously provided in the WebSphere Application Server V6.1/V7.0 Web 
+2.0 Feature Pack Simplified configuration capabilities Java EE 
+Integration  
+The acronym JAX-RS stands for Java API for RESTful web Services. 
+Included in WebSphere Application Server V8 are the JAX-RS runtime, 
+simplified configuration capabilities, and Java EE integration.
+References
+References JAX-RS information center documentation for WebSphere 
+Application Server V8 
+http://publib.boulder.ibm.com/infocenter/wasinfo/v8r0/topic/com.ibm.websphere.base.doc/info/aes/ae/welc6tech_wbs_rest_thr.html
+ JAX-RS information center documentation for Web 2.0 Feature Pack for 
+V6.1 and V7.0 
+http://publib.boulder.ibm.com/infocenter/wasinfo/v7r0/index.jsp?topic=/com.ibm.websphere.web20fepjaxrs.doc/info/ae/ae/cwbs_jaxrs_overview.html
+ Articles  in developerWorks 
+http://www.ibm.com/developerworks/web/library/wa-jaxrs/ 
+http://www.ibm.com/developerworks/web/library/wa-apachewink1/  
+http://www.ibm.com/search/csass/search/?sn=dw&amp;dws=dw&amp;q=jaxrs&amp;Search=Search
+  
+This slide contains links to useful information.
+Feedback
+Feedback Your feedback is valuable You can help improve the quality of 
+IBM Education Assistant content to better meet your needs by providing 
+feedback. Did you find this module useful? Did it help you solve a 
+problem or answer a question? Do you have suggestions for improvements? 
+ Click to send email feedback: 
+mailto:iea@us.ibm.com?subject=Feedback_about_WASV8_JAXRS.ppt  This 
+module is also available in PDF format at: ../WASV8_JAXRS.pdf 
+You can help improve the quality of IBM Education Assistant content by 
+providing feedback.
+Trademarks
+
+
+</servlet></context></port></hostname></class<?></class<?></class<?></servlet></context></port></hostname></div>
+
+
+
+
+</body></html>

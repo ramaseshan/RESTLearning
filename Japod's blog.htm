@@ -1,0 +1,746 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+		<!-- Page Info -->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="description" content="Blogs.Oracle.Com - Japod's blog">
+  <meta name="keywords" content="blogs, oracle, blogs.oracle, blogging, bloggers">
+		            <title>Japod's blog</title>
+                           <meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="imagetoolbar" content="no">
+
+           <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.oracle.com/japod/rsd">
+        
+            <link rel="alternate" type="application/atom+xml" title="Recent Entries (Atom)" href="https://blogs.oracle.com/japod/feed/entries/atom">
+    <link rel="alternate" type="application/rss+xml" title="Recent Entries (RSS)" href="https://blogs.oracle.com/japod/feed/entries/rss">
+    <link rel="alternate" type="application/atom+xml" title="Recent Comments (Atom)" href="https://blogs.oracle.com/japod/feed/comments/atom">
+    <link rel="alternate" type="application/rss+xml" title="Recent Comments (RSS)" href="https://blogs.oracle.com/japod/feed/comments/rss">
+
+    
+    
+<!-- Stylesheets -->
+<link rel="stylesheet" href="Japod%27s%20blog_files/theme.css" type="text/css" media="screen">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="https://blogs.oracle.com/japod/resource/oracle2col/favicon.gif">    	</head>
+	<body>
+		<div id="container" class="two-columns"> <!-- Note: Change the class from "two-columns" to "three-columns" if needed -->
+			
+			<!-- Header -->
+			<div id="header">
+				<ul id="nav">
+					<li id="logo"><h6><a href="http://www.oracle.com/">Oracle</a></h6></li>
+					<li class="current"><a href="https://blogs.oracle.com/">Blogs Home</a></li>
+					<li><a href="http://www.oracle.com/us/products/index.html">Products &amp; Services</a></li>
+					<li><a href="http://www.oracle.com/technetwork/indexes/downloads/index.html">Downloads</a></li>
+					<li><a href="http://www.oracle.com/us/support/index.html">Support</a></li>
+					<li><a href="http://www.oracle.com/us/partnerships/index.html">Partners</a></li>
+					<li><a href="http://www.oracle.com/us/community/index.html">Communities</a></li>
+					<li><a href="http://www.oracle.com/us/corporate/index.html">About</a></li>
+                                            <li id="signIn"><a href="https://blogs.oracle.com/roller-ui/login-redirect.rol">Login</a></li>
+                    				</ul>
+				<div id="jumbotron">
+					<h4>Oracle Blog</h4>
+          <h5><a href="https://blogs.oracle.com/japod/">Japod's blog</a></h5>
+          <h5 class="subhead">Blog for japod</h5>
+				</div>
+                																										</div>
+			
+			<!-- Content -->
+			<div id="content">
+                <div id="mainColumn">
+                    
+                    <!-- Previous and Next Entries -->
+                    <div id="pager">
+                                                    <a href="https://blogs.oracle.com/japod/">Main</a>
+                | <a href="https://blogs.oracle.com/japod/?page=1">Next page</a> »
+                        </div>
+
+                    <!-- Entries -->
+				    
+                <div class="day">
+
+	<div class="day-title">
+	    <h2>Friday Jun 29, 2012</h2>
+	</div>
+
+	<div class="entry" id="jersey_2_0_integrated_into">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_2_0_integrated_into" title="permalink">Jersey 2.0 Integrated into GlassFish 4.0</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Jun 29, 2012</a></h4>
+
+    <div class="entry-body">
+                                        	The latest promoted build of GlassFish 4.0 (<a href="http://dlc.sun.com.edgesuite.net/glassfish/4.0/promoted/glassfish-4.0-b43.zip">glassfish-4.0-b43.zip</a>) now contains upgraded Jersey version, 2.0-m05. Users are getting an early access to the implementation of some parts of the <a href="http://download.oracle.com/otndocs/jcp/jaxrs-2_0-edr3-spec/index.html">JAX-RS 2.0 API Early Draft  Review 3</a>. The appropriate JAX-RS bundle, version 2.0-m09 , gets bundled into GlassFish 4.0 as well.
+
+<h2>What should work</h2>
+The simple answer is: all the basic stuff. We have particularly tested the following two examples:
+<ul>
+<li><a href="http://search.maven.org/remotecontent?filepath=org/glassfish/jersey/examples/helloworld-webapp/2.0-m05/helloworld-webapp-2.0-m05-gf-project-src.zip">simple hello world webapp</a></li>
+<li><a href="">multipart webapp</a></li>
+</ul>
+Both above linked archives contain adjusted projects, so that resulting 
+war files do not bundle any Jersey dependencies. Both also use Jersey 2 
+specific Servlet class, <code>org.glassfish.jersey.servlet.ServletContainer</code>, for deployment. See <a href="http://blog.alutam.com/2012/06/26/writing-web-applications-that-can-run-with-jersey-1-x-as-well-as-jersey-2-0/">Martin's blog post</a> on how to package war applications capable of running with both Jersey 1 and Jersey 2 ServletContainer classes.
+
+<h2>What has not been covered yet</h2>
+The main areas, which have not been touched yet in Jersey 2 are:
+<ul>
+<li>EJB integration</li>
+<li>CDI integration</li>
+<li>Validation</li>
+</ul>
+These are also the areas where we are going to spend the most of our cycles in the coming month. 
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/glassfish" rel="tag">glassfish</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_2_0_integrated_into">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_2_0_integrated_into#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>            <div class="day">
+
+	<div class="day-title">
+	    <h2>Wednesday Feb 22, 2012</h2>
+	</div>
+
+	<div class="entry" id="jersey_1_12_is_released">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_1_12_is_released" title="permalink">Jersey 1.12 is released</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Feb 22, 2012</a></h4>
+
+    <div class="entry-body">
+                                        	<p>We have just released the 1.12 version of <a href="http://jersey.java.net/">Jersey</a>, the open source, 
+production quality, reference implementation of JAX-RS. The JAX-RS 1.1 <a href="http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html">specification</a>
+
+ is available at the JCP web site and also available in non-normative 
+HTML <a href="http://jsr311.java.net/nonav/releases/1.1/spec/spec.html">here</a>.</p> 
+  <p>For an overview of JAX-RS features read the Jersey <a href="http://jersey.java.net/nonav/documentation/1.12/user-guide.html">user
+
+ guide</a>. To get started with Jersey read the <a href="http://jersey.java.net/nonav/documentation/1.12/user-guide.html#getting-started">getting started section</a> of that guide. To understand more about what Jersey
+ depends on read the <a href="http://jersey.java.net/nonav/documentation/1.12/user-guide.html#chapter_deps">dependencies section</a> of that guide. See change log <a href="http://java.net/projects/jersey/sources/svn/content/tags/jersey-1.12/jersey/changes.txt">here</a>. 
+</p>
+
+<p>This version includes mainly bug fixes. The biggest update is Jersey asynchronous client switched internally
+from using Netty to Grizzly 2 client implementation. Grizzly 2 dependency was upgraded to version 2.2.1.
+
+  </p><p>For feedback&nbsp;send email to:</p> 
+  <blockquote> 
+    <p><a href="mailto:users@jersey.java.net">users@jersey.java.net</a>
+
+ (archived <a href="http://markmail.org/search/?q=list%3Anet.java.dev.jersey.users">here</a>)
+ </p> 
+  </blockquote> 
+  <p> or log bugs/features <a href="http://java.net/jira/browse/JERSEY/">here</a>.</p>
+
+ <p>Besides 1.12, we have been working hard on our first public 
+milestone for Jersey 2.0 and I am happy to let you know we have released
+ that as well - see <a href="http://marek.potociar.net/?p=300">Marek's blog post</a>
+ for more details. As a result, Jersey 1.x releases may become less 
+regular and we don't expect to add any bigger features going forward, as
+ Jersey 2.0 becomes our main focus. We are planning to add some new 
+exciting stuff there in the following months, so stay tuned!
+        
+    </p></div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/java" rel="tag">java</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/rest" rel="tag">rest</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_1_12_is_released">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_1_12_is_released#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>            <div class="day">
+
+	<div class="day-title">
+	    <h2>Tuesday Dec 13, 2011</h2>
+	</div>
+
+	<div class="entry" id="jersey_1_11_is_released">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_1_11_is_released" title="permalink">Jersey 1.11 is released</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Dec 13, 2011</a></h4>
+
+    <div class="entry-body">
+                                        	<p>Yesterday, we have released the 1.11 version of <a href="http://jersey.java.net/">Jersey</a>, the open source, 
+production quality, reference implementation of JAX-RS. The JAX-RS 1.1 <a href="http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html">specification</a>
+
+ is available at the JCP web site and also available in non-normative 
+HTML <a href="http://jsr311.java.net/nonav/releases/1.1/spec/spec.html">here</a>.</p> 
+  <p>For an overview of JAX-RS features read the Jersey <a href="http://jersey.java.net/nonav/documentation/1.11/user-guide.html">user
+
+ guide</a>. To get started with Jersey read the <a href="http://jersey.java.net/nonav/documentation/1.11/user-guide.html#getting-started">getting started section</a> of that guide. To understand more about what Jersey
+ depends on read the <a href="http://jersey.java.net/nonav/documentation/1.11/user-guide.html#chapter_deps">dependencies section</a> of that guide. See change log <a href="http://java.net/projects/jersey/sources/svn/content/tags/jersey-1.11/jersey/changes.txt">here</a>. 
+</p>
+
+<p>The main addition in 1.11 is integrated <a href="http://eclipse.org/eclipselink/moxy.php">EclipseLink MOXy</a>
+ support. An interesting, external binding, feature there allows you to 
+use unannotated POJOs
+as JAXB beans for XML processing. This could be quite handy when you 
+deal with external, 3rd party provided, beans without having control on 
+it's source code. Checkout Jersey's <a href="http://search.maven.org/remotecontent?filepath=com/sun/jersey/samples/moxy-oxm-mapping/1.11/moxy-oxm-mapping-1.11-project.zip">moxy-oxm-mapping example</a> readme file to see how to utilize this new feature in Jersey.
+</p>
+
+<p>Another major addition, added by Pavel, is the ability to attach filters to non-blocking clients.</p>
+
+<p>Besides the above, we managed to do some bug fixing and Jon spent some time on docs cleanup.</p>
+
+  <p>For feedback&nbsp;send email to:</p> 
+  <blockquote> 
+    <p><a href="mailto:users@jersey.java.net">users@jersey.java.net</a>
+
+ (archived <a href="http://markmail.org/search/?q=list%3Anet.java.dev.jersey.users">here</a>)
+ </p> 
+  </blockquote> 
+  <p> or log bugs/features <a href="http://java.net/jira/browse/JERSEY/">here</a>.</p>
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/java" rel="tag">java</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_1_11_is_released">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_1_11_is_released#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>            <div class="day">
+
+	<div class="day-title">
+	    <h2>Friday Nov 04, 2011</h2>
+	</div>
+
+	<div class="entry" id="jersey_1_10_is_released">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_1_10_is_released" title="permalink">Jersey 1.10 is released</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Nov 04, 2011</a></h4>
+
+    <div class="entry-body">
+                                        	<p>Yesterday, we have released the 1.10 version of <a href="http://jersey.java.net/">Jersey</a>, the open source, 
+production quality, reference implementation of JAX-RS. The JAX-RS 1.1 <a href="http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html">specification</a>
+
+ is available at the JCP web site and also available in non-normative 
+HTML <a href="http://jsr311.java.net/nonav/releases/1.1/spec/spec.html">here</a>.</p> 
+  <p>For an overview of JAX-RS features read the Jersey <a href="http://jersey.java.net/nonav/documentation/1.10/user-guide.html">user
+
+ guide</a>. To get started with Jersey read the <a href="http://jersey.java.net/nonav/documentation/1.10/user-guide.html#getting-started">getting started section</a> of that guide. To understand more about what Jersey
+ depends on read the <a href="http://jersey.java.net/nonav/documentation/1.10/user-guide.html#chapter_deps">dependencies section</a> of that guide. See change log <a href="http://java.net/projects/jersey/sources/svn/content/tags/jersey-1.10/jersey/changes.txt">here</a>. 
+</p>
+
+<p>The major breaking change is we separated Servlet, EJB, and CDI functionality
+out from the <code>jersey-server</code> module and put this Java EE related stuff
+to a new, <code>jersey-servlet</code> module. Then when deploying into a Servlet 
+container, you will need to add one more dependency (on that <code>jersey-servlet</code> module).
+
+</p><p>A similar change happened also to our <code>jersey-grizzly2</code> module, where
+if you need the Grizzly Servlet server, you will newly need an additional, 
+<code>jersey-grizzly2-servlet</code> dependency.
+
+</p><p>Another breaking change happened in the WADL area, where Pavel and Marek 
+worked on improving and fixing bugs.
+
+</p><p>Last but not least, Pedro Kowalski from the user community contributed
+stream support to the <code>jersey-multipart</code> module. 
+
+
+  </p><p>For feedback&nbsp;send email to:</p> 
+  <blockquote> 
+    <p><a href="mailto:users@jersey.java.net">users@jersey.java.net</a>
+
+ (archived <a href="http://markmail.org/search/?q=list%3Anet.java.dev.jersey.users">here</a>)
+ </p> 
+  </blockquote> 
+  <p> or log bugs/features <a href="http://java.net/jira/browse/JERSEY/">here</a>.</p>
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/rest" rel="tag">rest</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_1_10_is_released">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_1_10_is_released#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>            <div class="day">
+
+	<div class="day-title">
+	    <h2>Monday Sep 05, 2011</h2>
+	</div>
+
+	<div class="entry" id="jersey_1_9_is_released">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_1_9_is_released" title="permalink">Jersey 1.9 is released</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Sep 05, 2011</a></h4>
+
+    <div class="entry-body">
+                                        	<p>On the last Friday, we have released the 1.9 version of <a href="http://jersey.java.net/">Jersey</a>, the open source, 
+production quality, reference implementation of JAX-RS. The JAX-RS 1.1 <a href="http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html">specification</a>
+
+ is available at the JCP web site and also available in non-normative 
+HTML <a href="http://jsr311.java.net/nonav/releases/1.1/spec/spec.html">here</a>.</p> 
+  <p>For an overview of JAX-RS features read the Jersey <a href="http://jersey.java.net/nonav/documentation/1.9/user-guide.html">user
+
+ guide</a>. To get started with Jersey read the <a href="http://jersey.java.net/nonav/documentation/1.9/user-guide.html#getting-started">getting started section</a> of that guide. To understand more about what Jersey
+ depends on read the <a href="http://jersey.java.net/nonav/documentation/1.9/user-guide.html#chapter_deps">dependencies section</a> of that guide. See change log <a href="http://java.net/projects/jersey/sources/svn/content/tags/jersey-1.9/jersey/changes.txt">here</a>. 
+</p>
+
+<p>Jersey artifacts are finally available in the central maven repositories.
+I.e. when using maven, you should not need to specify the &lt;repositories/&gt; tag
+any more. Snapshot versions of Jersey will become available in a new <a href="http://maven.java.net/">Java.net maven repository</a>.
+
+</p><p>Besides a number of bug fixes, the major additions included in 
+this version are: non-blocking asynchronous client feature (moved over 
+to the contribs space from the experimental area, see <a href="http://blogs.oracle.com/PavelBucek/entry/jersey_non_blocking_client">Pavel's blog</a> for details), FreeMarker support and WADL improvements made by Gerard Davison (see his blog post <a href="http://kingsfleet.blogspot.com/2011/07/auttomatic-xml-schema-generation-for.html">here</a>),
+which allows you to automatically attach XML schema to the generated WADL.
+
+  </p><p>For feedback&nbsp;send email to:</p> 
+  <blockquote> 
+    <p><a href="mailto:users@jersey.java.net">users@jersey.java.net</a>
+
+ (archived <a href="http://markmail.org/search/?q=list%3Anet.java.dev.jersey.users">here</a>)
+ </p> 
+  </blockquote> 
+  <p> or log bugs/features <a href="http://java.net/jira/browse/JERSEY/">here</a>.</p>
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/rest" rel="tag">rest</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_1_9_is_released">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_1_9_is_released#comments">Comments [1]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>            <div class="day">
+
+	<div class="day-title">
+	    <h2>Tuesday Jun 28, 2011</h2>
+	</div>
+
+	<div class="entry" id="jersey_1_8_is_released">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/japod/entry/jersey_1_8_is_released" title="permalink">Jersey 1.8 is released</a>
+	    </h3>
+
+    <h4 class="entry-meta">By Jakub Podlesak on <a href="#">Jun 28, 2011</a></h4>
+
+    <div class="entry-body">
+                                        	<p>On the last Friday, we have released the 1.8 version of <a href="http://jersey.java.net/">Jersey</a>, the open source, 
+production quality, reference implementation of JAX-RS. The JAX-RS 1.1 <a href="http://jcp.org/aboutJava/communityprocess/mrel/jsr311/index.html">specification</a>
+
+ is available at the JCP web site and also available in non-normative 
+HTML <a href="http://jsr311.java.net/nonav/releases/1.1/spec/spec.html">here</a>.</p> 
+  <p>For an overview of JAX-RS features read the Jersey <a href="http://jersey.java.net/nonav/documentation/1.8/user-guide.html">user
+
+ guide</a>. To get started with Jersey read the <a href="http://jersey.java.net/nonav/documentation/1.8/user-guide.html#getting-started">getting started section</a> of that guide. To understand more about what Jersey
+ depends on read the <a href="http://jersey.java.net/nonav/documentation/1.8/user-guide.html#chapter_deps">dependencies section</a> of that guide. See change log <a href="http://java.net/projects/jersey/sources/svn/content/tags/jersey-1.8/jersey/changes.txt">here</a>. 
+</p>
+
+<p>This, 1.8, version of Jersey is going to be integrated into GlassFish 3.1.1 and contains bug fixes mainly.
+The most important fix from this perspective is included in the JAX-RS/EJB integration layer. 
+It is now possible to implement JAX-RS resources as EJB Session beans,
+which implement local and/or remote interfaces. This functionality was broken in previous releases.
+
+</p><p>Another great addition should come into the client space, where Pavel has already done some preparation
+in the client API (including some breaking changes there) for the non-blocking asynchronous client feature. 
+The implementation is already part of the experimental Jersey space and 
+should be included as part of the stable Jersey bits in some of the coming releases.
+
+  </p><p>For feedback&nbsp;send email to:</p> 
+  <blockquote> 
+    <p><a href="mailto:users@jersey.java.net">users@jersey.java.net</a>
+
+ (archived <a href="http://markmail.org/search/?q=list%3Anet.java.dev.jersey.users">here</a>)
+ </p> 
+  </blockquote> 
+  <p> or log bugs/features <a href="http://java.net/jira/browse/JERSEY/">here</a>.</p>
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: REST</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/japod/tags/jax-rs" rel="tag">jax-rs</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/jersey" rel="tag">jersey</a> 
+  	    <a href="https://blogs.oracle.com/japod/tags/rest" rel="tag">rest</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/japod/entry/jersey_1_8_is_released">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/japod/entry/jersey_1_8_is_released#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>    
+    
+          
+                    <!-- Previous and Next Entries -->
+                    <div id="pagerBottom">
+                                                    <a href="https://blogs.oracle.com/japod/">Main</a>
+                | <a href="https://blogs.oracle.com/japod/?page=1">Next page</a> »
+                        </div> 
+                    
+                    <!-- Comments -->
+                    				</div>
+
+                <!-- Sidebar -->
+                           <!-- Right Sidebar -->
+<div id="rightColumn">
+
+<!-- About -->
+  <div id="aboutSection">    
+    <h5 class="section-title">About</h5>
+    <div class="section-body">
+                  <p>Jakub Podlesak</p>
+            </div>
+  </div>  
+<!-- End About -->
+
+<!-- Search -->
+  <div id="searchSection">  
+    <h5 class="section-title">Search</h5>
+    <div class="section-body">
+        <script type="text/javascript">
+    function prepareSearchForm() {
+        document.getElementById("searchForm").searchQuery.name = "oq";
+        document.getElementById("searchFilter").innerHTML = "<input type='hidden' id='searchFilteredQuery' name='q' value=''>" +
+                "<br /><input type='checkbox' id='searchScope' checked='true' /><label for='searchScope'>Search only this blog</label>";
+    }
+    function submitSearchForm() {
+        var form = document.getElementById("searchForm");
+        var query = form.searchQuery.value;
+        var urlSearchOp = form.searchOp.value; //searchOp
+        var urlGroup = form.searchGroup.value; //group
+         
+        if (query == null || query == "") {
+            return false;
+        }
+        var filter = " weblog:japod";
+        var curUrl = window.location.href;
+        if (form.searchScope.checked && form.searchQuery.value.indexOf(filter) == -1) {
+            form.searchFilteredQuery.value = form.searchQuery.value + filter;
+        }
+        else {
+            form.searchFilteredQuery.value = form.searchQuery.value;
+        }
+
+        if(curUrl.indexOf("-dev") != -1) {
+             form.action="http://search-stage.oracle.com/search/search";
+           }
+        else if(curUrl.indexOf("-stage") != -1) {
+             form.action="http://search-stage.oracle.com/search/search";
+           }
+        else {
+             form.action="http://search.oracle.com/search/search";
+           }
+        
+        window.location = form.action + "?search_p_main_operator=" + urlSearchOp + "&group=" + urlGroup +"&q=" + form.searchFilteredQuery.value;
+        return false;
+    }
+</script>
+<form id="searchForm" action="http://search.oracle.com/search/search" onsubmit="return submitSearchForm();" method="get">
+    <input id="searchOp" name="search_p_main_operator" value="all" type="hidden">
+    <input id="searchGroup" name="group" value="Blogs" type="hidden">
+    <label for="searchQuery" title="Enter search term">Enter search term:</label>
+    <br>
+    <input id="searchQuery" name="oq" class="text" alt="Enter Search Term" type="text">
+    <input class="input-image" id="searchSubmit" alt="Submit Search" title="Submit Search" src="Japod%27s%20blog_files/search-button.gif" type="image">
+    <span id="searchFilter"><input id="searchFilteredQuery" name="q" value="" type="hidden"><br><input id="searchScope" checked="checked" type="checkbox"><label for="searchScope">Search only this blog</label></span>
+</form>
+<script type="text/javascript">prepareSearchForm();</script>
+    </div>
+  </div>    
+<!-- End Search -->
+
+<!-- Recent Posts -->
+  <div id="recentSection">  
+                <h5 class="section-title">Recent Posts</h5>
+        <div class="section-body">
+            <ul>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_2_0_integrated_into">Jersey 2.0 Integrated into GlassFish 4.0</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_12_is_released">Jersey 1.12 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_11_is_released">Jersey 1.11 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_10_is_released">Jersey 1.10 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_9_is_released">Jersey 1.9 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_8_is_released">Jersey 1.8 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/oracle_java_developer_conference_2011">Oracle Java Developer Conference 2011 v Brně</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_7_is_released">Jersey 1.7 is released</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jax_rs_presentation_at_javaone">JAX-RS Presentation at JavaOne in Moscow</a></li>
+                                    <li><a href="https://blogs.oracle.com/japod/entry/jersey_1_6_is_released">Jersey 1.6 is released</a></li>
+                            </ul>
+        </div>
+      </div>    
+<!-- End Recent Posts -->
+
+
+<!-- Top Tags -->
+  <div id="tagsSection">  
+            <h5 class="section-title">Top Tags</h5>
+    <div class="tags section-body">
+        <ul class="tag-cloud">
+                    <li><a href="https://blogs.oracle.com/japod/tags/.net" title="1" class="weight-1">.net</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/absolventi" title="1" class="weight-1">absolventi</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/ajax" title="2" class="weight-1">ajax</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/anketa" title="1" class="weight-1">anketa</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/apifest" title="1" class="weight-1">apifest</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/appserver" title="1" class="weight-1">appserver</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/center" title="1" class="weight-1">center</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/cli" title="1" class="weight-1">cli</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/community" title="1" class="weight-1">community</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/czjug" title="8" class="weight-3">czjug</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/deployment" title="1" class="weight-1">deployment</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/endpoint" title="1" class="weight-1">endpoint</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/glassfish" title="16" class="weight-4">glassfish</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/glassfishv2" title="1" class="weight-1">glassfishv2</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/grizzly" title="1" class="weight-1">grizzly</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/indiana" title="1" class="weight-1">indiana</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/interoperability" title="1" class="weight-1">interoperability</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/java" title="17" class="weight-4">java</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/javafx" title="1" class="weight-1">javafx</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/javascript" title="1" class="weight-1">javascript</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/javateam" title="1" class="weight-1">javateam</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jax-rs" title="19" class="weight-4">jax-rs</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jax-ws" title="3" class="weight-2">jax-ws</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jaxb" title="4" class="weight-2">jaxb</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jboss" title="1" class="weight-1">jboss</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jersey" title="40" class="weight-5">jersey</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jmaki" title="2" class="weight-1">jmaki</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/json" title="7" class="weight-3">json</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jsr-311" title="2" class="weight-1">jsr-311</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jsr311" title="15" class="weight-4">jsr311</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jsr88" title="1" class="weight-1">jsr88</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/jug" title="1" class="weight-1">jug</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/livecd" title="1" class="weight-1">livecd</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/logging" title="1" class="weight-1">logging</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/m3" title="1" class="weight-1">m3</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/mash-up" title="1" class="weight-1">mash-up</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/maven" title="1" class="weight-1">maven</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/maven2" title="1" class="weight-1">maven2</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/metro" title="2" class="weight-1">metro</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/netbeans" title="2" class="weight-1">netbeans</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/network" title="1" class="weight-1">network</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/port" title="1" class="weight-1">port</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/pozice" title="1" class="weight-1">pozice</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/rest" title="35" class="weight-5">rest</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/solaris" title="2" class="weight-1">solaris</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/updatecenter" title="2" class="weight-1">updatecenter</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/web" title="3" class="weight-2">web</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/webservices" title="13" class="weight-4">webservices</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/ws-policy" title="3" class="weight-2">ws-policy</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/tags/wsit" title="4" class="weight-2">wsit</a></li>
+                </ul>
+    </div>
+    </div>    
+<!-- End Top Tags -->
+    
+
+<!-- Categories -->
+  <div id="categoriesSection">
+    <h5 class="section-title">Categories</h5>
+    <div class="section-body">
+                        <ul class="rCategory">
+                                                                            <li><a href="https://blogs.oracle.com/japod/category/CZJUG">CZJUG</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Hezky+%C4%8Desky">Hezky česky</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Microsoft">Microsoft</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Other">Other</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Personal">Personal</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/REST">REST</a></li>
+                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Sun">Sun</a></li>
+            <ul class="rCategory">
+                                                                            <li><a href="https://blogs.oracle.com/japod/category/Sun/Java">Java</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Sun/Solaris">Solaris</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/japod/category/Sun/WS-Policy">WS-Policy</a></li>
+                                                                        </ul>
+                                    </ul>
+        </div>
+  </div>
+<!-- End Categories -->
+
+
+<!-- Archives -->
+   <div id="archiveSection">
+    <h5 class="section-title">Archives</h5>
+    <div class="section-body">
+        <table summary="Blog Archive Calendar" class="hCalendarTable" border="0" cellspacing="0"><tbody><tr><td colspan="7" class="hCalendarMonthYearRow" align="center"><a href="https://blogs.oracle.com/japod/date/201206" title="Prev" class="hCalendarNavBar">«</a> September 2013</td></tr><tr><th class="hCalendarDayNameRow" align="center">Sun</th><th class="hCalendarDayNameRow" align="center">Mon</th><th class="hCalendarDayNameRow" align="center">Tue</th><th class="hCalendarDayNameRow" align="center">Wed</th><th class="hCalendarDayNameRow" align="center">Thu</th><th class="hCalendarDayNameRow" align="center">Fri</th><th class="hCalendarDayNameRow" align="center">Sat</th></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">1</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">2</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">3</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">4</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">5</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">6</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">7</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">8</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">9</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">10</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">11</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">12</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">13</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">14</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">15</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">16</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">17</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">18</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">19</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">20</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">21</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">22</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">23</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">24</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">25</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">26</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">27</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">28</div></td></tr><tr><td class="hCalendarDayCurrent"><div class="hCalendarDayTitle">29</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">30</div></td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td></tr><tr><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td></tr><tr class="hCalendarNextPrev"><td colspan="7" align="center"><a href="https://blogs.oracle.com/japod/" class="hCalendarNavBar">Today</a></td></tr></tbody></table>
+    </div>
+  </div>
+<!-- End Archives -->
+
+<!-- Bookmarks -->
+   <div id="bookmarkSection">
+                <h5 class="section-title">Bookmarks</h5>
+        <div class="section-body">
+            <ul class="rFolder">
+                    <li class="rFolderItem">
+                                <a href="http://blog.alutam.com/feed/"><img class="smrssbadge" src="Japod%27s%20blog_files/smrssbadge.gif" alt="URL of site''s RSS feed"></a>
+                        <a href="http://blog.alutam.com/" title="$bookmark.description" class="rBookmark0">Martin Matula's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://java.net/" title="$bookmark.description" class="rBookmark0">java.net</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://earthly-powers.blogspot.cz/" title="$bookmark.description" class="rBookmark3">Paul's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://davidvancouvering.blogspot.com/" title="$bookmark.description" class="rBookmark3">David Van Couvering's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="https://blogs.oracle.com/arungupta/" title="$bookmark.description" class="rBookmark3">Arun's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://www.java.net/blogs/haroldcarr" title="$bookmark.description" class="rBookmark3">Harold's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://marek.potociar.net/" title="$bookmark.description" class="rBookmark3">Marek's blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://java.com/" title="$bookmark.description" class="rBookmark3">java.com</a>
+                </li>
+                    </ul>
+        </div>
+          </div>    
+<!-- End Bookmarks -->
+
+<!-- Blog and Author Menu -->
+   <div id="menuSection">
+    <h5 class="section-title">Menu</h5>
+    <div class="section-body">
+            <ul class="rNavigationBar">
+        <li class="rNavItem">
+            <a href="https://blogs.oracle.com/"><span>Blogs Home</span></a>
+        </li>
+        <li class="rNavItem">
+            <a href="https://blogs.oracle.com/japod/"><span>Weblog</span></a>
+        </li>
+                                                                        
+                                                                        
+        <li class="rNavItem"><a href="https://blogs.oracle.com/japod/page/comments"><span>comments</span></a></li>
+                                                                        
+                                                            <li class="rNavItem">
+                    <a href="https://blogs.oracle.com/roller-ui/login-redirect.rol"><span>Login</span></a>
+                </li>
+                        </ul>
+            </div>
+  </div>    
+<!-- End Blog and Author Menu -->
+
+    
+<!-- Feeds -->
+   <div id="feedsSection">   
+    <h5 class="section-title">Feeds</h5>
+    <div class="section-body">
+        <b>RSS</b>
+            <ul class="rFeeds">
+    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss">All</a></li>
+                        <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FCZJUG">/CZJUG</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FHezky+%C4%8Desky">/Hezky česky</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FMicrosoft">/Microsoft</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FOther">/Other</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FPersonal">/Personal</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FREST">/REST</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/rss?cat=%2FSun">/Sun</a></li>
+        <li><a href="https://blogs.oracle.com/japod/feed/comments/rss">Comments</a></li>
+    </ul>
+        <b>Atom</b>    
+            <ul class="rFeeds">
+    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom">All</a></li>
+                        <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FCZJUG">/CZJUG</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FHezky+%C4%8Desky">/Hezky česky</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FMicrosoft">/Microsoft</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FOther">/Other</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FPersonal">/Personal</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FREST">/REST</a></li>
+                    <li><a href="https://blogs.oracle.com/japod/feed/entries/atom?cat=%2FSun">/Sun</a></li>
+        <li><a href="https://blogs.oracle.com/japod/feed/comments/atom">Comments</a></li>
+    </ul>
+    </div>
+  </div>          
+<!-- End Feeds -->    
+    
+</div>    			</div>
+
+			<!-- Footer -->
+			<div id="footer">
+				<p>The views expressed on this blog are those of the author and do not necessarily reflect the views of Oracle. <a href="http://www.oracle.com/html/terms.html">Terms of Use</a> | <a href="http://www.oracle.com/html/privacy.html">Your Privacy Rights</a> | <span id="teconsent"><script src="Japod%27s%20blog_files/notice_002" async="async" defer="defer"></script><script type="text/javascript" src="Japod%27s%20blog_files/notice"></script>   <a style="cursor: pointer;" id="icon-id08968013486114743">Cookie Preferences</a></span>  </p>
+			</div>
+			<!-- Omniture Script --> 
+<!-- Start SiteCatalyst code -->
+
+<script language="JavaScript" src="Japod%27s%20blog_files/ora_blogs.htm"></script><script type="text/javascript" src="Japod%27s%20blog_files/ora_code_blogs.htm"></script><script type="text/javascript" src="Japod%27s%20blog_files/ora_code.htm"></script>
+
+<!-- End SiteCatalyst code -->
+		</div>
+	
+</body></html>

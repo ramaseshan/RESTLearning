@@ -1,0 +1,48 @@
+body {
+background-color: white;
+font-family: Arial;
+}
+table {
+text-align: left;
+}
+.topbar {
+margin-top:7px;
+background-color: #37647d;
+padding: 5px;
+color: #fff;
+font-size: 77%;
+}
+.topbar a {
+text-decoration: underline;
+color: #fff;
+}
+.icon {
+border:0px;
+width: 14px;
+height: 14px;
+vertical-align: bottom;
+}
+.tips {
+margin: 7 7 7 7;
+background-color: #e0e0e0;
+line-height:150%;
+text-align: justify;
+vertical-align: middle;
+}
+.tips img {
+align:left;
+valign: middle;
+width: 50;
+}
+ul {
+margin-top: 5;
+margin-bottom: 5;
+}
+
+#pageshare {position:fixed; bottom:24%; left:3px; float:left; border: 1px solid black; border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#eff3fa;padding:0 0 1 0;z-index:10;}
+#pageshare .sbutton {float:left;clear:both;margin:3px 3px 10px 3px;}
+#pageshare .floatbutton {float:left;clear:both;margin:3px 3px 3px 3px;}
+.fb_share_count_top {width:48px !important;}
+.fb_share_count_top, .fb_share_count_inner {-moz-border-radius:3px;-webkit-border-radius:3px;}
+.FBConnectButton_Small, .FBConnectButton_RTL_Small {width:49px !important; -moz-border-radius:3px;-webkit-border-radius:3px;}
+.FBConnectButton_Small .FBConnectButton_Text {padding:2px 2px 3px !important;-moz-border-radius:3px;-webkit-border-radius:3px;font-size:8px;}

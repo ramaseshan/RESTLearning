@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 //EN">
+<html><head><script language="JavaScript"> 
+function getTitle(){
+	return "Updater";
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Toolbar</title>
+ 
+<style type="text/css">
+
+/* need this one for Mozilla */
+HTML { 
+	margin:0px;
+	padding:0px;
+}
+ 
+BODY {
+	background:ButtonFace;
+}
+
+#titleText {
+	font-weight:bold;
+	color:WindowText;
+}
+ 
+.buttonOn a { 
+	display:block;
+	margin-left:2px;
+	margin-right:2px;
+	width:18px;
+	height:18px;
+	border:1px solid Highlight;
+	writing-mode:tb-rl;
+	vertical-align:middle;
+	background: Window;
+}
+
+.button a { 
+	display:block;
+	margin-left:2px;
+	margin-right:2px;
+	width:18px;
+	height:18px;
+	border:1px solid ButtonFace;
+	writing-mode:tb-rl;
+	vertical-align:middle;
+}
+
+.button a:hover { 
+	border-top:1px solid ButtonHighlight; 
+	border-left:1px solid ButtonHighlight; 
+	border-right:1px solid ButtonShadow; 
+	border-bottom:1px solid ButtonShadow;
+}
+
+
+#b6:hover{
+	border:1px solid ButtonFace;
+}
+
+
+.separator {
+	background-color: ThreeDShadow;
+	height:100%;
+	width: 1px;
+	border-top:2px solid ButtonFace;
+	border-bottom:2px solid ButtonFace;
+	border-left:3px solid ButtonFace;
+	border-right:3px solid ButtonFace;
+	
+}
+
+#container {
+	border-bottom:1px solid ThreeDShadow;
+
+	border-top:1px solid ThreeDShadow;
+	height:24px;
+
+}
+
+
+
+/* need this one for Mozilla */
+HTML { 
+	margin:0px;
+	padding:0px;
+}
+
+
+</style>
+
+<script language="JavaScript">
+
+var bRestore = false;
+// uat4i00000006
+var highlightButtonTooltipOn="Turn Highlight off ";
+var highlightButtonTooltipOff="Turn Highlight on";
+// end of uat4i00000006
+// Preload images
+
+	var back = new Image();
+	back.src = "images\u002Fe\u005Fback\u002Egif";
+
+	var forward = new Image();
+	forward.src = "images\u002Fe\u005Fforward\u002Egif";
+
+	var synch = new Image();
+	synch.src = "images\u002Fe\u005Fsynch\u005Ftoc\u005Fnav\u002Egif";
+
+	var toggle_highlight = new Image();
+	toggle\u005Fhighlight.src = "images\u002Fe\u005Fhighlight\u002Egif";
+
+	var print = new Image();
+	print.src = "images\u002Fe\u005Fprint\u005Fedit\u002Egif";
+
+	var maximize_restore = new Image();
+	maximize\u005Frestore.src = "images\u002Fe\u005Fmaximize\u002Egif";
+
+
+function setTitle(label)
+{
+	if( label == null) label = "";
+	var title = document.getElementById("titleText");
+	if (title == null) return;
+	var text = title.lastChild;
+	if (text == null) return;
+	text.nodeValue = label;
+}
+
+
+function registerMaximizedChangedListener(){
+	// get to the frameset
+	var p = parent;
+	while (p && p.document.referrer && !p.registerMaximizeListener)
+		p = p.parent;
+	
+	if (p!= null && p.document.referrer){
+		p.registerMaximizeListener('Toolbar', maximizedChanged);
+	}
+}
+registerMaximizedChangedListener();
+
+/**
+ * Handler for double click: maximize/restore this view
+ * Note: Mozilla browsers prior to 1.2.1 do not support programmatic frame resizing well.
+ */
+function mouseDblClickHandler(e) {
+	// ignore double click on buttons
+	var target=e.target;
+	if (target.tagName && (target.tagName == "A" || target.tagName == "IMG"))
+		return;
+	toggleFrame();
+	return false;
+}		
+function restore_maximize(button)
+{
+	toggleFrame();
+	if (isIE && button && document.getElementById(button)){
+		document.getElementById(button).blur();
+	}
+}
+function toggleFrame(){
+	// get to the frameset
+	var p = parent;
+	while (p && p.document.referrer && !p.toggleFrame)
+		p = p.parent;
+	
+	if (p!= null && p.document.referrer){
+		p.toggleFrame('');
+	}
+	if(document.selection){
+		document.selection.clear;	
+	}	
+}
+
+function maximizedChanged(maximizedNotRestored){
+	if(maximizedNotRestored){
+		document.getElementById("maximize_restore").src="images/e_restore.gif";
+		document.getElementById("maximize_restore").setAttribute("title", "Restore");
+		document.getElementById("maximize_restore").setAttribute("alt", "Restore");
+		bRestore = true;
+	}else{
+		document.getElementById("maximize_restore").src="images/e_maximize.gif";
+		document.getElementById("maximize_restore").setAttribute("title", "Maximize");
+		document.getElementById("maximize_restore").setAttribute("alt", "Maximize");
+		bRestore = false;
+	}
+}
+
+document.addEventListener('dblclick', mouseDblClickHandler, true);
+
+
+function setButtonState(buttonName, pressed) {
+	if(!document.getElementById("tdb_"+buttonName))
+		return;
+	if(pressed){
+		document.getElementById("tdb_"+buttonName).className="buttonOn";
+	}else{
+		document.getElementById("tdb_"+buttonName).className="button";
+	}
+}
+
+function setWindowStatus(buttonName){
+	
+		if (buttonName == "back"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Go\u0020Back";
+			}
+		}
+	
+		if (buttonName == "forward"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Go\u0020Forward";
+			}
+		}
+	
+		if (buttonName == "null"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "null";
+			}
+		}
+	
+		if (buttonName == "synch"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Show\u0020in\u0020Table\u0020of\u0020Contents";
+			}
+		}
+	
+		if (buttonName == "toggle_highlight"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Turn\u0020Highlight\u0020off\u0020";
+			}
+		}
+	
+		if (buttonName == "print"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Print\u0020Page";
+			}
+		}
+	
+		if (buttonName == "maximize_restore"){
+			if (buttonName == "maximize_restore"){
+				if (bRestore){
+					window.status = "Restore";
+				}else{
+					window.status = "Maximize";
+				}
+				//uat4i00000006
+			} else if(buttonName == "toggle_highlight"){
+				if (document.getElementById("tdb_toggle_highlight").className=="buttonOn"){
+					window.status = highlightButtonTooltipOn;
+				}else{
+					window.status = highlightButtonTooltipOff;
+				}
+				//end of uat4i00000006
+			} else{
+				window.status = "Maximize";
+			}
+		}
+	
+}
+
+/**
+ * Close filterManger window when its opener is closed.
+ */
+function onunloadHandler()
+{
+	try{
+		if (filterDialog){		
+			filterDialog.close();
+		}
+	}catch(e){}
+	if(this.name == "tocToolbarFrame" && window.parent.tocViewFrame){
+			window.parent.tocViewFrame.window.location.reload();
+	}
+}
+function onloadHandler(){
+	// get to the frameset
+	var p = parent;
+	while (p && p.document.referrer && !p.toggleFrame)
+		p = p.parent;
+	
+	if (p!= null && p.document.referrer){
+		var frameset = p.document.getElementById("helpFrameset"); 
+		if(frameset != null) {
+			var navFrameSize = frameset.getAttribute("cols");
+			var comma = navFrameSize.indexOf(',');
+			var left = navFrameSize.substring(0,comma);
+			var right = navFrameSize.substring(comma+1);
+	
+			if (left == "*" || right == "*") {
+				maximizedChanged(true);
+			}
+		}
+	}
+	
+}
+</script>
+
+
+<script language="JavaScript" src="contentToolbar_data/contentActions.js"></script>
+
+
+
+
+</head>
+ 
+
+	<body dir="ltr" onload="onloadHandler()" onunload="onunloadHandler()">
+
+
+<table id="container" style="padding-left:8px;" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+
+	<tbody><tr>
+		<td style="font: icon" nowrap="nowrap" valign="middle">
+			<div id="titleTextTableDiv" style="overflow:hidden; height:22px;"><table><tbody><tr><td style="font:icon" nowrap="nowrap"><div id="titleText">&nbsp;</div></td></tr></tbody></table>
+			</div>
+		
+		
+		<div style="position:absolute; top:1px; right:0px;">
+		<table border="0" cellpadding="0" cellspacing="1" height="100%" width="100%">
+			<tbody><tr>
+				<td align="right">
+					<table style="background:ButtonFace" align="right" border="0" cellpadding="0" cellspacing="0" height="100%">
+					<tbody><tr>
+					
+
+						<td id="tdb_back" class="button" align="center" height="18">
+							<a href="javascript:goBack('b0');" onmouseover="javascript:setWindowStatus('back');return true;" onmouseout="window.status='';" reg4i00000019="" title="Go Back" end="" of="" id="b0">
+							   <img src="contentToolbar_data/e_back.gif" alt="Go Back" title="Go Back" id="back" border="0">
+							</a>
+						</td>
+
+						<td id="tdb_forward" class="button" align="center" height="18">
+							<a href="javascript:goForward('b1');" onmouseover="javascript:setWindowStatus('forward');return true;" onmouseout="window.status='';" reg4i00000019="" title="Go Forward" end="" of="" id="b1">
+							   <img src="contentToolbar_data/e_forward.gif" alt="Go Forward" title="Go Forward" id="forward" border="0">
+							</a>
+						</td>
+
+						<td class="separator" align="center" valign="middle">
+						</td>
+
+						<td id="tdb_synch" class="button" align="center" height="18">
+							<a href="javascript:resynch('b3');" onmouseover="javascript:setWindowStatus('synch');return true;" onmouseout="window.status='';" reg4i00000019="" title="Show in Table of Contents" end="" of="" id="b3">
+							   <img src="contentToolbar_data/e_synch_toc_nav.gif" alt="Show in Table of Contents" title="Show in Table of Contents" id="synch" border="0">
+							</a>
+						</td>
+
+						<td id="tdb_toggle_highlight" class="buttonOn" align="center" height="18">
+							<a href="javascript:toggleHighLight('b4');" onmouseover="javascript:setWindowStatus('toggle_highlight');return true;" onmouseout="window.status='';" reg4i00000019="" title="Turn Highlight off " end="" of="" id="b4">
+							   <img src="contentToolbar_data/e_highlight.gif" alt="Turn Highlight off " title="Turn Highlight off " id="toggle_highlight" border="0">
+							</a>
+						</td>
+
+						<td id="tdb_print" class="button" align="center" height="18">
+							<a href="javascript:printContent('b5');" onmouseover="javascript:setWindowStatus('print');return true;" onmouseout="window.status='';" reg4i00000019="" title="Print Page" end="" of="" id="b5">
+							   <img src="tocView_data/e_print_edit.gif" alt="Print Page" title="Print Page" id="print" border="0">
+							</a>
+						</td>
+
+						<td id="tdb_maximize_restore" class="button" align="center" height="18">
+							<a href="javascript:restore_maximize('b6');" onmouseover="javascript:setWindowStatus('maximize_restore');return true;" onmouseout="window.status='';" reg4i00000019="" title="Maximize" end="" of="" id="b6">
+							   <img src="tocToolbar_data/e_maximize.gif" alt="Maximize" title="Maximize" id="maximize_restore" border="0">
+							</a>
+						</td>
+				
+					</tr>
+					</tbody></table>
+				</td>
+			</tr>
+		</tbody></table> 
+		</div>
+		</td>
+	</tr>
+</tbody></table>
+
+
+    <iframe name="liveHelpFrame" title="Layout frame: liveHelpFrame" style="visibility:hidden" tabindex="-1" frameborder="no" height="0" scrolling="no" width="0">
+    </iframe>
+    
+
+     
+
+
+
+</body></html>

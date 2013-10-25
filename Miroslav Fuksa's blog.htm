@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+		<!-- Page Info -->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="description" content="Blogs.Oracle.Com - Miroslav Fuksa's blog">
+  <meta name="keywords" content="blogs, oracle, blogs.oracle, blogging, bloggers">
+		            <title>Miroslav Fuksa's blog</title>
+                           <meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="imagetoolbar" content="no">
+
+           <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.oracle.com/mira/rsd">
+        
+            <link rel="alternate" type="application/atom+xml" title="Recent Entries (Atom)" href="https://blogs.oracle.com/mira/feed/entries/atom">
+    <link rel="alternate" type="application/rss+xml" title="Recent Entries (RSS)" href="https://blogs.oracle.com/mira/feed/entries/rss">
+    <link rel="alternate" type="application/atom+xml" title="Recent Comments (Atom)" href="https://blogs.oracle.com/mira/feed/comments/atom">
+    <link rel="alternate" type="application/rss+xml" title="Recent Comments (RSS)" href="https://blogs.oracle.com/mira/feed/comments/rss">
+
+    
+    
+<!-- Stylesheets -->
+<link rel="stylesheet" href="Miroslav%20Fuksa%27s%20blog_files/theme.css" type="text/css" media="screen">
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="https://blogs.oracle.com/mira/resource/oracle2col/favicon.gif">    	</head>
+	<body>
+		<div id="container" class="two-columns"> <!-- Note: Change the class from "two-columns" to "three-columns" if needed -->
+			
+			<!-- Header -->
+			<div id="header">
+				<ul id="nav">
+					<li id="logo"><h6><a href="http://www.oracle.com/">Oracle</a></h6></li>
+					<li class="current"><a href="https://blogs.oracle.com/">Blogs Home</a></li>
+					<li><a href="http://www.oracle.com/us/products/index.html">Products &amp; Services</a></li>
+					<li><a href="http://www.oracle.com/technetwork/indexes/downloads/index.html">Downloads</a></li>
+					<li><a href="http://www.oracle.com/us/support/index.html">Support</a></li>
+					<li><a href="http://www.oracle.com/us/partnerships/index.html">Partners</a></li>
+					<li><a href="http://www.oracle.com/us/community/index.html">Communities</a></li>
+					<li><a href="http://www.oracle.com/us/corporate/index.html">About</a></li>
+                                            <li id="signIn"><a href="https://blogs.oracle.com/roller-ui/login-redirect.rol">Login</a></li>
+                    				</ul>
+				<div id="jumbotron">
+					<h4>Oracle Blog</h4>
+          <h5><a href="https://blogs.oracle.com/mira/">Miroslav Fuksa's blog</a></h5>
+          <h5 class="subhead">Blog about Jersey, JAX-RS and Java RESTful Web Services</h5>
+				</div>
+                																										</div>
+			
+			<!-- Content -->
+			<div id="content">
+                <div id="mainColumn">
+                    
+                    <!-- Previous and Next Entries -->
+                    <div id="pager">
+                                                                </div>
+
+                    <!-- Entries -->
+				    
+                <div class="day">
+
+	<div class="day-title">
+	    <h2>Tuesday Aug 20, 2013</h2>
+	</div>
+
+	<div class="entry" id="monitoring_of_restful_jersey_applicaiton">
+
+	<h3 class="entry-title">
+			<a href="https://blogs.oracle.com/mira/entry/monitoring_of_restful_jersey_applicaiton" title="permalink">Monitoring of RESTful Jersey application</a>
+	    </h3>
+
+    <h4 class="entry-meta">By mfuksa on <a href="#">Aug 20, 2013</a></h4>
+
+    <div class="entry-body">
+                                        	<p><a href="https://jersey.java.net/" title="Jersey">Jersey</a> 2.1 contains a feature for monitoring of Jersey application. This feature is documented in <a href="https://jersey.java.net/documentation/latest/monitoring.html" title="Jersey Monitoring">Jersey documentation.</a> In this blog post I am going to show how to use the monitoring in a Jersey application on a simple example.</p> 
+  <p> </p> 
+  <p>Jersey supports three areas of monitoring:</p> 
+  <p> </p> 
+  <p> </p> 
+  <ol> 
+    <li> 
+      <p> Event Listeners that can listen to application and request events</p> 
+    </li> 
+  </ol> 
+  <p> </p> 
+  <ol> 
+    <li> 
+      <p>Calculation of Monitoring Statistics of Jersey application</p> 
+    </li> 
+  </ol> 
+  <p> </p> 
+  <ol> 
+    <li> 
+      <p>Exposure of JMX MBeans with monitoring statistics</p> 
+    </li> 
+  </ol> 
+  <p> </p> 
+  <p> </p> 
+  <p>Let's look at how to listen to application and request events first.</p> 
+  <h2>Event Listeners <br></h2> 
+  <p>I have a very simple Jersey application with one resource MyResource:</p> 
+  <p><font face="courier new,courier,monospace">@Path("myresource")<br>@Singleton<br>public class MyResource {<br><br>&nbsp;&nbsp;&nbsp; @GET<br>&nbsp;&nbsp;&nbsp; @Produces(MediaType.TEXT_PLAIN)<br>&nbsp;&nbsp;&nbsp; public String getIt() throws InterruptedException {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.sleep(100);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return "Got it!";<br>&nbsp;&nbsp;&nbsp; }<br>}</font> </p> 
+  <p> We would like to log execution times of the resource method <font face="courier new,courier,monospace">getIt().<font face="arial,helvetica,sans-serif">I firstly start by creating our custom implementation of <font face="courier new,courier,monospace">ApplicationEventListener</font>. </font><br></font></p> 
+  <p><font face="courier new,courier,monospace">import org.glassfish.jersey.server.monitoring.ApplicationEvent;<br>import org.glassfish.jersey.server.monitoring.ApplicationEventListener;<br>import org.glassfish.jersey.server.monitoring.RequestEvent;<br>import org.glassfish.jersey.server.monitoring.RequestEventListener;<br><br>public class MyApplicationEventListener implements ApplicationEventListener {<br>&nbsp;&nbsp;&nbsp; @Override<br>&nbsp;&nbsp;&nbsp; public void onEvent(ApplicationEvent applicationEvent) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch (applicationEvent.getType()) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case INITIALIZATION_FINISHED:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ System.out.println("Jersey application started.");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp; @Override<br>&nbsp;&nbsp;&nbsp; public RequestEventListener onRequest(RequestEvent requestEvent) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return new MyRequestEventListener();<br>&nbsp;&nbsp;&nbsp; }<br><br><br>&nbsp;&nbsp;&nbsp; public static class MyRequestEventListener implements RequestEventListener {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; private volatile long methodStartTime;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Override<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void onEvent(RequestEvent requestEvent) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch (requestEvent.getType()) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case RESOURCE_METHOD_START:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ methodStartTime = System.currentTimeMillis();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case RESOURCE_METHOD_FINISHED:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ long methodExecution = System.currentTimeMillis() - methodStartTime;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ final String methodName = 
+requestEvent.getUriInfo().getMatchedResourceMethod().getInvocable().getHandlingMethod().getName();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ System.out.println("Method '" + methodName + "' executed. Processing 
+time: " + methodExecution + " ms");<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br>}</font></p> 
+  <p><font face="courier new,courier,monospace">MyApplicationEventListener</font> will listen to all application events. For application event type <font face="courier new,courier,monospace">INITIALIZATION_FINISHED</font>
+ it will log the information (to System.out) that the Jersey app was 
+started. This event will be triggered when the application is 
+initialized and it is ready to process request. The method <font face="courier new,courier,monospace">onRequest</font> will be invoked when new request will come. By returning new instance of <font face="courier new,courier,monospace">RequestEventListener</font> I say to Jersey runtime, that I want to listen also to request events of this particular request. Returned instance of <font face="courier new,courier,monospace">RequestEventListener</font> will receive these events. The request event listener <font face="courier new,courier,monospace">MyRequestEventListener</font> will receive all request events except the first event <font face="courier new,courier,monospace">START</font> which was already triggered on MyApplicationEventListener (this is the only event type passed to <font face="courier new,courier,monospace">onRequest</font> of <font face="courier new,courier,monospace">MyApplicationEventListener</font>). This point is quite important; make sure you don't handle <font face="courier new,courier,monospace">START</font> event in <font face="courier new,courier,monospace">RequestEventListener</font> as it will be never called there.</p> 
+  <p><font face="courier new,courier,monospace">MyRequestEventListener</font>
+ only measures how long the execution of the resource method took. After
+ the method is finished, the time is printed to console. Interesting is 
+the way how method is extracted from the requestEvent. RequestEvent and 
+ApplicationEvent contains many getters which return lot of useful 
+information relevant to particular processing phases. In the example, 
+the matched resource method is extracted from <font face="courier new,courier,monospace">ExtendedUriInfo</font>. I could get much more information here like request, <font face="courier new,courier,monospace">ContainerRequestFilter</font>s that were executed, <font face="arial,helvetica,sans-serif">exception</font> that occurred during the request processing, <font face="courier new,courier,monospace">ExceptionMapper</font>s
+ that were used to map these exeptions and others. There are also many 
+event types you could listen to. Check javadoc and documentation for 
+more details.</p> 
+  <p>Finally, I must register the listener. This is my <font face="courier new,courier,monospace">Application</font> class that registers resource class and our <font face="courier new,courier,monospace">MyApplicationEventListener</font>:</p> 
+  <p><font face="courier new,courier,monospace">public class MyApplication extends Application {<br><br>&nbsp;&nbsp;&nbsp; @Override<br>&nbsp;&nbsp;&nbsp; public Set&lt;Class&lt;?&gt;&gt; getClasses() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; final Set&lt;Class&lt;?&gt;&gt; classes = new HashSet&lt;Class&lt;?&gt;&gt;();<br> <b>classes.add(MyResource.class);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; classes.add(MyApplicationEventListener.class);</b><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return classes;<br>&nbsp;&nbsp;&nbsp; }</font></p> 
+  <p><font face="courier new,courier,monospace">}</font></p> 
+  <p>When I deploy and start my application and request the resource URI, I get the following output to the console:</p> 
+  <p><font face="courier new,courier,monospace">Jersey application started.<br></font></p> 
+  <p><font face="courier new,courier,monospace">... <br></font></p> 
+  <p><font face="courier new,courier,monospace">Method 'getIt' executed. Processing time: 115 ms<br>Method 'getIt' executed. Processing time: 101 ms<br>Method 'getIt' executed. Processing time: 100 ms<br>Method 'getIt' executed. Processing time: 100 ms<br>Method 'getIt' executed. Processing time: 101 ms<br>Method 'getIt' executed. Processing time: 100 ms<br>Method 'getIt' executed. Processing time: 100 ms<br>Method 'getIt' executed. Processing time: 100 ms</font><br><br></p> 
+  <h2>Expose Statistics MBean</h2> 
+  <p><font face="courier new,courier,monospace">MyApplicationEventListener</font>
+ measures execution of all resource methods and prints results to 
+console. But we might need to have more statistics, like execution time 
+of whole requests, count of method executions, average execution times, 
+exception mapper executions, executions grouped by URIs, and so on. The 
+implementation of these statistics would be similar to the example above
+ but just much more complex. Jersey provides the feature of calculating 
+of these statistics. I could enable calculation of statistics and use 
+them in my resource methods. Check <font face="courier new,courier,monospace">MonitoringStatistics</font>
+ interface for more information (in javadoc, documentation with 
+example). Let's look now on how to expose these statistics as MBeans. I 
+just change MyApplication and register the property enabling Statistics 
+MBeans:</p> 
+  <p><font face="courier new,courier,monospace">&nbsp;public class MyApplication extends Application {<br>&nbsp;&nbsp;&nbsp; ...</font></p> 
+  <p><font face="courier new,courier,monospace"><br>&nbsp;&nbsp;&nbsp; @Override<br>&nbsp;&nbsp;&nbsp; public Map&lt;String, Object&gt; getProperties() {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Map&lt;String, Object&gt; properties = new HashMap&lt;String, Object&gt;();<br><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; properties.put(ServerProperties.MONITORING_STATISTICS_MBEANS_ENABLED, true);</b><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return properties;<br>&nbsp;&nbsp;&nbsp; }<br>}</font></p> 
+  <p>Then I deploy the application and connect to the process using JConsole. If I browse to <a><font face="arial,helvetica,sans-serif">org.glassfish.jersey </font></a> group and to statistics of URI execution, I get this view:<br></p> 
+  <p><img alt="Jersey monitoring MBeans in JConsole" src="Miroslav%20Fuksa%27s%20blog_files/jersey-monitoring-jconsole.htm" height="476" width="610"></p> 
+  <p>Before opening the JConsole I did 8 requests to the /myresource URI and it is displayed in <font face="courier new,courier,monospace">RequestCount_total</font>. So, I double click the field <font face="courier new,courier,monospace">RequestCount_1s</font>
+ which contains number of requests received in last one second. The 
+graph appears, then I make some requests to /myresource and I get such 
+an output:</p> 
+  <p><img alt="Request graph" src="Miroslav%20Fuksa%27s%20blog_files/jersey-monitoring-jconosle-detail.htm" align="middle" height="409" width="610"> </p> 
+  <p>So, it is very simple. Just define the property 
+"jersey.config.server.monitoring.statistics.mbeans.enabled" and start 
+monitoring your Jersey application using JConsole. To do this you do not
+ need to implement any event listener or register any provider. This 
+feature can be used during the development, testing or in production to 
+monitor the performance of the application. It also offers good 
+graphical view on URIs available in the RESTful Web application.<br> </p> 
+  <h2>Summary</h2> 
+  <p> Jersey allows you to monitor an application in programmatic way 
+using Event Listeners. Or you can let Jersey to calculate monitoring 
+statistics for you or expose these statistics using MBeans. Check <a href="https://jersey.java.net/documentation/latest/monitoring.html" title="Jersey Monitoring">Jersey documentation</a>
+ of monitoring for more details and examples. If you find any problem or
+ miss any functionality, let us know on Jersey user's mailing list (see <a href="https://jersey.java.net/" title="Jersey page">Jersey project page</a>).<br></p> 
+  <p> </p>
+        
+    </div>
+
+    <div class="entry-footer">
+        <p class="entry-category">Category: Oracle</p>
+        <p class="entry-tags">Tags:    
+    	    <a href="https://blogs.oracle.com/mira/tags/java" rel="tag">java</a> 
+  	    <a href="https://blogs.oracle.com/mira/tags/jersey" rel="tag">jersey</a> 
+  	    <a href="https://blogs.oracle.com/mira/tags/monitoring" rel="tag">monitoring</a> 
+  	    <a href="https://blogs.oracle.com/mira/tags/restful" rel="tag">restful</a> 
+  	    <a href="https://blogs.oracle.com/mira/tags/services" rel="tag">services</a> 
+  	    <a href="https://blogs.oracle.com/mira/tags/web" rel="tag">web</a> 
+    
+ </p>
+        <p class="entry-links">
+        <a href="https://blogs.oracle.com/mira/entry/monitoring_of_restful_jersey_applicaiton">Permanent link to this entry</a>
+                                            | <a href="https://blogs.oracle.com/mira/entry/monitoring_of_restful_jersey_applicaiton#comments">Comments [0]</a>
+                            </p>
+    </div>
+
+	    
+	</div>
+
+</div>    
+    
+          
+                    <!-- Previous and Next Entries -->
+                    <div id="pagerBottom">
+                                                                </div> 
+                    
+                    <!-- Comments -->
+                    				</div>
+
+                <!-- Sidebar -->
+                           <!-- Right Sidebar -->
+<div id="rightColumn">
+
+<!-- About -->
+  <div id="aboutSection">    
+    <h5 class="section-title">About</h5>
+    <div class="section-body">
+                  <p>The author is a developer on the Jersey project 
+which is a reference implementation of JAX-RS (specification for Java 
+RESTful web services). This blog presents news about Jersey, new 
+features and enhancements, new releases. Blog posts includes technical 
+details useful for developers.</p>
+            </div>
+  </div>  
+<!-- End About -->
+
+<!-- Search -->
+  <div id="searchSection">  
+    <h5 class="section-title">Search</h5>
+    <div class="section-body">
+        <script type="text/javascript">
+    function prepareSearchForm() {
+        document.getElementById("searchForm").searchQuery.name = "oq";
+        document.getElementById("searchFilter").innerHTML = "<input type='hidden' id='searchFilteredQuery' name='q' value=''>" +
+                "<br /><input type='checkbox' id='searchScope' checked='true' /><label for='searchScope'>Search only this blog</label>";
+    }
+    function submitSearchForm() {
+        var form = document.getElementById("searchForm");
+        var query = form.searchQuery.value;
+        var urlSearchOp = form.searchOp.value; //searchOp
+        var urlGroup = form.searchGroup.value; //group
+         
+        if (query == null || query == "") {
+            return false;
+        }
+        var filter = " weblog:mira";
+        var curUrl = window.location.href;
+        if (form.searchScope.checked && form.searchQuery.value.indexOf(filter) == -1) {
+            form.searchFilteredQuery.value = form.searchQuery.value + filter;
+        }
+        else {
+            form.searchFilteredQuery.value = form.searchQuery.value;
+        }
+
+        if(curUrl.indexOf("-dev") != -1) {
+             form.action="http://search-stage.oracle.com/search/search";
+           }
+        else if(curUrl.indexOf("-stage") != -1) {
+             form.action="http://search-stage.oracle.com/search/search";
+           }
+        else {
+             form.action="http://search.oracle.com/search/search";
+           }
+        
+        window.location = form.action + "?search_p_main_operator=" + urlSearchOp + "&group=" + urlGroup +"&q=" + form.searchFilteredQuery.value;
+        return false;
+    }
+</script>
+<form id="searchForm" action="http://search.oracle.com/search/search" onsubmit="return submitSearchForm();" method="get">
+    <input id="searchOp" name="search_p_main_operator" value="all" type="hidden">
+    <input id="searchGroup" name="group" value="Blogs" type="hidden">
+    <label for="searchQuery" title="Enter search term">Enter search term:</label>
+    <br>
+    <input id="searchQuery" name="oq" class="text" alt="Enter Search Term" type="text">
+    <input class="input-image" id="searchSubmit" alt="Submit Search" title="Submit Search" src="Miroslav%20Fuksa%27s%20blog_files/search-button.gif" type="image">
+    <span id="searchFilter"><input id="searchFilteredQuery" name="q" value="" type="hidden"><br><input id="searchScope" checked="checked" type="checkbox"><label for="searchScope">Search only this blog</label></span>
+</form>
+<script type="text/javascript">prepareSearchForm();</script>
+    </div>
+  </div>    
+<!-- End Search -->
+
+<!-- Recent Posts -->
+  <div id="recentSection">  
+                <h5 class="section-title">Recent Posts</h5>
+        <div class="section-body">
+            <ul>
+                                    <li><a href="https://blogs.oracle.com/mira/entry/monitoring_of_restful_jersey_applicaiton">Monitoring of RESTful Jersey application</a></li>
+                            </ul>
+        </div>
+      </div>    
+<!-- End Recent Posts -->
+
+
+<!-- Top Tags -->
+  <div id="tagsSection">  
+            <h5 class="section-title">Top Tags</h5>
+    <div class="tags section-body">
+        <ul class="tag-cloud">
+                    <li><a href="https://blogs.oracle.com/mira/tags/java" title="1" class="weight-1">java</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/tags/jersey" title="1" class="weight-1">jersey</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/tags/monitoring" title="1" class="weight-1">monitoring</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/tags/restful" title="1" class="weight-1">restful</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/tags/services" title="1" class="weight-1">services</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/tags/web" title="1" class="weight-1">web</a></li>
+                </ul>
+    </div>
+    </div>    
+<!-- End Top Tags -->
+    
+
+<!-- Categories -->
+  <div id="categoriesSection">
+    <h5 class="section-title">Categories</h5>
+    <div class="section-body">
+                        <ul class="rCategory">
+                                                                            <li><a href="https://blogs.oracle.com/mira/category/Oracle">Oracle</a></li>
+                                                                                                            <li><a href="https://blogs.oracle.com/mira/category/Personal">Personal</a></li>
+                                                                            </ul>
+        </div>
+  </div>
+<!-- End Categories -->
+
+
+<!-- Archives -->
+   <div id="archiveSection">
+    <h5 class="section-title">Archives</h5>
+    <div class="section-body">
+        <table summary="Blog Archive Calendar" class="hCalendarTable" border="0" cellspacing="0"><tbody><tr><td colspan="7" class="hCalendarMonthYearRow" align="center"><a href="https://blogs.oracle.com/mira/date/201308" title="Prev" class="hCalendarNavBar">«</a> September 2013</td></tr><tr><th class="hCalendarDayNameRow" align="center">Sun</th><th class="hCalendarDayNameRow" align="center">Mon</th><th class="hCalendarDayNameRow" align="center">Tue</th><th class="hCalendarDayNameRow" align="center">Wed</th><th class="hCalendarDayNameRow" align="center">Thu</th><th class="hCalendarDayNameRow" align="center">Fri</th><th class="hCalendarDayNameRow" align="center">Sat</th></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">1</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">2</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">3</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">4</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">5</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">6</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">7</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">8</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">9</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">10</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">11</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">12</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">13</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">14</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">15</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">16</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">17</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">18</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">19</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">20</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">21</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">22</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">23</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">24</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">25</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">26</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">27</div></td><td class="hCalendarDayCurrent"><div class="hCalendarDayTitle">28</div></td></tr><tr><td class="hCalendarDay"><div class="hCalendarDayTitle">29</div></td><td class="hCalendarDay"><div class="hCalendarDayTitle">30</div></td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td></tr><tr><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td><td class="hCalendarDayNotInMonth">&nbsp;</td></tr><tr class="hCalendarNextPrev"><td colspan="7" align="center"><a href="https://blogs.oracle.com/mira/" class="hCalendarNavBar">Today</a></td></tr></tbody></table>
+    </div>
+  </div>
+<!-- End Archives -->
+
+<!-- Bookmarks -->
+   <div id="bookmarkSection">
+                <h5 class="section-title">Bookmarks</h5>
+        <div class="section-body">
+            <ul class="rFolder">
+                    <li class="rFolderItem">
+                                <a href="http://www.oracle.com/technetwork/community/developer-day/index.html" title="$bookmark.description" class="rBookmark0">Events</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://www.oracle.com/technetwork/index.html" title="$bookmark.description" class="rBookmark0">Oracle Technology Network</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://blogs.oracle.com/otn" title="$bookmark.description" class="rBookmark0">Oracle Technology Network Blog</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://www.oracle.com/technetwork/community/techcasts/techcastlive/index.html?origref=http://www.oracle.com/technetwork/index.html" title="$bookmark.description" class="rBookmark0">Recent Articles</a>
+                </li>
+            <li class="rFolderItem">
+                                <a href="http://www.oracle.com/technetwork/community/developer-day/index.html" title="$bookmark.description" class="rBookmark0">Technology Newsletters</a>
+                </li>
+                    </ul>
+        </div>
+          </div>    
+<!-- End Bookmarks -->
+
+<!-- Blog and Author Menu -->
+   <div id="menuSection">
+    <h5 class="section-title">Menu</h5>
+    <div class="section-body">
+            <ul class="rNavigationBar">
+        <li class="rNavItem">
+            <a href="https://blogs.oracle.com/"><span>Blogs Home</span></a>
+        </li>
+        <li class="rNavItem">
+            <a href="https://blogs.oracle.com/mira/"><span>Weblog</span></a>
+        </li>
+                                                                                                                            <li class="rNavItem">
+                    <a href="https://blogs.oracle.com/roller-ui/login-redirect.rol"><span>Login</span></a>
+                </li>
+                        </ul>
+            </div>
+  </div>    
+<!-- End Blog and Author Menu -->
+
+    
+<!-- Feeds -->
+   <div id="feedsSection">   
+    <h5 class="section-title">Feeds</h5>
+    <div class="section-body">
+        <b>RSS</b>
+            <ul class="rFeeds">
+    <li><a href="https://blogs.oracle.com/mira/feed/entries/rss">All</a></li>
+                        <li><a href="https://blogs.oracle.com/mira/feed/entries/rss?cat=%2FOracle">/Oracle</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/feed/entries/rss?cat=%2FPersonal">/Personal</a></li>
+        <li><a href="https://blogs.oracle.com/mira/feed/comments/rss">Comments</a></li>
+    </ul>
+        <b>Atom</b>    
+            <ul class="rFeeds">
+    <li><a href="https://blogs.oracle.com/mira/feed/entries/atom">All</a></li>
+                        <li><a href="https://blogs.oracle.com/mira/feed/entries/atom?cat=%2FOracle">/Oracle</a></li>
+                    <li><a href="https://blogs.oracle.com/mira/feed/entries/atom?cat=%2FPersonal">/Personal</a></li>
+        <li><a href="https://blogs.oracle.com/mira/feed/comments/atom">Comments</a></li>
+    </ul>
+    </div>
+  </div>          
+<!-- End Feeds -->    
+    
+</div>    			</div>
+
+			<!-- Footer -->
+			<div id="footer">
+				<p>The views expressed on this blog are those of the author and do not necessarily reflect the views of Oracle. <a href="http://www.oracle.com/html/terms.html">Terms of Use</a> | <a href="http://www.oracle.com/html/privacy.html">Your Privacy Rights</a> | <span id="teconsent"><script src="Miroslav%20Fuksa%27s%20blog_files/notice_002" async="async" defer="defer"></script><script type="text/javascript" src="Miroslav%20Fuksa%27s%20blog_files/notice"></script>   <a style="cursor: pointer;" id="icon-id03030008464189077">Cookie Preferences</a></span>  </p>
+			</div>
+			<!-- Omniture Script --> 
+<!-- Start SiteCatalyst code -->
+
+<script language="JavaScript" src="Miroslav%20Fuksa%27s%20blog_files/ora_blogs.htm"></script><script type="text/javascript" src="Miroslav%20Fuksa%27s%20blog_files/ora_code_blogs.htm"></script><script type="text/javascript" src="Miroslav%20Fuksa%27s%20blog_files/ora_code.htm"></script>
+
+<!-- End SiteCatalyst code -->
+		</div>
+	
+</body></html>

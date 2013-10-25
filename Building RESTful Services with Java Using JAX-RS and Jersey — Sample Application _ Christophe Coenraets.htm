@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html class=" js csstransforms3d csstransitions" lang="en-US"><head>
+<meta charset="UTF-8">
+<title>Building RESTful Services with Java Using JAX-RS and Jersey — Sample Application | Christophe Coenraets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="pingback" href="http://coenraets.org/blog/xmlrpc.php">
+<link rel="alternate" type="application/rss+xml" title="Christophe Coenraets » Feed" href="http://coenraets.org/blog/feed/">
+<link rel="alternate" type="application/rss+xml" title="Christophe Coenraets » Comments Feed" href="http://coenraets.org/blog/comments/feed/">
+				
+	<div class="fit-vids-style">­<style>               .fluid-width-video-wrapper {                 width: 100%;                              position: relative;                       padding: 0;                            }                                                                                   .fluid-width-video-wrapper iframe,        .fluid-width-video-wrapper object,        .fluid-width-video-wrapper embed {           position: absolute;                       top: 0;                                   left: 0;                                  width: 100%;                              height: 100%;                          }                                       </style></div><script async="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/cbgapi.loaded_1"></script><script src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/widgets.js" id="twitter-wjs"></script><script async="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/cbgapi.loaded_0"></script><script src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+	// Google Analytics for WordPress by Yoast v4.2.2 | http://yoast.com/wordpress/google-analytics/
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount','UA-721308-1']);
+	_gaq.push(['_trackPageview'],['_trackPageLoadTime']);
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	//]]></script>
+<link rel="alternate" type="application/rss+xml" title="Christophe Coenraets » Building RESTful Services with Java Using JAX-RS and Jersey — Sample Application Comments Feed" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/feed/">
+<link rel="stylesheet" id="cptchStylesheet-css" href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/style_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="theme-stylesheet-css" href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="woo-layout-css" href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/layout.css" type="text/css" media="all">
+<link rel="stylesheet" id="woo-layout-dynamic-css" href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/a.css" type="text/css" media="all">
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/comment-reply.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/jquery.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/third-party.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/modernizr.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/general.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://coenraets.org/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://coenraets.org/blog/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="jQuery Mobile &quot;Getting Started&quot; Application" href="http://coenraets.org/blog/2011/11/jquery-mobile-getting-started-application/">
+<link rel="next" title="Building Apps with jQuery and JAX-RS – Sample App" href="http://coenraets.org/blog/2011/11/building-apps-with-jquery-and-jax-rs-sample-app/">
+<meta name="generator" content="WordPress 3.5.1">
+<link rel="canonical" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/">
+<link rel="shortlink" href="http://coenraets.org/blog/?p=2019">
+
+<!-- Theme version -->
+<meta name="generator" content="Canvas 5.2.0">
+<meta name="generator" content="WooFramework 5.5.5">
+
+<!-- Custom Favicon -->
+<link rel="shortcut icon" href="http://coenraets.org/blog/wp-content/uploads/2012/11/christophe.png">
+
+<!-- Woo Shortcodes CSS -->
+<link href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shortcodes.css" rel="stylesheet" type="text/css">
+
+<!-- Custom Stylesheet -->
+<link href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/custom.css" rel="stylesheet" type="text/css">
+
+<!-- Custom CSS Styling -->
+<style type="text/css">
+#logo .site-title, #logo .site-description { display:block!important; }
+body {background-color:#EEEEEE;background-repeat:no-repeat;background-position:top left;background-attachment:scroll;border-top:0px solid #000000;}
+#header {background-repeat:no-repeat;background-position:top center;margin-top:0px;margin-bottom:0px;padding-top:40px;padding-bottom:40px;border:0px solid ;}
+#logo .site-title a {font:bold 32px/1em "Helvetica Neue", Helvetica, sans-serif;color:#222222;}
+#logo .site-description {font:normal 13px/1em "Helvetica Neue", Helvetica, sans-serif;color:#999999;}
+#wrapper {padding-left:30px; padding-right:30px;background-color:#FFFFFF;margin-top:20px;margin-bottom:20px;border-top:1px solid #dbdbdb;border-bottom:1px solid #dbdbdb;border-left:1px solid #dbdbdb;border-right:1px solid #dbdbdb;border-radius:3px;-moz-border-radius:3px;-webkit-border-radius:3px;box-shadow: 0px 1px 5px rgba(0,0,0,.1);} @media only screen and (max-width:767px) { #wrapper { padding-left: 0; padding-right: 0;} } 
+body, p { font:normal 13px/1.5em 'Open Sans', arial, sans-serif;color:#555555; }
+h1 { font:bold 28px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }h2 { font:bold 24px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }h3 { font:bold 20px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }h4 { font:bold 16px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }h5 { font:bold 14px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }h6 { font:bold 12px/1.2em 'Open Sans', arial, sans-serif;color:#222222; }
+.post .title, .page .title, .post .title a:link, .post .title a:visited, .page .title a:link, .page .title a:visited {font:bold 26px/1.1em 'Open Sans', arial, sans-serif;color:#222222;}
+.post-meta { font:normal 12px/1.5em 'Open Sans', arial, sans-serif;color:#999999; }
+.entry, .entry p{ font:normal 14px/1.5em 'Open Sans', arial, sans-serif;color:#444444; }
+.post-more {font:normal 12px/1.5em Open Sans;color:;border-top:0px solid #e6e6e6;border-bottom:0px solid #e6e6e6;}
+#post-author, #connect {border-top:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6;border-left:1px solid #e6e6e6;border-right:1px solid #e6e6e6;border-radius:5px;-moz-border-radius:5px;-webkit-border-radius:5px;background-color:#fafafa}
+.nav-entries a, .woo-pagination { font:normal 12px/1em 'Open Sans', arial, sans-serif;color:#888; }
+.woo-pagination a, .woo-pagination a:hover {color:#888!important}
+.widget h3 {font:bold 14px/1.2em "Helvetica Neue", Helvetica, sans-serif;color:#555555;border-bottom:1px solid #e6e6e6;}
+.widget_recent_comments li, #twitter li { border-color: #e6e6e6;}
+.widget p, .widget .textwidget { font:normal 12px/1.5em Arial, sans-serif;color:#555555; }
+.widget {font:normal 12px/1.5em Arial, sans-serif;color:#555555;border-radius:0px;-moz-border-radius:0px;-webkit-border-radius:0px;}
+#tabs .inside li a, .widget_woodojo_tabs .tabbable .tab-pane li a { font:bold 12px/1.5em "Helvetica Neue", Helvetica, sans-serif;color:#555555; }
+#tabs .inside li span.meta, .widget_woodojo_tabs .tabbable .tab-pane li span.meta { font:normal 11px/1.5em "Helvetica Neue", Helvetica, sans-serif;color:#555555; }
+#tabs ul.wooTabs li a, .widget_woodojo_tabs .tabbable .nav-tabs li a { font:normal 11px/2em "Helvetica Neue", Helvetica, sans-serif;color:#555555; }
+@media only screen and (min-width:768px) {
+ul.nav li a, #navigation ul.rss a, #navigation .cart-contents, #navigation ul.rss { font:normal 14px/1em Arial, sans-serif;color:#666666; }
+#navigation ul.nav li ul  { border: 1px solid #dbdbdb; }
+#navigation ul.nav > li  { border-right: 1px solid #dbdbdb; }#navigation ul li:first-child, #navigation ul li:first-child a { border-radius:5px 0 0 5px; -moz-border-radius:5px 0 0 5px; -webkit-border-radius:5px 0 0 5px; }
+@media only screen and (min-width: 768px) { #navigation {border-top:1px solid #dbdbdb;border-bottom:1px solid #dbdbdb;border-left:1px solid #dbdbdb;border-right:1px solid #dbdbdb;border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px;} }
+#top ul.nav li a { font:normal 12px/1.6em Arial, sans-serif;color:#ddd; }
+}
+#footer, #footer p { font:normal 13px/1.4em "Helvetica Neue", Helvetica, sans-serif;color:#999999; }
+#footer {border-top:1px solid #dbdbdb;border-bottom:0px solid ;border-left:0px solid ;border-right:0px solid ;border-radius:0px; -moz-border-radius:0px; -webkit-border-radius:0px;}
+.magazine #loopedSlider .content h2.title a { font:bold 24px/1em Arial, sans-serif;color:#ffffff; }
+.magazine #loopedSlider .content .excerpt p { font:normal 12px/1.5em Arial, sans-serif;color:#cccccc; }
+.business #loopedSlider .content h2 { font:bold 24px/1em Arial, sans-serif;color:#ffffff; }
+.business #loopedSlider .content h2.title a { font:bold 24px/1em Arial, sans-serif;color:#ffffff; }
+#wrapper .business #loopedSlider .content p { font:normal 12px/1.5em Arial, sans-serif;color:#cccccc; }
+.archive_header { font:bold 18px/1em Arial, sans-serif;color:#222222; }
+.archive_header {border-bottom:1px solid #e6e6e6;}
+</style>
+
+<!-- Google Webfonts -->
+<link href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/css.css" rel="stylesheet" type="text/css">
+
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<!--  Mobile viewport scale -->
+<meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" name="viewport">
+
+<!-- Adjust the website width -->
+<style type="text/css">
+	.col-full, #wrapper { max-width: 1000px !important; }
+</style>
+
+<!--[if lt IE 9]>
+<link href="http://coenraets.org/blog/wp-content/themes/canvas520/css/non-responsive.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.col-full, #wrapper { width: 1000px; max-width: 1000px; }
+</style>
+<![endif]-->
+<link href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shCore.css" type="text/css" rel="stylesheet"><link href="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shThemeDefault.css" type="text/css" rel="stylesheet"><meta id="syntaxhighlighteranchor" name="syntaxhighlighter-version" content="3.1.5">
+<style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
+.fb_invisible{display:none}
+.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}
+.fb_reset > div{overflow:hidden}
+.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}
+.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.fb_dialog_content{background:#fff;color:#333}
+.fb_dialog_close_icon{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px;top:8px\9;right:7px\9}
+.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}
+.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}
+.fb_dialog_close_icon:hover{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_close_icon:active{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}
+.fb_dialog_top_left,
+.fb_dialog_top_right,
+.fb_dialog_bottom_left,
+.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}
+.fb_dialog_top_left{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}
+.fb_dialog_top_right{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}
+.fb_dialog_bottom_left{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}
+.fb_dialog_bottom_right{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right,
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right{width:10px;height:100%}
+.fb_dialog_vert_left{margin-left:-10px}
+.fb_dialog_vert_right{right:0;margin-right:-10px}
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{width:100%;height:10px}
+.fb_dialog_horiz_top{margin-top:-10px}
+.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}
+.fb_dialog_iframe{line-height:0}
+.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}
+.fb_dialog_content .dialog_title > span{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif)
+no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
+body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
+}
+.fb_dialog.fb_dialog_mobile.loading{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif)
+white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
+.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
+#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}
+#fb-root #fb_dialog_ipad_overlay.hidden{display:none}
+.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
+.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
+.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
+}
+.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
+color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
+rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
+.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}
+.fb_dialog_content .dialog_content{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}
+.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}
+#fb_dialog_loader_close{float:left}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}
+.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}
+.fb_iframe_widget iframe{position:absolute}
+.fb_iframe_widget_lift{z-index:1}
+.fb_hide_iframes iframe{position:relative;left:-10000px}
+.fb_iframe_widget_loader{position:relative;display:inline-block}
+.fb_iframe_widget_fluid{display:inline}
+.fb_iframe_widget_fluid span{width:100%}
+.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}
+.fb_iframe_widget_loader .FB_Loader{background:url(http://m-static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_connect_bar_container div,
+.fb_connect_bar_container span,
+.fb_connect_bar_container a,
+.fb_connect_bar_container img,
+.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}
+.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}
+.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}
+.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}
+.fb_connect_bar a:hover{color:#fff}
+.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}
+.fb_connect_bar div a,
+.fb_connect_bar span,
+.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}
+.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fb_edge_widget_with_comment{position:relative;*z-index:1000}
+.fb_edge_widget_with_comment span.fb_edge_comment_widget{position:absolute}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget{z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget .FB_Loader{left:0;top:1px;margin-top:6px;margin-left:0;background-position:50% 50%;background-color:#fff;height:150px;width:394px;border:1px #666 solid;border-bottom:2px solid #283e6c;z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.dark .FB_Loader{background-color:#000;border-bottom:2px solid #ccc}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.siderender
+.FB_Loader{margin-top:0}
+.fbpluginrecommendationsbarleft,
+.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}
+.fbpluginrecommendationsbarleft{left:10px}
+.fbpluginrecommendationsbarright{right:10px}</style></head>
+<body data-twttr-rendered="true" class="single single-post postid-2019 single-format-standard gecko alt-style-default boxed-layout two-col-left width-1000 two-col-left-1000">
+	<div id="top">
+		<div class="col-full">
+			<h3 class="top-menu">Main</h3><ul id="top-nav" class="nav top-navigation fl"><li id="menu-item-4594" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4594"><a href="http://coenraets.org/">Home</a></li>
+<li id="menu-item-4863" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4863"><a href="http://coenraets.org/blog/phonegap-tutorial/">PhoneGap Tutorial</a></li>
+<li id="menu-item-2661" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2661"><a href="http://coenraets.org/blog/bio/">Bio</a></li>
+</ul>		</div>
+	</div><!-- /#top -->
+<div id="wrapper">
+
+	<div id="inner-wrapper">
+
+	
+	<header id="header" class="col-full">
+
+		<hgroup id="logo">
+<span class="site-title"><a href="http://coenraets.org/blog/">Christophe Coenraets</a></span>
+<span class="site-description">Web Platform, Cloud and Mobile Application Development</span>
+</hgroup>
+<h3 class="nav-toggle icon"><a href="#navigation">Navigation</a></h3>
+
+	</header>
+	<nav id="navigation" class="col-full" role="navigation">
+
+	<section class="menus">
+
+		<ul class="rss fr">
+						<li class="sub-rss"><a href="http://coenraets.org/blog/feed/"></a></li>
+			</ul>
+	
+	<a href="http://coenraets.org/blog" class="nav-home"><span>Home</span></a>
+
+	<h3>Main</h3><ul id="main-nav" class="nav fl"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4594"><a href="http://coenraets.org/">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4863"><a href="http://coenraets.org/blog/phonegap-tutorial/">PhoneGap Tutorial</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2661"><a href="http://coenraets.org/blog/bio/">Bio</a></li>
+</ul>	</section><!-- /.menus -->
+
+	<a href="#top" class="nav-close"><span>Return to Content</span></a>
+
+</nav>
+       
+    <!-- #content Starts -->
+	    <div id="content" class="col-full">
+    
+    	<div id="main-sidebar-container">    
+
+            <!-- #main Starts -->
+                        <section id="main">                       
+<article class="post-2019 post type-post status-publish format-standard hentry category-java category-jax-rs category-rest">
+	<header>
+		<h1 class="title">Building RESTful Services with Java Using JAX-RS and Jersey — Sample Application</h1>	</header>
+<div class="post-meta"><span class="small">By</span> <span class="author vcard"><span class="fn"><a href="http://coenraets.org/blog/author/admin/" title="Posts by Christophe Coenraets" rel="author">Christophe Coenraets</a></span></span> <span class="small">on</span> <abbr class="date time published" title="2011-11-07T12:32:57-0400">November 7, 2011</abbr>  <span class="small">in</span> <span class="categories"><a href="http://coenraets.org/blog/category/java/" title="View all posts in Java">Java</a>, <a href="http://coenraets.org/blog/category/jax-rs/" title="View all posts in JAX-RS">JAX-RS</a>, <a href="http://coenraets.org/blog/category/rest/" title="View all posts in REST">REST</a></span>  </div>
+	<section class="entry">
+	    <p>I’m working on a project that required a RESTful API implemented in Java. <a href="http://jersey.java.net/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://jersey.java.net']);">Jersey</a>,
+ the reference implementation for JAX-RS, made it easy to implement and 
+deploy these services. I figured I’d share my sample application here.<br>
+<span id="more-2019"></span></p>
+<h4>Configuring Tomcat (or your own app server)</h4>
+<p>There are many options to initialize Jersey in your servlet 
+container. Some of them require no XML configuration at all. For my 
+application, I simply configured the Jersey Servlet in web.xml as 
+follows:</p>
+<div><div id="highlighter_954074" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">servlet</code><code class="xml plain">&gt;</code></div><div class="line number2 index1 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">servlet-name</code><code class="xml plain">&gt;Jersey&lt;/</code><code class="xml keyword">servlet-name</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">servlet-class</code><code class="xml plain">&gt;com.sun.jersey.spi.container.servlet.ServletContainer&lt;/</code><code class="xml keyword">servlet-class</code><code class="xml plain">&gt;</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">init-param</code><code class="xml plain">&gt;</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">param-name</code><code class="xml plain">&gt;com.sun.jersey.config.property.packages&lt;/</code><code class="xml keyword">param-name</code><code class="xml plain">&gt;</code></div><div class="line number6 index5 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">param-value</code><code class="xml plain">&gt;org.coenraets&lt;/</code><code class="xml keyword">param-value</code><code class="xml plain">&gt;</code></div><div class="line number7 index6 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;/</code><code class="xml keyword">init-param</code><code class="xml plain">&gt;</code></div><div class="line number8 index7 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">load-on-startup</code><code class="xml plain">&gt;1&lt;/</code><code class="xml keyword">load-on-startup</code><code class="xml plain">&gt;</code></div><div class="line number9 index8 alt2"><code class="xml plain">&lt;/</code><code class="xml keyword">servlet</code><code class="xml plain">&gt;</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="xml plain">&lt;</code><code class="xml keyword">servlet-mapping</code><code class="xml plain">&gt;</code></div><div class="line number12 index11 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">servlet-name</code><code class="xml plain">&gt;Jersey&lt;/</code><code class="xml keyword">servlet-name</code><code class="xml plain">&gt;</code></div><div class="line number13 index12 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">url-pattern</code><code class="xml plain">&gt;/rest/*&lt;/</code><code class="xml keyword">url-pattern</code><code class="xml plain">&gt;</code></div><div class="line number14 index13 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">servlet-mapping</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>NOTE: Using this type of initialization, the packages parameter 
+defines which classes Jersey will scan for URL Paths to resolve: in this
+ case, all the classes in org.coenraets.* packages.</p>
+<h4>Defining the REST API</h4>
+<p>Before working on the implementation, I identified that my simple application would require three services:</p>
+<ol>
+<li>Find all employees</li>
+<li>Find an employee by id</li>
+<li>Find a list of direct reports for a specific employee</li>
+</ol>
+<p>Based on these requirements, I came up with the following REST API:</p>
+<ol>
+<li>
+<strong>/api/employees</strong><br>Returns all employees
+</li>
+<li>
+<strong>/api/employees/1</strong><br>Returns an employee identified by id (employee 1 in this case)
+</li>
+<li>
+<strong>/api/employees/1/reports</strong><br>Returns direct reports of an employee (employee 1 in this case)
+</li>
+</ol>
+<h4>Implementing the API</h4>
+<p>Once my API was defined, providing the implementation using JAX-RS was easy. I just created a Java class defined as follows:</p>
+<div><div id="highlighter_381846" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java keyword">package</code> <code class="java plain">org.coenraets.directory;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="java keyword">import</code> <code class="java plain">java.util.List;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="java keyword">import</code> <code class="java plain">javax.ws.rs.GET;</code></div><div class="line number6 index5 alt1"><code class="java keyword">import</code> <code class="java plain">javax.ws.rs.Path;</code></div><div class="line number7 index6 alt2"><code class="java keyword">import</code> <code class="java plain">javax.ws.rs.PathParam;</code></div><div class="line number8 index7 alt1"><code class="java keyword">import</code> <code class="java plain">javax.ws.rs.Produces;</code></div><div class="line number9 index8 alt2"><code class="java keyword">import</code> <code class="java plain">javax.ws.rs.core.MediaType;</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"/employees"</code><code class="java plain">)</code></div><div class="line number12 index11 alt1"><code class="java keyword">public</code> <code class="java keyword">class</code> <code class="java plain">EmployeeResource {</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">EmployeeDAO dao = </code><code class="java keyword">new</code> <code class="java plain">EmployeeDAO();</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@GET</code></div><div class="line number17 index16 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@Produces</code><code class="java plain">({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })</code></div><div class="line number18 index17 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java plain">List&lt;Employee&gt; findAll() {</code></div><div class="line number19 index18 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">dao.findAll();</code></div><div class="line number20 index19 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number21 index20 alt2">&nbsp;</div><div class="line number22 index21 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@GET</code> <code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"{id}"</code><code class="java plain">)</code></div><div class="line number23 index22 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@Produces</code><code class="java plain">({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })</code></div><div class="line number24 index23 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java plain">Employee findById(</code><code class="java color1">@PathParam</code><code class="java plain">(</code><code class="java string">"id"</code><code class="java plain">) String id) {</code></div><div class="line number25 index24 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">dao.findById(Integer.parseInt(id));</code></div><div class="line number26 index25 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@GET</code> <code class="java color1">@Path</code><code class="java plain">(</code><code class="java string">"{id}/reports"</code><code class="java plain">)</code></div><div class="line number29 index28 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@Produces</code><code class="java plain">({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })</code></div><div class="line number30 index29 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java plain">List&lt;Employee&gt; findByManager(</code><code class="java color1">@PathParam</code><code class="java plain">(</code><code class="java string">"id"</code><code class="java plain">) String managerId) {</code></div><div class="line number31 index30 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">return</code> <code class="java plain">dao.findByManager(Integer.parseInt(managerId));</code></div><div class="line number32 index31 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number33 index32 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>You annotate your class and methods with the path (@Path) and the 
+content type (@Produces) they respond to. The  serialization from model 
+objects to the content type requested by the client happens 
+automatically. In this application, the methods will return either JSON 
+or XML depending on the content type requested by the client.</p>
+<p>The approach you use to actually retrieve the data is, of course, 
+totally up to you. In this example, I use a simple DAO, but you can of 
+course use your own data access solution.</p>
+<p>This application only required GET methods, but JAX-RS allows you to 
+handle the other HTTP methods (@GET, @PUT, @POST, @DELETE and @HEAD).</p>
+<p>Note that the package name matches the packages parameter defined in web.xml.</p>
+<h4>Testing the API</h4>
+<p>If you want to test your API before using it in a client application,
+ you can invoke your REST services straight from a browser address bar. 
+ For example, try:</p>
+<p><a href="http://coenraets.org/rest/employees">http://coenraets.org/rest/employees</a><br>
+<a href="http://coenraets.org/rest/employees/1">http://coenraets.org/rest/employees//1</a><br>
+<a href="http://coenraets.org/rest/employees/1/reports">http://coenraets.org/rest/employees/1/reports</a></p>
+<p>However, that doesn’t give you full control to test all the content 
+types your API can return. A common option to test the different content
+ types supported by your API is to use <a href="http://curl.haxx.se/" onclick="javascript:_gaq.push(['_trackEvent','outbound-article','http://curl.haxx.se']);">cURL</a> and specify the content type requested in the Accept header:</p>
+<p>curl -I http://coenraets.org/rest/employees -H’Accept:application/json’</p>
+<h4>Download the Source Code</h4>
+<p>Click <a href="http://coenraets.org/apps/directory/EmployeeDirectoryJAXRS.zip" onclick="javascript:_gaq.push(['_trackEvent','download','http://coenraets.org/apps/directory/EmployeeDirectoryJAXRS.zip']);">here</a> to download the source code (Eclipse Dynamic Web Project).</p>
+<p>In my next post, I’ll share the client-side of the application: how to invoke these services using jQuery (and JSON).</p>
+	</section><!-- /.entry -->
+	<div class="fix"></div>
+<div class="woo-sc-hr"></div><h3 style="padding-bottom:14px;">Share this Article:</h3><script gapi_processed="true" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/plusone.js" type="text/javascript">
+</script>
+<script type="text/javascript">gapi.plusone.go();</script>
+<div class="shortcode-google-plusone fl"><div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px;"><iframe title="+1" data-gapiattached="true" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/fastbutton.htm" name="I0_1380417713765" id="I0_1380417713765" vspace="0" tabindex="0" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" marginwidth="0" marginheight="0" hspace="0" frameborder="0" scrolling="no" width="100%"></iframe></div></div><!--/.shortcode-google-plusone-->
+
+<div class="woo-sc-twitter left"><iframe data-twttr-rendered="true" title="Twitter Tweet Button" style="width: 109px; height: 20px;" class="twitter-share-button twitter-count-horizontal" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/tweet_button.htm" allowtransparency="true" frameborder="0" scrolling="no"></iframe><script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/widgets.js"></script></div><div class="shortcode-twitter-follow fl">
+<iframe data-twttr-rendered="true" title="Twitter Follow Button" style="width: 236px; height: 20px;" class="twitter-follow-button twitter-follow-button" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/follow_button.htm" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div><!--/.shortcode-twitter-follow-->
+
+<div class="woo-sc-divider flat"></div>
+<div class="woo-fbshare left">
+<div fb-iframe-plugin-query="app_id=&amp;href=http%3A%2F%2Fcoenraets.org%2Fblog%2F2011%2F11%2Fbuilding-restful-services-with-java-using-jax-rs-and-jersey-sample-application%2F&amp;locale=en_US&amp;sdk=joey&amp;type=button_count" fb-xfbml-state="rendered" data-type="button_count" data-href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/" class="fb-share-button fb_iframe_widget"><span style="vertical-align: bottom; width: 88px; height: 18px;"><iframe class="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/share_button.htm" style="border: medium none; visibility: visible; width: 88px; height: 18px;" title="fb:share_button Facebook Social Plugin" allowtransparency="true" name="f21125377496412" frameborder="0" height="1000px" scrolling="no" width="1000px"></iframe></span></div>
+<script src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/FB.js" type="text/javascript">
+</script>
+</div>
+	
+<div class="woo-fblike none">
+<iframe src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/like.htm" allowtransparency="true" style="border:none; overflow:hidden; width:auto; height:25px;" frameborder="0" scrolling="no"></iframe>
+</div>
+			<aside id="connect">
+		<h3>Subscribe</h3>
+
+		<div class="col-left">
+			<p> </p>
+
+			
+			
+						<div class="social">
+		   				   		<a href="http://coenraets.org/blog/feed/" class="subscribe" title="RSS"></a>
+
+		   				   		<a target="_blank" href="http://www.twitter.com/ccoenraets" class="twitter" title="Twitter"></a>
+
+		   				   		<a target="_blank" href="http://www.youtube.com/ccoenraets" class="youtube" title="YouTube"></a>
+
+		   				   		<a target="_blank" href="http://www.linkedin.com/in/coenraets" class="linkedin" title="LinkedIn"></a>
+
+		   				   		<a target="_blank" href="https://plus.google.com/113420108342911308974/" class="googleplus" title="Google+"></a>
+
+							</div>
+			
+		</div><!-- col-left -->
+
+				<div class="related-posts col-right">
+			<h4>Related Posts:</h4>
+			<div class="woo-sc-related-posts">
+<ul>
+<li class="post-id-6356">
+
+<a href="http://coenraets.org/blog/2013/09/the-create-now-tour-starts-this-thursday-in-san-francisco/" title="The Create Now Tour starts this Thursday in San Francisco" class="related-title"><span>The Create Now Tour starts this Thursday in San Francisco</span></a>
+</li>
+<li class="post-id-4904">
+
+<a href="http://coenraets.org/blog/2012/12/phonegap-and-phonegap-build-in-5-minutes/" title="PhoneGap and PhoneGap Build in 5 Minutes" class="related-title"><span>PhoneGap and PhoneGap Build in 5 Minutes</span></a>
+</li>
+<li class="post-id-4841">
+
+<a href="http://coenraets.org/blog/2012/11/new-tutorial-developing-and-architecting-a-phonegap-application/" title="New Tutorial: Developing and Architecting a PhoneGap Application" class="related-title"><span>New Tutorial: Developing and Architecting a PhoneGap Application</span></a>
+</li>
+<li class="post-id-4476">
+
+<a href="http://coenraets.org/blog/2012/10/creating-a-dropbox-integration-extension-for-brackets/" title="Creating a Dropbox Integration Extension for Brackets" class="related-title"><span>Creating a Dropbox Integration Extension for Brackets</span></a>
+</li>
+<li class="post-id-4443">
+
+<a href="http://coenraets.org/blog/2012/10/exploring-and-contributing-to-web-platform-docs/" title="Exploring and Contributing to Web Platform Docs" class="related-title"><span>Exploring and Contributing to Web Platform Docs</span></a>
+</li>
+</ul>
+<div class="fix"></div><!--/.fix-->
+</div><!--/.woo-sc-related-posts-->		</div><!-- col-right -->
+		
+        <div class="fix"></div>
+	</aside>
+	<div class="post-utility"></div>
+</article><!-- /.post -->
+	        <div class="post-entries">
+	            <div class="nav-prev fl"><a href="http://coenraets.org/blog/2011/11/jquery-mobile-getting-started-application/" rel="prev"><i class="icon-angle-left"></i> jQuery Mobile "Getting Started" Application</a></div>
+	            <div class="nav-next fr"><a href="http://coenraets.org/blog/2011/11/building-apps-with-jquery-and-jax-rs-sample-app/" rel="next">Building Apps with jQuery and JAX-RS – Sample App <i class="icon-angle-right"></i></a></div>
+	            <div class="fix"></div>
+	        </div>
+
+		<div id="comments">		 	<h3 id="comments-title">13 Responses to <em>Building RESTful Services with Java Using JAX-RS and Jersey — Sample Application</em></h3>
+		 	<ol class="commentlist">
+					                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-5493"></a>
+	      	
+	      	<div id="li-comment-5493" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/2e508f62937daf30a59577bc62864fcc.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name"><a href="http://blog.mariojunior.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://blog.mariojunior.com']);" rel="external nofollow" class="url">Mario Junior</a></span>           
+	                <span class="date">November 11, 2011 at 2:00 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-5493" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-5493">
+				
+				<p>That’s a good approach, but I prefer use Spring Web 3 Restfull support.<br>
+On the last spring-flex-integration release, was released a Restfull integration for AMF outputs.<br>
+You can use the same @Controller writing output on XML, Json or AMF 
+formats… with it, we can build hibrids back-end for any front-end 
+(html/jquery or extjs or event Flex Applications).</p>
+<p>Best Regards.</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=5493#respond" onclick='return addComment.moveForm("comment-5493", "5493", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-5494"></a>
+	      	
+	      	<div id="li-comment-5494" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/2e508f62937daf30a59577bc62864fcc.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name"><a href="http://blog.mariojunior.com/" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://blog.mariojunior.com']);" rel="external nofollow" class="url">Mario Junior</a></span>           
+	                <span class="date">November 13, 2011 at 8:52 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-5494" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-5494">
+				
+				<p>I’ve posted a post/screencast using Spring WEB Restfull support 
+where I show hot to use the same @Controller with outputs in XML, JSON 
+and AMF.<br>
+<a href="http://blog.dclick.com.br/2011/11/13/amfrestfull-um-back-end-para-qualquer-front-end/pt/" onclick="javascript:_gaq.push(['_trackEvent','outbound-comment','http://blog.dclick.com.br']);" rel="nofollow">http://blog.dclick.com.br/2011/11/13/amfrestfull-um-back-end-para-qualquer-front-end/pt/</a> (in portguese).</p>
+<p>Best Regards.</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=5494#respond" onclick='return addComment.moveForm("comment-5494", "5494", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-61964"></a>
+	      	
+	      	<div id="li-comment-61964" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/67187808faf4515d0a174b806306aa34.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">leo</span>           
+	                <span class="date">May 18, 2012 at 3:44 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-61964" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-61964">
+				
+				<p>Brilliant tutorial, many thanks!</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=61964#respond" onclick='return addComment.moveForm("comment-61964", "61964", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-118980"></a>
+	      	
+	      	<div id="li-comment-118980" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/cb3f575f0143f7504d728d16c4947e94.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Kamal</span>           
+	                <span class="date">September 5, 2012 at 1:29 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-118980" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-118980">
+				
+				<p>Hi,<br>
+I am trying to run this example, I see employee.xml, and you are 
+queering from a database called directory, should we create a database 
+called directory and create a table called employee ? if so how to 
+populate the table with the employees.xml data ?<br>
+I did not understand, please your help is appreciated.</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=118980#respond" onclick='return addComment.moveForm("comment-118980", "118980", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-151019"></a>
+	      	
+	      	<div id="li-comment-151019" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/0ef6ffbf901e2fb53b616bacbf45c072.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Kris</span>           
+	                <span class="date">October 26, 2012 at 1:55 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-151019" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-151019">
+				
+				<p>Hi,</p>
+<p>I was wondering if you can help me with my mobile application. I am 
+new to the development world and I am all over the place to understand 
+the technology better. So I have already created a client-side mobile 
+application and am trying to connect that to a Java backend and render 
+data from SQL server.<br>
+How can I make a call from the client side application to my back-end 
+application that contains the business logic and DAO layer?</p>
+<p>Kris</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=151019#respond" onclick='return addComment.moveForm("comment-151019", "151019", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-186900"></a>
+	      	
+	      	<div id="li-comment-186900" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/fe7ec3f49ba930cf8b7c4ecdb306a18b.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Alexk2009</span>           
+	                <span class="date">November 21, 2012 at 8:43 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-186900" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-186900">
+				
+				<p>This tutorial and the downloaded application left me thinking I Understood what was going on. </p>
+<p>However  when  I access the app from the browser I  only get XML back
+ and have been unable to work out what parameter to add to get json 
+back. </p>
+<p>There was one error in the project, the init-param was org.conraets 
+and produced a container expection. When I changed that to 
+org.conraets.directory it worked like a dream.  Not one of my favourite 
+dreams, but good enough. Thanks for this</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=186900#respond" onclick='return addComment.moveForm("comment-186900", "186900", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-197893"></a>
+	      	
+	      	<div id="li-comment-197893" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/83d7d6cd98b8f6abb9e6e6379d09e1f8.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">ryan</span>           
+	                <span class="date">November 28, 2012 at 8:24 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-197893" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-197893">
+				
+				<p>Hi,</p>
+<p>excellent tutorial.Thanks for posting this.I am looking to create a 
+rest service to do crud on mysql database do u have any samples or 
+tutorials on that?</p>
+<p>thanks<br>
+ryan</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=197893#respond" onclick='return addComment.moveForm("comment-197893", "197893", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-367551"></a>
+	      	
+	      	<div id="li-comment-367551" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/0ca52abaa9fce14c44a351fccd1b9fc5.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Bob</span>           
+	                <span class="date">March 20, 2013 at 1:50 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-367551" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-367551">
+				
+				<p>Thanks for putting all these great examples out there! I’ve ended
+ up on your site while building a java + backbone.js web app countless 
+times now. Extremely helpful.</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=367551#respond" onclick='return addComment.moveForm("comment-367551", "367551", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-370528"></a>
+	      	
+	      	<div id="li-comment-370528" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/77ac96ef7233ec29b81d86c4184628fc.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">asma</span>           
+	                <span class="date">March 22, 2013 at 9:37 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-370528" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-370528">
+				
+				<p>hi,<br>
+thank you for posting this tutorial<br>
+can i have the link of the  next post, which  client-side of the application ?</p>
+<p>thanx<br>
+asma</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=370528#respond" onclick='return addComment.moveForm("comment-370528", "370528", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-370532"></a>
+	      	
+	      	<div id="li-comment-370532" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/77ac96ef7233ec29b81d86c4184628fc.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">asma</span>           
+	                <span class="date">March 22, 2013 at 9:38 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-370532" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-370532">
+				
+				<p>hi,<br>
+thank you for posting this tutorial<br>
+can i have the link of the  next post, which  client-side of the application ?</p>
+<p>thanks<br>
+asma</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=370532#respond" onclick='return addComment.moveForm("comment-370532", "370532", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment even thread-even depth-1">
+	    
+	    	<a name="comment-379662"></a>
+	      	
+	      	<div id="li-comment-379662" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/8e0923952abf9d11ad15869d66c83b2f.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Paul</span>           
+	                <span class="date">March 28, 2013 at 11:19 am</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-379662" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-379662">
+				
+				<p>Thanks for the example.</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=379662#respond" onclick='return addComment.moveForm("comment-379662", "379662", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+	                 
+		<li class="comment odd alt thread-odd thread-alt depth-1">
+	    
+	    	<a name="comment-426889"></a>
+	      	
+	      	<div id="li-comment-426889" class="comment-container">
+	      	
+					                <div class="avatar"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/375719dcdc880aaaaade9b13c3e7cd7e.png" class="avatar avatar-40 photo" height="40" width="40"></div>
+	                        
+	
+		      	<div class="comment-head">
+		      	            
+	                <span class="name">Amol Powar</span>           
+	                <span class="date">May 28, 2013 at 3:49 pm</span>
+	                <span class="perma"><a href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#comment-426889" title="Direct link to this comment">#</a></span>
+	                <span class="edit"></span>
+		        		          	
+				</div><!-- /.comment-head -->
+		      
+		   		<div class="comment-entry" id="comment-426889">
+				
+				<p>Thanks for the example, this helped me understand the basis. Do you have any tutorial for rest with OAuth ?</p>
+		            
+										
+	                <div class="reply">
+	                    <a class="comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/?replytocom=426889#respond" onclick='return addComment.moveForm("comment-426889", "426889", "respond", "2019")'>Reply</a>	                </div><!-- /.reply -->                       
+			
+				</div><!-- /comment-entry -->
+	
+			</div><!-- /.comment-container -->
+			
+	</li>
+			</ol>
+		 				 	<h3 id="comments-title">Trackbacks/Pingbacks</h3>
+			 	<ol class="commentlist">
+						
+		<li id="comment-13320">
+			<span class="author"><a href="http://vaporwarecorp.com/blog/2012/01/crear-un-servidor-rest-con-jersey/" onclick="javascript:_gaq.push(['_trackEvent','outbound-commentauthor','http://vaporwarecorp.com']);" rel="external nofollow" class="url">Random Code » De un programador a otro programador » Crear un servidor REST con Jersey</a></span> - 
+			<span class="date">January 20, 2012</span>
+			<span class="pingcontent"><p>[...] tutorial esta basado en el articulo “Building RESTful Services with Java Using JAX-RS and Jersey” por Christophe [...]</p>
+</span>
+</li>
+				</ol>
+			</div>								<div id="respond">
+				<h3 id="reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://coenraets.org/blog/2011/11/building-restful-services-with-java-using-jax-rs-and-jersey-sample-application/#respond" style="display:none;">Click here to cancel reply.</a></small></h3>
+									<form action="http://coenraets.org/blog/wp-comments-post.php" method="post" id="commentform">
+																										<p class="comment-form-author"><input id="author" name="author" class="txt" tabindex="1" size="30" aria-required="true" type="text"><label for="author">Name <span class="required">(required)</span></label> </p>
+<p class="comment-form-email"><input id="email" name="email" class="txt" tabindex="2" size="30" aria-required="true" type="text"><label for="email">Email (will not be published) <span class="required">(required)</span></label> </p>
+<p class="comment-form-url"><input id="url" name="url" class="txt" tabindex="3" size="30" type="text"><label for="url">Website</label></p>
+<p class="cptch_block"><label>Help me keep this blog spam-free:</label><br>	<input name="cptch_result" value="F9o=" type="hidden"><input value="Version: 2.4" type="hidden">
+	<input autocomplete="off" name="cptch_number" maxlength="2" size="2" style="width:20px;margin-bottom:0;display:inline;font-size: 12px;width: 30px;" type="text"> + 4 = 8</p>												<p class="comment-form-comment"><label class="hide" for="comment">Comment</label><textarea tabindex="4" id="comment" name="comment" cols="50" rows="10" aria-required="true"></textarea></p>												<p class="form-submit">
+							<input name="submit" id="submit" value="Submit Comment" type="submit">
+							<input name="comment_post_ID" value="2019" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+						</p>
+						<p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="6e5c40136f" type="hidden"></p>					</form>
+							</div><!-- #respond -->
+			<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('#commentform').submit(function() {
+            _gaq.push(
+                ['_setAccount','UA-721308-1'],
+                ['_trackEvent','comment']
+            );
+        });
+    });    
+</script>
+			     
+            </section><!-- /#main -->
+                
+            <aside id="sidebar">
+	<div id="woo_search-2" class="widget widget_woo_search"><div class="search_main">
+    <form method="get" class="searchform" action="http://coenraets.org/blog/">
+        <input class="field s" name="s" value="Search..." onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" type="text">
+        		<i class="icon-search"></i>
+    </form>    
+    <div class="fix"></div>
+</div>
+</div><div id="woo_blogauthorinfo-2" class="widget widget_woo_blogauthorinfo"><h3>About Me</h3><span class="left"><img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/3f30c25cbbc01a086a653b5d90535f19.jpg" class="avatar avatar-48 photo" height="48" width="48"></span>
+<p>I'm a Technical Evangelist for Adobe where I focus on the Web Platform, Mobile Applications  and Enterprise Integration.</p>
+<p><a href="http://coenraets.org/blog/bio/">Read More</a></p>
+<div class="fix"></div>
+</div><div id="woo_subscribe-2" class="widget widget_woo_subscribe">		<aside id="connect">
+		<h3>Subscribe</h3>
+
+		<div>
+			<p> </p>
+
+			
+			
+						<div class="social">
+		   				   		<a href="http://coenraets.org/blog/feed/" class="subscribe" title="RSS"></a>
+
+		   				   		<a target="_blank" href="http://www.twitter.com/ccoenraets" class="twitter" title="Twitter"></a>
+
+		   				   		<a target="_blank" href="http://www.youtube.com/ccoenraets" class="youtube" title="YouTube"></a>
+
+		   				   		<a target="_blank" href="http://www.linkedin.com/in/coenraets" class="linkedin" title="LinkedIn"></a>
+
+		   				   		<a target="_blank" href="https://plus.google.com/113420108342911308974/" class="googleplus" title="Google+"></a>
+
+							</div>
+			
+		</div><!-- col-left -->
+
+		
+        <div class="fix"></div>
+	</aside>
+	</div>
+		<div id="woo_tabs-2" class="widget widget_woo_tabs"> 		<div id="tabs">
+
+            <ul class="wooTabs">
+                                <li class="popular"><a class="selected" href="#tab-pop">Popular</a></li>                <li class="latest"><a href="#tab-latest">Latest</a></li>                <li class="comments"><a href="#tab-comm">Comments</a></li>                <li class="tags"><a href="#tab-tags">Tags</a></li>            </ul>
+
+            <div class="clear"></div>
+
+            <div class="boxes box inside">
+
+	            
+                                <ul style="display: block;" id="tab-pop" class="list">
+                    	<li>
+		<a href="http://coenraets.org/blog/2012/10/nodecellar-sample-application-with-backbone-js-twitter-bootstrap-node-js-express-and-mongodb/" title="NodeCellar: Sample Application with Backbone.js, Twitter Bootstrap, Node.js, Express, and MongoDB"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/nodejs-45x45.gif" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="NodeCellar: Sample Application with Backbone.js, Twitter Bootstrap, Node.js, Express, and MongoDB" href="http://coenraets.org/blog/2012/10/nodecellar-sample-application-with-backbone-js-twitter-bootstrap-node-js-express-and-mongodb/">NodeCellar: Sample Application with Backbone.js, Twitter Bootstrap, Node.js, Express, and MongoDB</a>
+		<span class="meta">October 4, 2012</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/03/sociogram-mobile-a-starter-kit-application-for-phonegap-and-facebook-integration/" title="Sociogram Mobile: A Starter-Kit Application for PhoneGap and Facebook Integration"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/f_logo-45x45.gif" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="Sociogram Mobile: A Starter-Kit Application for PhoneGap and Facebook Integration" href="http://coenraets.org/blog/2013/03/sociogram-mobile-a-starter-kit-application-for-phonegap-and-facebook-integration/">Sociogram Mobile: A Starter-Kit Application for PhoneGap and Facebook Integration</a>
+		<span class="meta">March 21, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/05/architecting-a-phonegap-application-video-slides/" title="Architecting a PhoneGap Application: Video + Slides"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/phonegap-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="Architecting a PhoneGap Application: Video + Slides" href="http://coenraets.org/blog/2013/05/architecting-a-phonegap-application-video-slides/">Architecting a PhoneGap Application: Video + Slides</a>
+		<span class="meta">May 13, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/06/sample-mobile-phonegap-application-with-backbone-js-and-topcoat/" title="Sample Mobile / PhoneGap Application with Backbone.js and Topcoat"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/phonegap-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="Sample Mobile / PhoneGap Application with Backbone.js and Topcoat" href="http://coenraets.org/blog/2013/06/sample-mobile-phonegap-application-with-backbone-js-and-topcoat/">Sample Mobile / PhoneGap Application with Backbone.js and Topcoat</a>
+		<span class="meta">June 4, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li style="border-bottom: 0px none;">
+		<a href="http://coenraets.org/blog/2012/10/real-time-web-analytics-with-node-js-and-socket-io/" title="Real Time Web Analytics with Node.js and Socket.IO"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/nodejs-45x45.gif" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="Real Time Web Analytics with Node.js and Socket.IO" href="http://coenraets.org/blog/2012/10/real-time-web-analytics-with-node-js-and-socket-io/">Real Time Web Analytics with Node.js and Socket.IO</a>
+		<span class="meta">October 10, 2012</span>
+		<div class="fix"></div>
+	</li>
+	                </ul>
+                                                <ul style="display: none;" id="tab-latest" class="list">
+                    	<li>
+		<a href="http://coenraets.org/blog/2013/09/phonegap-and-cordova-with-ios-7/" title="PhoneGap and Cordova with iOS 7"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/ios7-45x45.png" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="PhoneGap and Cordova with iOS 7" href="http://coenraets.org/blog/2013/09/phonegap-and-cordova-with-ios-7/">PhoneGap and Cordova with iOS 7</a>
+		<span class="meta">September 19, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/09/the-create-now-tour-starts-this-thursday-in-san-francisco/" title="The Create Now Tour starts this Thursday in San Francisco"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/creative_cloud-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="The Create Now Tour starts this Thursday in San Francisco" href="http://coenraets.org/blog/2013/09/the-create-now-tour-starts-this-thursday-in-san-francisco/">The Create Now Tour starts this Thursday in San Francisco</a>
+		<span class="meta">September 17, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/09/how-to-upload-pictures-from-a-phonegap-app-to-amazon-s3/" title="How to Upload Pictures from a PhoneGap App to Amazon S3"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/phonegap-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="How to Upload Pictures from a PhoneGap App to Amazon S3" href="http://coenraets.org/blog/2013/09/how-to-upload-pictures-from-a-phonegap-app-to-amazon-s3/">How to Upload Pictures from a PhoneGap App to Amazon S3</a>
+		<span class="meta">September 16, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li>
+		<a href="http://coenraets.org/blog/2013/09/how-to-upload-pictures-from-a-phonegap-application-to-node-js-and-other-servers-2/" title="How to upload pictures from a PhoneGap Application to Node.js (and other servers)"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/phonegap-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="How to upload pictures from a PhoneGap Application to Node.js (and other servers)" href="http://coenraets.org/blog/2013/09/how-to-upload-pictures-from-a-phonegap-application-to-node-js-and-other-servers-2/">How to upload pictures from a PhoneGap Application to Node.js (and other servers)</a>
+		<span class="meta">September 10, 2013</span>
+		<div class="fix"></div>
+	</li>
+		<li style="border-bottom: 0px none;">
+		<a href="http://coenraets.org/blog/2013/09/pull-to-refresh-in-phonegap-and-topcoat-applications/" title="Pull-to-Refresh in PhoneGap and Topcoat Applications"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/phonegap-45x45.jpg" alt="" class="woo-image thumbnail" height="45" width="45"></a>		<a title="Pull-to-Refresh in PhoneGap and Topcoat Applications" href="http://coenraets.org/blog/2013/09/pull-to-refresh-in-phonegap-and-topcoat-applications/">Pull-to-Refresh in PhoneGap and Topcoat Applications</a>
+		<span class="meta">September 5, 2013</span>
+		<div class="fix"></div>
+	</li>
+	                </ul>
+                                				<ul style="display: none;" id="tab-comm" class="list">
+                    				<li class="recentcomments">
+					<img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/8aec69db68d80af6029d6e92e1559ce0.png" class="avatar avatar-45 photo" height="45" width="45">					<a href="http://coenraets.org/blog/2013/09/phonegap-and-cordova-with-ios-7/#comment-436974" title="Keenan on PhoneGap and Cordova with iOS 7">Keenan: If you are still running Cordova 2.X here is plugi...</a>
+					<div class="fix"></div>
+				</li>
+							<li class="recentcomments">
+					<img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/aed96be52e33f07a2b6e564567d9095c.png" class="avatar avatar-45 photo" height="45" width="45">					<a href="http://coenraets.org/blog/2012/10/creating-a-rest-api-using-node-js-express-and-mongodb/#comment-436972" title="feedbooks.com on Creating a REST API using Node.js, Express, and MongoDB">feedbooks.com: Attractive section of content. I just stumbled 
+u...</a>
+					<div class="fix"></div>
+				</li>
+							<li class="recentcomments">
+					<img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/7b7593f5000f5edda281f38c58863b0d.jpg" class="avatar avatar-45 photo" height="45" width="45">					<a href="http://coenraets.org/blog/2012/10/nodecellar-sample-application-with-backbone-js-twitter-bootstrap-node-js-express-and-mongodb/#comment-436939" title="Vaibhav on NodeCellar: Sample Application with Backbone.js, Twitter Bootstrap, Node.js, Express, and MongoDB">Vaibhav: Thank you so so much!!!!...</a>
+					<div class="fix"></div>
+				</li>
+							<li class="recentcomments">
+					<img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/543738c5c694f317e4aa3bf45786c112.png" class="avatar avatar-45 photo" height="45" width="45">					<a href="http://coenraets.org/blog/2012/01/setting-up-wordpress-on-amazon-ec2-in-5-minutes/#comment-436896" title="captcha\" on="" setting="" up="" wordpress="" amazon="" ec2="" in="" 5="" minutes"="">captcha\": I do not comment, however after reading a great de...</a>
+					<div class="fix"></div>
+				</li>
+							<li style="border-bottom: 0px none;" class="recentcomments">
+					<img alt="" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/27a53395b78c4f0e1aa6ac4b3d22e0a1.png" class="avatar avatar-45 photo" height="45" width="45">					<a href="http://coenraets.org/blog/2012/10/creating-a-rest-api-using-node-js-express-and-mongodb/#comment-436892" title="laser dentistry on Creating a REST API using Node.js, Express, and MongoDB">laser dentistry: Each day is really a brand-new day to focus on dro...</a>
+					<div class="fix"></div>
+				</li>
+			                </ul>
+                                                <div style="display: none;" id="tab-tags" class="list">
+                    <a href="http://coenraets.org/blog/tag/air/" class="tag-link-3" title="4 topics" style="font-size: 17.818181818182pt;">Air</a>
+<a href="http://coenraets.org/blog/tag/ajax/" class="tag-link-46" title="1 topic" style="font-size: 12pt;">ajax</a>
+<a href="http://coenraets.org/blog/tag/blazeds/" class="tag-link-7" title="1 topic" style="font-size: 12pt;">BlazeDS</a>
+<a href="http://coenraets.org/blog/tag/brackets/" class="tag-link-66" title="1 topic" style="font-size: 12pt;">Brackets</a>
+<a href="http://coenraets.org/blog/tag/charts/" class="tag-link-47" title="3 topics" style="font-size: 16.363636363636pt;">charts</a>
+<a href="http://coenraets.org/blog/tag/creative-cloud/" class="tag-link-78" title="1 topic" style="font-size: 12pt;">Creative Cloud</a>
+<a href="http://coenraets.org/blog/tag/data-services/" class="tag-link-48" title="1 topic" style="font-size: 12pt;">Data Services</a>
+<a href="http://coenraets.org/blog/tag/dropbox/" class="tag-link-67" title="1 topic" style="font-size: 12pt;">Dropbox</a>
+<a href="http://coenraets.org/blog/tag/flex/" class="tag-link-12" title="6 topics" style="font-size: 20pt;">Flex</a>
+<a href="http://coenraets.org/blog/tag/flexorg/" class="tag-link-49" title="3 topics" style="font-size: 16.363636363636pt;">flexorg</a>
+<a href="http://coenraets.org/blog/tag/frameworks/" class="tag-link-14" title="1 topic" style="font-size: 12pt;">Frameworks</a>
+<a href="http://coenraets.org/blog/tag/html/" class="tag-link-50" title="1 topic" style="font-size: 12pt;">html</a>
+<a href="http://coenraets.org/blog/tag/ilog/" class="tag-link-18" title="1 topic" style="font-size: 12pt;">ilog</a>
+<a href="http://coenraets.org/blog/tag/lcds/" class="tag-link-28" title="1 topic" style="font-size: 12pt;">LCDS</a>
+<a href="http://coenraets.org/blog/tag/messaging/" class="tag-link-51" title="1 topic" style="font-size: 12pt;">Messaging</a>
+<a href="http://coenraets.org/blog/tag/offline/" class="tag-link-52" title="3 topics" style="font-size: 16.363636363636pt;">Offline</a>
+<a href="http://coenraets.org/blog/tag/open-source/" class="tag-link-53" title="1 topic" style="font-size: 12pt;">Open Source</a>
+<a href="http://coenraets.org/blog/tag/phonegap/" class="tag-link-37" title="2 topics" style="font-size: 14.618181818182pt;">PhoneGap</a>
+<a href="http://coenraets.org/blog/tag/remoting/" class="tag-link-54" title="1 topic" style="font-size: 12pt;">Remoting</a>
+<a href="http://coenraets.org/blog/tag/salesbuilder/" class="tag-link-55" title="1 topic" style="font-size: 12pt;">Salesbuilder</a>
+<a href="http://coenraets.org/blog/tag/sqlite/" class="tag-link-44" title="1 topic" style="font-size: 12pt;">SQLite</a>
+<a href="http://coenraets.org/blog/tag/webplatform/" class="tag-link-68" title="1 topic" style="font-size: 12pt;">WebPlatform</a>                </div>
+                
+            </div><!-- /.boxes -->
+
+        </div><!-- /wooTabs -->
+
+        </div>         <div id="woo_twitter-2" class="widget widget_woo_twitter"><h3>Recent Tweets</h3><div class="back">
+<ul id="twitter_update_list_woo_twitter-2">
+<li></li>
+</ul>
+<p>Follow <a href="http://twitter.com/ccoenraets"><strong>@ccoenraets</strong></a> on Twitter</p>
+</div>
+<div class="clear"></div>
+	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
+
+	    function twitterCallback2(twitters) {
+
+	      var statusHTML = [];
+	      for (var i=0; i<twitters.length; i++){
+	        var username = twitters[i].user.screen_name;
+	        var status = twitters[i].text.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
+	          return '<a href="'+url+'">'+url+'</a>';
+	        }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
+	          return  reply.charAt(0)+'<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(1)+'</a>';
+	        });
+	        statusHTML.push( '<li><span class="content">'+status+'</span> <a style="font-size:85%" class="time" href="http://twitter.com/'+username+'/statuses/'+twitters[i].id_str+'">'+relative_time(twitters[i].created_at)+'</a></li>' );
+	      }
+	      document.getElementById( 'twitter_update_list_woo_twitter-2').innerHTML = statusHTML.join( '' );
+	    }
+
+	    function relative_time(time_value) {
+	      var values = time_value.split( " " );
+	      time_value = values[1] + " " + values[2] + ", " + values[5] + " " + values[3];
+	      var parsed_date = Date.parse(time_value);
+	      var relative_to = (arguments.length > 1) ? arguments[1] : new Date();
+	      var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);
+	      delta = delta + (relative_to.getTimezoneOffset() * 60);
+
+	      if (delta < 60) {
+	        return 'less than a minute ago';
+	      } else if(delta < 120) {
+	        return 'about a minute ago';
+	      } else if(delta < (60*60)) {
+	        return (parseInt(delta / 60)).toString() + ' minutes ago';
+	      } else if(delta < (120*60)) {
+	        return 'about an hour ago';
+	      } else if(delta < (24*60*60)) {
+	        return 'about ' + (parseInt(delta / 3600)).toString() + ' hours ago';
+	      } else if(delta < (48*60*60)) {
+	        return '1 day ago';
+	      } else {
+	        return (parseInt(delta / 86400)).toString() + ' days ago';
+	      }
+	    }
+	//-->!]]>
+	</script>
+	<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/ccoenraets.json"></script>
+	</div></aside><!-- /#sidebar -->
+
+		</div><!-- /#main-sidebar-container -->         
+
+		
+    </div><!-- /#content -->
+	
+	<footer id="footer" class="col-full">
+
+		
+		<div id="copyright" class="col-left">
+			<p>© 2013 Christophe Coenraets. All Rights Reserved. </p>		</div>
+
+		<div id="credit" class="col-right">
+			<p>Powered by <a href="http://wordpress.org/" title="WordPress">WordPress</a>. Designed by <a href="http://www.woothemes.com/" title="WooThemes"><img src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/woothemes.png" alt="Woo Themes" height="19" width="74"></a></p>		</div>
+
+	</footer>
+
+	
+	</div><!-- /#inner-wrapper -->
+
+</div><div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/xd_arbiter.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_http" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0" scrolling="no"></iframe><iframe src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/xd_arbiter_002.htm" style="border: medium none;" tab-index="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_https" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0" scrolling="no"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div><!-- /#wrapper -->
+
+<div class="fix"></div><!--/.fix-->
+
+<!-- Woo Tabs Widget -->
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	// UL = .wooTabs
+	// Tab contents = .inside
+
+	var tag_cloud_class = '#tagcloud';
+
+	//Fix for tag clouds - unexpected height before .hide()
+	var tag_cloud_height = jQuery( '#tagcloud').height();
+
+	jQuery( '.inside ul li:last-child').css( 'border-bottom','0px' ); // remove last border-bottom from list in tab content
+	jQuery( '.wooTabs').each(function(){
+		jQuery(this).children( 'li').children( 'a:first').addClass( 'selected' ); // Add .selected class to first tab on load
+	});
+	jQuery( '.inside > *').hide();
+	jQuery( '.inside > *:first-child').show();
+
+	jQuery( '.wooTabs li a').click(function(evt){ // Init Click funtion on Tabs
+
+		var clicked_tab_ref = jQuery(this).attr( 'href' ); // Strore Href value
+
+		jQuery(this).parent().parent().children( 'li').children( 'a').removeClass( 'selected' ); //Remove selected from all tabs
+		jQuery(this).addClass( 'selected' );
+		jQuery(this).parent().parent().parent().children( '.inside').children( '*').hide();
+
+		jQuery( '.inside ' + clicked_tab_ref).fadeIn(500);
+
+		 evt.preventDefault();
+
+	})
+})
+</script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shCore.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shBrushXml.js"></script>
+<script type="text/javascript" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/shBrushJava.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://coenraets.org/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.83c";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://coenraets.org/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.83c";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+
+
+
+
+
+<iframe style="width: 1px; height: 1px; position: absolute; top: -100px;" src="Building%20RESTful%20Services%20with%20Java%20Using%20JAX-RS%20and%20Jersey%20%E2%80%94%20Sample%20Application%20_%20Christophe%20Coenraets_files/postmessageRelay.htm" id="oauth2relay594880439" name="oauth2relay594880439"></iframe></body></html>
+<!-- Dynamic page generated in 1.013 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2013-09-28 21:21:49 -->
+<!-- super cache -->

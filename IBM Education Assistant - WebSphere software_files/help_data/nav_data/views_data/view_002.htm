@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!------------------------------------------------------------------------------
+ ! Copyright (c) 2000, 2004 IBM Corporation and others.
+ ! All rights reserved. This program and the accompanying materials 
+ ! are made available under the terms of the Eclipse Public License v1.0
+ ! which accompanies this distribution, and is available at
+ ! http://www.eclipse.org/legal/epl-v10.html
+ ! 
+ ! Contributors:
+ !     IBM Corporation - initial API and implementation
+ ------------------------------------------------------------------------------->
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Search Results</title>
+
+<script language="JavaScript">
+
+function onloadHandler(e)
+{
+	var h=window.searchToolbarFrame.document.getElementById("titleText").offsetHeight; 
+	if(h<=19){
+		return; 
+	}
+	document.getElementById("viewFrameset").setAttribute("rows", (11+h)+",*"); 
+	window.searchToolbarFrame.document.getElementById("titleTextTableDiv").style.height=(9+h)+"px"; 
+
+}
+</script>
+
+</head>
+
+<frameset id="viewFrameset" onload="onloadHandler()" rows="24,*" frameborder="0" framespacing="0" border="0">
+	<frame id="toolbar" name="searchToolbarFrame" title="Search Results View Toolbar" src="view_data_002/searchToolbar.htm" marginwidth="0" marginheight="0" frameborder="0" noresize="0" scrolling="no">
+	<frame name="searchViewFrame" title="Search Results View" src="view_data_002/searchView.htm" marginwidth="10" marginheight="0" frameborder="0">
+</frameset>
+
+
+
+</html>

@@ -1,0 +1,1582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Cache-control" content="no-cache">
+<title>Build a RESTful Web service using Jersey and Apache Tomcat</title>
+<meta http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="en">
+<meta name="IBM.Country" content="ZZ">
+<meta name="Security" content="Public">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.PageAttributes" content="sid=1003,1004">
+<meta name="Source" content="v16 Template Generator">
+<meta name="Robots" content="index,follow">
+<meta name="Abstract" content="Representational state transfer (REST) was introduced in early 2000 by Roy Fielding's doctoral dissertation. However, in the Java community, it was not standardized until JSR 311(JAX-RS) was finalized in 2008. The first release of its reference implementation is even later. In this article, I introduce Jersey, which is the reference implementation of JSR 311, by describing its essential APIs and annotations. I'll also show you how you can smoothly transfer from servlet-style services to RESTful services by integrating Jersey into Apache Tomcat.">
+<meta name="Description" content="Representational state transfer (REST) was introduced in early 2000 by Roy Fielding's doctoral dissertation. However, in the Java community, it was not standardized until JSR 311(JAX-RS) was finalized in 2008. The first release of its reference implementation is even later. In this article, I introduce Jersey, which is the reference implementation of JSR 311, by describing its essential APIs and annotations. I'll also show you how you can smoothly transfer from servlet-style services to RESTful services by integrating Jersey into Apache Tomcat.">
+<meta name="Keywords" content="Ajax, curl, web services, RESTful Web services, , tttwaca">
+<meta name="DC.Date" scheme="iso8601" content="2009-09-24">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TTA00">
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCDEVZZ">
+<meta name="DC.Rights" content="© Copyright&nbsp;IBM Corporation&nbsp;2009">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2009-09-24">
+<meta name="title" content="Build a RESTful Web service using Jersey and Apache Tomcat">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- dW-specific CSS -->
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/jquery.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- xM Masthead/Footer -->
+<link href="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dw-mf2013-N.css" rel="stylesheet" title="www" type="text/css">
+<script src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/ibmcommon.js" type="text/javascript">//</script><link title="IBM Search" href="http://www.ibm.com/search/opensearch/description.xml" type="application/opensearchdescription+xml" rel="search">
+<script src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dynamicnav.js" type="text/javascript">//</script>
+<!-- dW functional JS -->
+<script language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('web');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+<script charset="UTF-8" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/flash-detect_002.js" type="text/javascript" id="flashdetect"></script><script charset="UTF-8" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/usen-utf8.js" type="text/javascript" id="mhMenu"></script><script charset="UTF-8" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/Controller" type="text/javascript" id="wiBundle"></script></head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead-dw">
+  
+    <!-- TOP ROW -->    
+    <div id="dw-masthead-top-row">
+        <ul id="ibm-mast-options-dw">
+			<li id="dw-mast-top-4">
+				<a href="http://www.ibm.com/developerworks/"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dwn-dw-badge.png" alt="dW" aria-label="dW" height="22" width="43"></a>
+			</li>
+		    <li id="dw-mast-top-0" class="navtab">
+				<a class="" href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&amp;lang=en&amp;d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F" title="">Sign in (or register)</a>
+			</li>
+		    <li id="dw-mast-top-1" class="navtab">
+				<a href="#SELECTLANG">English</a>
+			</li>
+			<li id="dw-mast-top-2" class="navtab dw-mf-hide">
+				<a href="#">[userid]</a>
+			</li>
+			<li id="dw-mast-top-3" class="navtab">
+				<a href="#">IBM</a>
+			</li>
+		</ul>
+	</div>
+    
+    <!-- TOP ROW SLIDER -->
+    <div id="ibm-my-menu-dw">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+                <!-- Sign-in -->
+				<div class="dw-mast-columns">                
+					<div class="dw-mast-col-1-1">
+						<div id="dw-mast-sso">
+							<div id="signin_error_mf" class="no-display"></div>
+							<div id="dw-mast-sso-form">
+								<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-sso-id" class="dw-mast-sso-id-en">
+										<label for="ibmid_mf">IBM ID:</label>
+										<input class="" id="ibmid_mf" name="ibmid_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,'mf');" type="text">
+									</div>
+									<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-en">
+										<label for="pw_mf">Password:</label>
+										<input class="" id="pw_mf" value="" name="pw_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,'mf');" type="password">
+									</div>
+									<div id="dw-mast-sso-target" class="dw-mast-sso-target-en">
+										<p class="dw-mf-perm-box">
+											<input id="perm_mf" name="perm_name_mf" type="checkbox"><label for="perm_mf"> Keep me signed in.</label>
+										</p>
+									</div>					
+									<div id="dw-mast-sso-terms">
+										<p class="dw-mast-sso-terms-en">By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="ibm_submit_name_mf" value="Submit" onclick="signin('mf');return false;" type="submit">
+									</div>
+								</form>
+							</div>
+							<div id="dw-mast-sso-update">
+								<div id="dw-mast-sso-update-id">
+									<ul>
+										<li><a class="ibm-forward-link" href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=en&amp;d='+encodeURIComponent(location.href);})();">Need an IBM ID?</a></li>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></li>
+									</ul>
+								</div>
+								<div id="dw-mast-sso-update-pw">
+									<ul class="dw-mf-pwupdate">
+										<li><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a></li>
+										<li><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password</a></li>
+									</ul>
+								</div>
+							</div>
+							<div id="dw-mast-sso-text">
+						<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select
+ information in your profile (name, country/region, and company) is 
+displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+								</ul>
+							</div>							
+						</div>                    
+						<div id="dw-mast-dname" class="dw-mf-hide">
+							<p>The first time you sign in to developerWorks, a profile is 
+created for you, so you need to choose a display name.  Your display 
+name accompanies the content you post on developerworks.</p><p><strong>Please choose a display name between 3-31 characters</strong>.  Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+							<div id="signin_dname_error_mf" class="no-display"></div>
+							<div id="dw-mast-dname-form">
+								<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-dname-mf">
+										<label for="dname_mf">Display name:</label>
+										<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" onkeypress="handleEP(event,this.form,'mf');" type="text">
+									</div>
+									<div id="dw-mast-dname-terms">
+										<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="dname_submit_name_mf" value="Submit" onclick="signin('mf');return false;" type="submit">
+									</div>
+								</form>								
+							</div>
+							<div id="dw-mast-dname-secure">
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+								</ul>
+							</div>							
+						</div>
+						<div id="dw-mast-auth" class="dw-mf-hide">
+							<div>
+								<h2>My developerWorks:</h2>
+								<ul>
+									<li><a id="dw-mast-top-0-0" href="http://www.ibm.com/developerworks/community/homepage/web/updates/?lang=en">My home</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=en">My profile</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=en">My communities</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/news">Settings</a></li>
+								</ul>     
+							</div>
+							<div id="dw-mast-notify" class="dw-mf-hide">
+								<h2>My notifications:</h2>
+								<ul>
+									<li><a id="new_notify" href="http://www.ibm.com/developerworks/community/homepage?lang=en">{[num_notify] new notifications}([num_notify] new notification)</a></li>
+									<li><a id="new_invite" href="http://www.ibm.com/developerworks/community/profiles/html/wc.do?action=in&amp;requireAuth=true&amp;widgetId=friends&amp;lang=[lang]">{[num_invite] network requests}([num_invite] network request)</a></li>  
+								</ul>
+							</div>
+							<div class="dw-mast-more">
+								<ul class="ibm-link-list">
+									<li><a class="dw-more-link" href="#" onclick="signOut(); return false;"><strong>Sign out</strong></a></li>
+								</ul>
+							</div>		
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+								</ul>
+							</div>							
+						</div>						
+					</div>                   
+                </div>
+                <!-- Language selector --> 
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2>Select a language:</h2>
+						<ul>
+							<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/">English</a></li>
+							<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+							<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+							<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-lang"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+                </div>                
+                <div class="dw-mast-columns"><!-- Authenticated --></div>
+                <!-- IBM -->
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<ul>
+							<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/">IBM home</a></li>
+							<li><a href="http://www.ibm.com/solutions/">Industries &amp; solutions</a></li>
+							<li><a href="http://www.ibm.com/technologyservices/">Services</a></li>
+							<li><a href="http://www.ibm.com/products/">Products</a></li>
+							<li><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2 dw-mast-ibm">
+						<ul>
+							<li><a href="http://www.ibm.com/support/publications/us/library/index.shtml">Product information</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks</a></li>
+							<li><a href="http://www.ibm.com/software/">Software</a></li>
+							<li><a href="http://www.ibm.com/software/sw-services/">Software services</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-ibm"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div id="ibm-universal-nav-dw">
+        <ul id="ibm-unav-links-dw">
+            <li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dwn-dw-wordmark.png" alt="developerWorks®" height="28" width="225"></a>
+            </li>
+        </ul>
+        <ul id="ibm-menu-links-dw">
+            <li id="dw-mast-nav-0"><a href="http://www.ibm.com/developerworks/topics/">Technical topics</a></li>
+            <li id="dw-mast-nav-1"><a href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></li>
+            <li id="dw-mast-nav-2"><a href="http://www.ibm.com/developerworks/community/index.html">Community</a></li>
+            <li id="dw-mast-nav-3"><a href="http://www.ibm.com/developerworks/events/">Events</a></li>
+        </ul>
+			<form id="ibm-search-form-dw" action="//www.ibm.com/search/csass/search/" method="get" name="form1">
+				<p>
+				<label for="q"><span class="ibm-access">Search developerWorks</span></label>
+				<input id="q" name="q" value="Search developerWorks" maxlength="100" type="text">
+				<input name="sn" value="dw" type="hidden">
+				<input name="lang" value="en" type="hidden">
+				<input name="cc" value="US" type="hidden">
+				<input name="en" value="utf" type="hidden">
+				<input name="hpp" value="20" type="hidden">
+				<input name="dws" value="dw" type="hidden">
+				<input id="ibm-search-dw" class="ibm-btn-search-dw" value="Search" type="submit">
+				</p>
+			</form>
+    </div>
+    
+    <!-- BOTTOM ROW SLIDER -->
+    <div id="ibm-common-menu-dw">
+        <div class="ibm-ribbon-pane-dw dw-ribbon-pane-en">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Technical topics category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-5-1">
+						<h2><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/topics/">Technical topics</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/agile/">Agile transformation</a></li>
+							<li><a href="http://www.ibm.com/developerworks/aix/">AIX and UNIX</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bigdata/">Big data</a></li>
+							<li><a href="http://www.ibm.com/developerworks/analytics/">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bpm/">Business process management</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-5-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/cloud/">Cloud computing</a></li>
+							<li><a href="http://www.ibm.com/developerworks/commerce/">Commerce</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ibmi/">IBM i</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/industry/">Industries</a></li>
+							<li><a href="http://www.ibm.com/developerworks/data/">Information management</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-5-3">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/java/">Java technology</a></li>
+							<li><a href="http://www.ibm.com/developerworks/linux/">Linux</a></li>
+							<li><a href="http://www.ibm.com/developerworks/lotus/">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/mobile/">Mobile development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/opensource/">Open source</a></li>
+						</ul>     
+                    </div>
+                    <div class="dw-mast-col-5-4">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/rational/">Rational</a></li>
+							<li><a href="http://www.ibm.com/developerworks/security/">Security</a></li>
+							<li><a href="http://www.ibm.com/developerworks/servicemanagement/">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/web/">Web development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/websphere/">WebSphere</a></li>
+						</ul> 
+                    </div>
+                    <div class="dw-mast-col-5-5">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/library/"><strong>Technical library</strong></a></li>
+							<li><a href="http://www.ibm.com/developerworks/products/"><strong>Products A to Z</strong></a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-tech"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Evaluation software category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2><a id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#ba">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#data">Information management</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#lotus">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#rational">Rational</a></li>
+						</ul>            
+                    </div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#tivoli">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#websphere">WebSphere</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#more">More IBM products (Mobile, PureSystems, Security...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-eval"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Community category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-3-1">
+						<h2><a id="dw-mast-nav-2-0" href="http://www.ibm.com/developerworks/community/index.html">Community</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/homepage/?lang=en">My home</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/profiles/?lang=en">Profiles</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/groups/?lang=en">Communities</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-3-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/blogs/?lang=en">Blogs</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/forums/?lang=en">Forums</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/wikis/?lang=en">Wikis</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-3-3 dw-mast-col-3-3-en">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/activities/?lang=en">Activities</a></li>
+							<li><a href="https://www.ibm.com/developerworks/community/podcasts/?lang=en">Podcasts</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/champion/">IBM Champion program</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-comm"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Events category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-1-1">
+						<h2><a id="dw-mast-nav-3-0" href="http://www.ibm.com/developerworks/events/">Events</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/find/webcasts/">Webcasts</a></li>
+							<li><a href="http://www.ibm.com/developerworks/find/events/">Find events (webcasts, conferences...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-event"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div id="fdiv" class="ibm-access"></div>
+<!-- MASTHEAD_END --><!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+        <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/web/">Web development</a></li><li><a href="http://www.ibm.com/developerworks/views/web/library.jsp">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Build a RESTful Web service using Jersey and Apache Tomcat</h1><p>
+</p></div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="#author1">Yi Ming Huang</a> (<a href="mailto:huangyim@cn.ibm.com?subject=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">huangyim@cn.ibm.com</a>), Software Engineer, 				IBM	</div><div style="display: none;" id="authortip1" class="dwauthor-onload-state ibm-no-print">Yi Ming Huang is a software engineer working on Lotus ActiveInsight in the
+             China Development Lab. He has experience on Portlet/Widget-related Web
+            development and is interested in REST, OSGi, and Spring technologies.</div><div class="author"><a class="dwauthor" rel="#authortip2" href="#author2">Dong Fei Wu</a> (<a href="mailto:wudongf@cn.ibm.com?subject=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">wudongf@cn.ibm.com</a>), Software Engineer,  IBM</div><div style="display: none;" id="authortip2" class="dwauthor-onload-state ibm-no-print">Dong
+ Fei Wu is a staff software engineer with the IBM WebSphere Dashboard 
+Framework development team in the IBM China Software Development Lab. He
+ designs and develops basic builders for WebSphere Dashboard Framework. 
+You can contact him at wudongf@cn.ibm.com.</div><div class="author"><a class="dwauthor" rel="#authortip3" href="#author3">Qing Guo</a> (<a href="mailto:qingguo@cn.ibm.com?subject=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">qingguo@cn.ibm.com</a>), Software Engineer, 				IBM	</div><div style="display: none;" id="authortip3" class="dwauthor-onload-state ibm-no-print">Qing Guo is the development lead of the IBM WebSphere Dashboard Framework.
+             He is experienced in J2EE-related areas.</div>
+<p></p>
+<p><strong>Summary:</strong>&nbsp; Representational state transfer (REST) was introduced in early 2000 by Roy Fielding's doctoral dissertation.
+         However, in the Java™ community, it was not standardized until the JSR
+           311(JAX-RS) specification was
+         finalized in 2008. The first release of its reference implementation is
+         even later. In this article, I introduce Jersey, which is the reference
+         implementation of JSR 311, by describing its essential APIs and annotations. I'll
+         also show you how you can smoothly transfer from servlet-style services to
+         RESTful services by integrating Jersey into Apache Tomcat.</p>
+
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><b>Date:</b>&nbsp; 24 Sep  2009
+<br><b>Level: </b>&nbsp;Introductory
+<br class="ibm-ind-link"><b>PDF:</b>&nbsp; <a href="http://download.boulder.ibm.com/ibmdl/pub/software/dw/ajax/wa-aj-tomcat/wa-aj-tomcat-pdf.pdf">A4 and Letter</a> (46KB | 14 pages)<a class="ibm-external-link" href="http://www.adobe.com/products/acrobat/readstep2.html">Get Adobe® Reader®</a>
+<br><strong>Also available in:&nbsp;</strong>
+&nbsp;<a href="http://www.ibm.com/developerworks/cn/web/wa-aj-tomcat/">Chinese</a>
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/jp/web/library/wa-aj-tomcat/">Japanese</a> 
+
+
+
+<br>
+<br><strong>Activity:</strong>&nbsp; 298087 views
+<br><strong>Comments:</strong> &nbsp; <span id="nCmts">&nbsp;(<a class="dw-view-comment" href="#icomments">View</a>&nbsp;|&nbsp;<a onclick="showSignIn();return false;" href="#">Add comment</a> - Sign in)</span>
+<!-- Rating_Area_Begin -->
+</p><div id="art-rating-summary"><img alt="Average rating 4 stars based on 230 votes" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-4b.jpg" class="dw-avg-rating"> Average rating (230 votes)<br><a class="dw-view-comment" href="#iratings">Rate this article</a></div>
+<!-- Rating_Area_End -->
+<p></p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p><a name="N10098"><span class="atitle">RESTful Web service introduction</span></a></p>
+                
+                <p>Representational State Transfer, or REST, was
+            introduced and defined in 2000 by the doctoral dissertation of Roy Fielding,
+            one of the principal authors of the HTTP specification versions 1.0 and
+            1.1.</p>
+                
+                <p>The most important concept in REST is <i>resources</i>, which are
+                    identified by global IDs— typically using URIs.
+            Client applications use HTTP methods (<code>GET/ POST/ PUT/ DELETE</code>) to manipulate
+            the resource or collection of resources.  A RESTful Web service is a Web
+            service implemented using HTTP and the principles of REST. Typically, a RESTful
+            Web service should define the following aspects:</p>
+                
+                <ul>
+            <li>The base/root URI for the Web service such as
+                http://host/&lt;appcontext&gt;/resources.</li>
+                
+            <li>The MIME type of the response data supported, which are JSON/XML/ATOM and so on.</li>
+                
+            <li> The set of operations supported by the service. (for example,<code> POST, GET, PUT</code> or
+               <code>DELETE</code>).</li>
+            </ul>
+                
+                <p>Table 1 illustrates the resource URI and HTTP methods
+            used in typical RESTful Web services. (<a href="#resources">Resources</a> also gives you more introduction and
+            design considerations for RESTful Web services.)</p>
+           
+           <br><a name="table1"><b>Table 1. Example of a RESTful Web service</b></a><br>
+			<table class="data-table-1" summary="Example of a RESTful web service" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>
+                  <b>Method / Resource</b>
+               </td><td> Collection of resources,
+                  URI like:<br> http://host/&lt;appctx&gt;/resources </td><td> Member resources, URI
+                  like:<br> http://host/&lt;appctx&gt;/resources/1234 </td></tr><tr><td>
+                  <b>GET</b>
+               </td><td>
+                 List all the members of the collection resources. </td><td>
+                  Retrieve a representation of one resource identified as 1234.
+               </td></tr><tr><td>
+                  <b>PUT</b>
+               </td><td>
+                  Update (replace) the collection with another one. </td><td>
+                  Update the member resource identified as 1234. </td></tr><tr><td>
+                  <b>POST</b>
+               </td><td>
+                  Create a member resource in the collection where the ID of it is
+                  automatically assigned. </td><td>
+                  Create a sub resource under it. </td></tr><tr><td>
+                  <b>DELETE</b>
+               </td><td>
+                  Delete the entire collection of resources. </td><td>
+                  Delete the member resource identified as 1234. </td></tr></tbody></table>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10125"><span class="atitle">JSR 311 (JAX-RS) and Jersey</span></a></p>
+                
+                <p>The proposal for JSR 311
+            or JAX-RS (The Java API for RESTful Web Services) was started in 2007, and the
+            release of version 1.0 was finalized in October 2008. Currently, JSR 311
+            version 1.1 is in the draft state. The purpose of this JSR is to provide a set
+            of APIs that can simplify the development of REST-style Web services.
+            </p>
+                
+                <p>Before the JAX-RS specification there were frameworks like Restlet and
+            RestEasy that could help you implement the RESTful Web services, but they were not
+            intuitive. Jersey is the reference implementation for JAX-RS, and it contains three
+            major parts.</p>
+                
+                <ul>
+            <li>
+               Core Server: By providing annotations and APIs standardized in 
+               JSR 311, you can develop a RESTful Web service in a very intuitive
+               way.</li>
+                
+            <li>
+               Core Client: The Jersey client API helps you to easily communicate with REST
+               services.</li>
+                
+            <li>
+               Integration: Jersey also provides libraries that can easily
+               integrate with Spring, Guice, Apache Abdera, and so on.</li>
+            </ul>
+                
+                <p>In the following sections of the article, I introduce all of these
+         components, but will focus more on the Core Server. </p>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10140"><span class="atitle">Build a RESTful Web service</span></a></p>
+                
+                <p>I'll begin with a "hello world" application that can be
+            integrated into Tomcat. This application will get you through setting up the environment
+            and will cover the basics of Jersey and JAX-RS.</p>
+                
+                <p>Then, I'll introduce a more
+            complicated application to go deeper into the essentials and features of
+            JAX-RS, such as multiple MIME type representations support, JAXB support, and
+            so on. I 
+            will excerpt code snippets from the sample to introduce the important
+            concepts.</p>
+                
+                <p><a name="N1014C"><span class="smalltitle">Hello World: The first Jersey Web project</span></a></p>
+                
+                <p>To set up the development environment you need
+            the following artifacts (see <a href="#resources">Resources</a> for downloads):</p>
+                
+                <ul>
+            <li>IDE: Eclipse IDE for JEE (v3.4+) or IBM Rational Application Developer 7.5</li>
+                     <li>Java SE5 or above</li>
+                
+            <li>Web container: Apache Tomcat 6.0 (Jetty and others will also work)</li>
+                    <li>Jersey libraries: Jersey 1.0.3 archive, which includes all the necessary
+               libraries</li>
+            </ul>
+                
+                <p><a name="N10168"><span class="smalltitle">Setting up the environment for
+                Jersey</span></a></p>
+           
+           <p>First, create a server run time for Tomcat 6.0 on Eclipse. This
+            is the Web container for your RESTful Web application. Then create a dynamic
+            Web application named "Jersey," and specify the target run time to be Tomcat
+            6.0.</p>
+                
+                <p>Finally, copy the following libraries from the Jersey archive to the lib
+            directory under WEB-INF:</p>
+                
+                <ul>
+            <li>Core Server: jersey-core.jar, jersey-server.jar, jsr311-api.jar, asm.jar</li>
+            <li>Core Client: (Used for testing) jersey-client.jar</li>
+            <li>JAXB support: (Used in the advanced example) jaxb-impl.jar, jaxb-api.jar, activation.jar, stax-api.jar, wstx-asl.jar</li>
+           <li>JSON support: (Used in the advanced example) jersey-json.jar</li>
+            </ul>
+                
+                <p><a name="N10182"><span class="smalltitle">Developing the REST service</span></a></p>
+           
+           <p>Now
+            that you have set up the environment you are ready to develop your first REST
+            service, which simply says "Hello" to the client.</p>
+                
+                <p>To do this, you need to
+            direct all the REST requests to the Jersey container by defining a servlet
+            dispatcher in the application's web.xml file. (See Listing 1.)
+            Besides declaring the Jersey servlet, it also defines an initialization
+            parameter indicating the Java package that contains the
+            resources.</p>
+                
+                <br><a name="N1018F"><b>Listing 1. Define the
+Jersey servlet dispatcher in the web.xml file</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">&lt;servlet&gt;
+  &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+&lt;servlet-class&gt;
+  com.sun.jersey.spi.container.servlet.ServletContainer
+&lt;/servlet-class&gt;
+  &lt;init-param&gt;
+    &lt;param-name&gt;com.sun.jersey.config.property.packages&lt;/param-name&gt;
+    &lt;param-value&gt;sample.hello.resources&lt;/param-value&gt;
+  &lt;/init-param&gt;
+  &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;Jersey REST Service&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/rest/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;            </pre></td></tr></tbody></table><br>
+                
+                <p>Now
+            you will write a resource named HelloResource, which accepts the HTTP <code>GET</code> and
+            responses with the cliché "Hello Jersey."</p>
+                
+                <br><a name="N1019E"><b>Listing 2. HelloResource in package sample.hello.resources</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@Path("/hello")
+public class HelloResource {
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public String sayHello() {
+		return "Hello Jersey";
+	}
+}            </pre></td></tr></tbody></table><br>
+                
+                <p>There
+are several points in the code that need highlighting:</p>
+                
+                <ul>
+            <li>Resource Class: Notice the resource class is a plain old java
+               object (POJO) and is not restricted from implementing any interface. This adds many
+               advantages such as reusability and simplicity.</li>
+                
+            <li>Annotations: They are defined in javax.ws.rs.*, which are part of
+               the JAX-RS (JSR 311) specification.</li>
+            
+                    <li><code>@Path</code>: This defines the resource base URI.
+               Formed with context root and hostname, the resource identifier will be
+               something like http://localhost:8080/Jersey/rest/hello.</li>
+                
+                
+            <li><code>@GET:</code> This means that the following method
+               responds to the HTTP <code>GET</code> method.</li>
+                
+                
+            <li><code>@Produces:</code> Defines the response content MIME type as
+               plain/text. </li>
+            </ul>
+                
+                <p><a name="N101C6"><span class="smalltitle">Testing the Hello app</span></a></p>
+                
+                <p>To test the app, open your browser and enter the URL
+            http://&lt;host&gt;:&lt;port&gt;/&lt;appctx&gt;/rest/hello. You will see
+            the response "Hello Jersey." This is quite simple, with annotations taking care of the
+            request, response, and methods.</p>
+                
+                <p>The following sections will cover the
+            essential parts of the JAX-RS specification and will be introduced using some code
+            snippets from the Contacts example application. You can find all the code for
+            this more advanced sample in the source code package (see <a href="#download">Download</a>).</p>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N101D5"><span class="atitle">Resources</span></a></p>
+                
+                <p>Resources are the key parts that
+            compose a RESTful Web service. You manipulate resources using HTTP methods
+            like <code>GET, POST, PUT</code>, and <code>DELETE</code>. Anything in the application can be a resource:
+            employees, contacts, organizations, everything. In JAX-RX, resources are
+            implemented by a POJO, with an <code>@Path</code> annotation to
+            compose its <i>identifier</i>. A resource can also have sub resources. In this
+                    case, 
+            the parent resource is a resource collection while the sub resources are
+            member resources. </p>
+                
+                <p>In the sample Contacts application, you will
+            manipulate individual contacts and collections of contacts. <code>ContactsResource</code> is the collection resource with the URI of
+            /contacts, and <code>ContactResource</code> is the member
+            resource with the URI of /contacts/{contactId}. The underlining JavaBean is a
+            simple Contact class with id, name, and address as its member fields. See
+            Listings 3 and 4 for details. You can also download the full source code
+            package at the end of this
+            article (see <a href="#download">Download</a>).</p>
+                
+                <br><a name="list3"><b>Listing 3. ContactsResource</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@Path("/contacts")
+public class ContactsResource {
+	@Context
+	UriInfo uriInfo;
+	@Context
+	Request request;
+
+	@GET
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public List&lt;Contact&gt; getContacts() {
+		List&lt;Contact&gt; contacts = &gt;new ArrayList&lt;Contact&gt;();
+		contacts.addAll( ContactStore.getStore().values() );
+		return contacts;
+	}
+
+@Path("{contact}")
+	public ContactResource getContact(
+			@PathParam("contact") String contact) {
+		return new ContactResource(uriInfo, request, contact);
+	}
+}            </pre></td></tr></tbody></table><br>
+                
+                <p>There
+are several interesting things here that you should note.</p>
+                
+                <ul>
+            <li>
+               <code>@Context:</code> Use this annotation to inject the
+               contextual objects such as Request, Response, UriInfo, ServletContext, and
+               so on.</li>
+                
+                
+            <li>               <code>@Path("{contact}"):</code> This is the <code>@Path</code> annotation combined with the root path
+                  "/contacts" that forms the sub resources' URI.</li>
+                
+                
+            <li>               <code>@PathParam("contact"):</code> This
+                annotation injects
+               the parameters into the path, contact id in this case, to the method
+               parameter. Other available annotations are <code>@FormParam</code>, <code>@QueryParam</code>, and so on.</li>
+                
+                
+            <li>
+               <code>@Produces:</code> Multiple MIME types are supported for
+               responses. In this and the preceding case, application/xml will be the
+               default MIME type.</li>
+            </ul>
+                
+                <p>You may also notice that the <code>GET</code> methods
+                    return custom Java objects
+            instead of a String (plain text), as is shown in the previous Hello World example.
+            The JAX-RS specification requires that the implementation support multiple
+               representation types like InputStream, byte[], JAXB elements,
+            collections of JAXB elements, and so on, as well as the ability to serialize them to XML,
+            JSON, or plain text as responses. I will provide more information on representation
+            techniques, and especially on the JAXB element representation, later in this
+            article.
+         </p>
+                
+                <br><a name="N1023B"><b>Listing 4. ContactResource</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">public class ContactResource {
+	@Context
+	UriInfo uriInfo;
+	@Context
+	Request request;
+	String contact;
+	
+	public ContactResource(UriInfo uriInfo, Request request, 
+			String contact) {
+		this.uriInfo = uriInfo;
+		this.request = request;
+		this.contact = contact;
+	}
+	
+	@GET
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Contact getContact() {
+		Contact cont = ContactStore.getStore().get(contact);
+		if(cont==null)
+			throw new NotFoundException("No such Contact.");
+		return cont;
+	}
+}            </pre></td></tr></tbody></table><br>
+                
+                <p>The
+            code for ContactResource is straightforward. And, note the following items:</p>
+                
+                <ul>
+            <li>
+               Representation Type Contact: Contact is a simple JavaBean annotated
+               by <code>@XmlRootElement</code>, which makes it possible to be represented as XML or
+               JSON.</li>
+                
+                
+            <li>
+               ContactStore: It's a HashMap-based in-memory data store whose
+               implementation is not important for this article.</li>
+            </ul>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10251"><span class="atitle">Method</span></a></p>
+                
+                <p>HTTP methods
+            are mapped to CRUD (create, read, update and delete) actions for a resource.
+            Although you can make slight modifications such as making the <code>PUT</code> method to be
+            create or update, the basic patterns are listed as follows.</p>
+                
+                <ul>
+            <li>HTTP <code>GET</code>: Get/List/Retrieve an individual resource or a collection of
+               resources.</li>
+                
+            <li>HTTP <code>POST</code>: Create a new resource or resources.</li>
+                
+            <li>HTTP <code>PUT</code>: Update an existing resource or collection of
+               resources.</li>
+                
+            <li>HTTP <code>DELETE</code>: Delete a resource or collection of resources.</li>
+                </ul>
+           
+           <p>Because I have already introduced the <code>GET</code> method, I will start my
+               descriptions with <code>POST</code>. I will continue using
+               the Contact example as I explain these other methods.</p>
+           
+       <p><a name="N10288"><span class="smalltitle">POST</span></a></p>
+                 <p>Usually a new contact is created
+            by filling in a form. That is, an HTML form will be POSTed to the server, and
+            the server creates and persists the newly created contact. Listing 5
+            demonstrates the server-side logic for
+            this.</p>
+                
+                <br><a name="N10292"><b>Listing 5. Accept the form submission (POST) and create a new contact</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@POST
+@Produces(MediaType.TEXT_HTML)
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+public void newContact(
+		@FormParam("id") String id,
+		@FormParam("name") String name,
+		@Context HttpServletResponse servletResponse
+) throws IOException {
+	Contact c = new Contact(id,name,new ArrayList&lt;Address&gt;());
+	ContactStore.getStore().put(id, c);
+		
+	URI uri = uriInfo.getAbsolutePathBuilder().path(id).build();
+	Response.created(uri).build();
+		
+	servletResponse.sendRedirect("../pages/new_contact.html");
+}            </pre></td></tr></tbody></table><br>
+                
+                <p>Note that the following parts make this example work. </p>
+                
+                <ul>
+            <li><code>@Consumes:</code> Declares that the method consumes an
+               HTML FORM.</li>
+                
+            <li><code>@FormParam:</code> Injects the form input identified by
+               the HTML name attribute to this method.</li>
+                
+            <li><code>@Response.created(uri).build():</code> Builds a new URI
+               for the newly created contact as <code>/contacts/{id}</code> and set the response code
+               as <code>201/created</code>. You can access the new contact
+                using http://localhost:8080/Jersey/rest/contacts/&lt;id&gt;.</li>
+                </ul>
+           
+           <p><a name="N102B8"><span class="smalltitle">PUT</span></a></p>
+                
+              <p>I use the PUT method to update an existing resource.
+            However, this can also be implemented as an update or by creating a resource as
+            shown in the code snippet in Listing 6.</p>
+                
+                <br><a name="list6"><b>Listing 6. Accept PUT request and create or update a contact</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@PUT
+@Consumes(MediaType.APPLICATION_XML)
+public Response putContact(JAXBElement&lt;Contact&gt; jaxbContact) {
+	Contact c = jaxbContact.getValue();
+	return putAndGetResponse(c);
+}
+
+private Response putAndGetResponse(Contact c) {
+	Response res;
+	if(ContactStore.getStore().containsKey(c.getId())) {
+		res = Response.noContent().build();
+	} else {
+		res = Response.created(uriInfo.getAbsolutePath()).build();
+	}
+	ContactStore.getStore().put(c.getId(), c);
+	return res;
+}            </pre></td></tr></tbody></table><br>
+                
+                <p>I cover a number of different concepts in this example, highlighting
+                    the following concepts. </p>
+                
+                <ul>
+            <li>
+               Consume XML: The <code>putContact()</code> method
+               accepts the request content type of APPLICATION/XML, while this input XML will
+               bind to the Contact object using JAXB. You will find the client code in next
+               section.</li>
+                
+            <li>
+               Empty response with different status code: The response of the <code>PUT</code>
+               request will not have any content, but will have a different status code. If the
+               contact exists in the data store, I update this contact and return <code>204/no
+               content</code>. If there is a new contact, I create it and return <code>201/created</code>.</li>
+                </ul>
+           
+           <p><a name="N102E4"><span class="smalltitle">DELETE</span></a></p>
+                
+              <p>It's quite simple to implement a <code>DELETE</code>
+                  method. Take a look at Listing 7 for an
+            example.</p>
+           
+           <br><a name="N102F2"><b>Listing 7. Delete a contact identified by its ID</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@DELETE
+public void deleteContact() {
+	Contact c = ContactStore.getStore().remove(contact);
+	if(c==null)
+		throw new NotFoundException("No such Contact.");
+}            </pre></td></tr></tbody></table><br>
+                
+                <p><a name="N102F8"><span class="smalltitle">Representation</span></a></p>
+                
+                <p>In the previous
+            sections, I illustrated several representation types. Now I'll briefly go
+            through them and give you a close look at the JAXB representation. Other supported
+            representation types are byte[], InputStream, File, and so on.</p>
+                
+                <ul>
+            <li>String: Plain text.</li>
+                
+            <li>Response: A generic HTTP response that can contain your custom content
+               with a different response code.</li>
+                
+            <li>Void: An empty response with a status code of 204/no content.</li>
+                
+            <li>Resource Class: Delegate the process to this resource class.</li>
+                
+            <li>POJO: JavaBeans that are annotated with <code>@XmlRootElement</code>, which makes it a JAXB bean, and which you can bind to
+                  XML.</li>
+                
+            <li>Collection of POJOs: A collection of JAXB beans.</li>
+            </ul>
+                
+                <p>JAX-RS supports the use of JAXB (Java API for XML Binding) to bind a
+                    JavaBean to XML or JSON and vise versa. The JavaBean must be annotated with <code>@XmlRootElement</code>. Listing 8 takes a Contact bean as an
+            example. The fields without an explicit <code>@XmlElement</code>
+            annotation will have the XML element named the same as themselves. Listing 9
+            displays the serialized XML and JSON representation for one Contact bean.
+            Representation for a collection of contacts is much the same and has 
+            &lt;Contacts&gt; as the wrapper element by
+            default.</p>
+                
+                <br><a name="N10327"><b>Listing 8. Contact bean</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">@XmlRootElement
+public class Contact {
+	private String id;
+	private String name;
+	private List&lt;Address&gt; addresses;
+	
+	public Contact() {}
+	
+	public Contact(String id, String name, List&lt;Address&gt; addresses) {
+		this.id = id;
+		this.name = name;
+		this.addresses = addresses;
+	}
+
+	@XmlElement(name="address")
+	public List&lt;Address&gt; getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List&lt;Address&gt; addresses) {
+		this.addresses = addresses;
+	}
+	// Omit other getters and setters
+}               </pre></td></tr></tbody></table><br>
+                
+                
+                <br><a name="N10330"><b>Listing 9. The representation for one Contact</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">               
+<strong>XML representation:</strong>
+&lt;contact&gt;
+  &lt;address&gt;
+    &lt;city&gt;Shanghai&lt;/city&gt;
+    &lt;street&gt;Long Hua Street&lt;/street&gt;
+  &lt;/address&gt;
+  &lt;address&gt;
+    &lt;city&gt;Shanghai&lt;/city&gt;
+    &lt;street&gt;Dong Quan Street&lt;/street&gt;
+  &lt;/address&gt;
+  &lt;id&gt;huangyim&lt;/id&gt;
+    &lt;name&gt;Huang Yi Ming&lt;/name&gt;
+&lt;/contact&gt;
+
+
+<strong>JSON representation:</strong>
+{"contact":[{"address":[{"city":"Shanghai","street":"Long
+            Hua Street"},{"city":"Shanghai","street":"Dong Quan
+            Street"}],"id":"huangyim","name":"Huang Yi Ming"}]}
+         </pre></td></tr></tbody></table><br>
+                
+                <p>For more
+                advanced topics using JAXB see the project home in <a href="#resources">Resources</a>.</p>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="4.Clients that communicate with REST services|outline"><span class="atitle">Clients that communicate with REST services</span></a></p>
+                
+                <p>In the
+            example so far, I have developed a RESTful Web service that supports CRUD
+            contacts. Now I'll explain how to communicate with this REST service
+            using curl and Jersey client APIs. In doing so, I'll test the server-side
+            code and give you more information about the client-side technologies.</p>
+                
+                <p><a name="N1034C"><span class="smalltitle">Use curl to communicate with the REST
+            service</span></a></p>
+                
+                <p>Curl is a popular command-line tool that can send requests
+            to a server using protocols like HTTP and HTTPS. It is a good tool to
+            communicate with RESTful Web services because it can send content by any HTTP
+            method. Curl is already distributed with Linux® and Mac, and there is a utility
+            that you can install for the Windows® platform (see <a href="#resources">Resources</a>).</p>
+           
+           <p>Now,
+            let's initialize the first curl command that gets all the contacts. You can
+            refer to <a href="#list3">Listing 3</a> for the server-side code. </p>
+                
+         <p><code>curl http://localhost:8080/Jersey/rest/contacts</code></p>
+         
+                <p>The response will be in XML and will contain all the contacts. </p><p>Notice the
+               <code>getContacts()</code> method also produces an 
+            application/json MIME-type response. You can request content in this type
+            also.</p>
+                
+         <p><code>curl –HAccept:application/json http://localhost:8080/Jersey/rest/contacts</code></p>
+        
+                <p>The response will be a JSON string that contains all the contacts.</p>
+           
+           <p>Now
+            I will <code>PUT</code> a new contact. Notice that the <code>putContact()</code> method in <a href="#list6">Listing 6</a> accepts XML and uses JAXB to bind
+            the XML to the Contact object.</p>
+                
+               <p> </p><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">curl -X PUT -HContent-type:application/xml --data "&lt;contact&gt;&lt;id&gt;foo&lt;/id&gt;
+                &lt;name&gt;bar&lt;/name&gt;&lt;/contact&gt;" http://localhost:8080/Jersey/rest/contacts/foo</pre></td></tr></tbody></table><br><p></p>
+           
+           <p>A
+            new contact identified by "foo" is added to the contacts store. You can use
+            URI /contacts or /contacts/foo to verify the contacts collection or individual
+            contact.</p>
+                
+                <p><a name="N10392"><span class="smalltitle">Using the Jersey Client
+            to communicate with the REST service</span></a></p>
+                
+                <p>Jersey also provides a client
+            library that helps you to communicate with the server as well as unit test the
+            RESTful services. The library is a generic implementation that can cooperate
+            with any HTTP/HTTPS-based Web service.</p>
+                
+                <p>The core class for the client is
+            the <code>WebResource</code> class.  You use it to build a
+                    request URL based on the root URI,
+            and then send requests and get responses. Listing 10 shows how to create a
+            <code>WebResource</code> instance. Notice that <code>WebResource</code> is a heavy object, so you create
+            it once.</p>
+                
+                
+                <br><a name="N103AC"><b>Listing 10. Create the WebResource instance</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">Client c = Client.<i>create</i>();
+WebResource r=c.resource("http://localhost:8080/Jersey/rest/contacts");            </pre></td></tr></tbody></table><br>
+                
+                <p>The
+            first Jersey client example is to send a <code>GET</code> request to fetch all the
+            contacts and print the response status code and response content. See Listing
+            11.</p>
+                
+                
+                <br><a name="N103BE"><b>Listing 11. GET all contacts and print the response</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">ClientResponse response = r.get(ClientResponse.class);
+System.out.println( response.getStatus() );
+System.out.println( response.getHeaders().get("Content-Type") );
+String entity = response.getEntity(String.class);
+System.out.println(entity);
+                </pre></td></tr></tbody></table><br>
+           
+           <p>Listing
+            12 shows a second example that creates a new contact identified by
+            "foo".</p>
+           
+           <br><a name="N103C9"><b>Listing 12. Create one contact</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">Address[] addrs = {
+	new Address("Shanghai", "Ke Yuan Street")
+};
+Contact c = new Contact("foo", "Foo Bar", Arrays.asList(addrs));
+
+ClientResponse response = r
+	.path(c.getId())
+	.accept(MediaType.APPLICATION_XML)
+	.put(ClientResponse.class, c);
+System.out.println(response.getStatus());            </pre></td></tr></tbody></table><br>
+                
+                <p>Notice
+            the APIs for the <code>WebResource</code> instance. It builds
+                    the URI, sets the request headers, 
+            and invokes the request in one line of code. The content (Contact object) is
+            bound to XML automatically.</p>
+                
+                <p>Listing 13 shows the last example that retrieves the contact identified
+                    by "foo" (which I created in the last example) and then deletes it.</p>
+                
+                <br><a name="N103DC"><b>List 13. Retrieve "foo" contact and delete it</b></a><br><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td class="code-outline"><pre class="displaycode">
+GenericType&lt;JAXBElement&lt;Contact&gt;&gt; generic = new GenericType&lt;JAXBElement&lt;Contact&gt;&gt;() {};
+JAXBElement&lt;Contact&gt; jaxbContact = r
+	.path("foo")
+	.type(MediaType.APPLICATION_XML)
+	.get(generic);
+Contact contact = jaxbContact.getValue();
+System.out.println(contact.getId() + ": " + contact.getName());
+
+ClientResponse response = r.path("foo").delete(ClientResponse.class);
+System.out.println(response.getStatus());            </pre></td></tr></tbody></table><br>
+                
+                <p>Notice
+            here that when you want to get a response that is a JAXB bean, you need to use
+            the generic type feature introduced in Java 2 Platform, Standard Edition (J2SE).</p>
+           
+           <p>Play with these
+            examples using the Jersey client.  You can find more sample code in the source
+            package too (see <a href="#download">Download</a>). Also refer to the Jersey
+               Web site for more information (see
+            <a href="#resources">Resources</a>).</p>
+                
+                <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N103F0"><span class="atitle">Conclusion</span></a></p>
+                
+                <p>Jersey can be integrated with other frameworks or
+            utility libraries using the Jersey integration libraries. Currently, Jersey
+            can integrate with Spring, Guice, and can support ATOM representation with
+            apache-adbera integration.  You'll find APIs and guides on getting started on
+            Jersey project home.</p>
+                
+            <!-- CMA ID: 431860 --> <!-- Site ID: 1 --><!--XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl-->
+<br><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><span class="atitle"><a name="download">Download</a></span></p><table class="ibm-data-table" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><th scope="col">Description</th><th scope="col">Name</th><th scope="col">Size</th><th scope="col">Download method</th></tr><tr><td class="tb-row" scope="row">Source code</td><td nowrap="nowrap">Jersey.Sample.Contact.Src.zip</td><td nowrap="nowrap">10KB</td><td nowrap="nowrap"><a class="fbox" href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=431860&amp;filename=Jersey.Sample.Contact.Src.zip&amp;method=http&amp;locale=worldwide">HTTP</a></td></tr></tbody></table><p><a href="http://www.ibm.com/developerworks/library/whichmethod.html" class="ibm-forward-link">Information about download methods</a></p><br>
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><b>Learn</b></p><ul><li> Find introduction and other related links
+               for REST on <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">Wikipedia</a>.<br><br></li><li>Check out the trial for <a href="http://www.ibm.com/developerworks/downloads/r/rad/" onmouseover="linkQueryAppend(this)">Rational
+                  Application Developer</a>.<br><br></li><li>Read this paper on the <a href="https://www.sun.com/offers/details/Java_Jersey_Client.xml">Jersey client
+               APIs</a> to get more information.<br><br></li><li> You can get more information on <a href="http://jcp.org/en/jsr/summary?id=311">JAX-RS (JSR 311)</a> on the Java Community Process Web site.<br><br></li><li> The JAXB Reference Implementation Project
+                gives more information on <a href="https://jaxb.dev.java.net/">JAXB</a>.<br><br></li></ul><p><b>Get products and technologies</b></p><ul><li>Download Eclipse from the <a href="http://www.eclipse.org/downloads/">project Web site</a>
+            <br><br></li><li>Get Java SE 5.0
+               from the <a href="http://java.sun.com/javase/downloads/index_jdk5.jsp">company Web site</a>.<br><br></li><li>Download Apache
+               Tomcat 6.x from the <a href="http://tomcat.apache.org/download-60.cgi">project Web site</a>.<br><br></li><li>You can find
+               downloads, sample code archives, users' guides, and JAX-RS API documents on
+               the 
+               <a href="https://jersey.dev.java.net/">Jersey Project Home</a>.<br><br></li><li>Get <a href="http://curl.haxx.se/download.html">curl</a> for Windows.<br><br></li></ul>
+<p><a name="author"><span class="atitle">About the authors</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><p><a name="author1"></a>Yi Ming Huang is a software engineer working on Lotus ActiveInsight in the
+             China Development Lab. He has experience on Portlet/Widget-related Web
+            development and is interested in REST, OSGi, and Spring technologies.</p></div><div class="ibm-container-body"><p><a name="author2"></a>Dong
+ Fei Wu is a staff software engineer with the IBM WebSphere Dashboard 
+Framework development team in the IBM China Software Development Lab. He
+ designs and develops basic builders for WebSphere Dashboard Framework. 
+You can contact him at wudongf@cn.ibm.com.</p></div><div class="ibm-container-body"><p><a name="author3"></a>Qing Guo is the development lead of the IBM WebSphere Dashboard Framework.
+             He is experienced in J2EE-related areas.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input onclick="ibmCommon.Overlays.hide('reportabuseoverlay');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" type="button">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input onclick="ibmCommon.Overlays.hide('reportabuseoverlayerror');return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close" type="button">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" class="required" onkeypress="handleEP(event,this.form);" type="text"><br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;d='+encodeURIComponent(location.href);})();">Need an IBM ID?</a><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a>   
+</span></p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" onkeypress="handleEP(event,this.form);" type="password"><br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Den_US%26d%3D'+encodeURIComponent(location.href);})();">Forgot your password?</a><br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">Change your password</a></span></p>
+ 
+<p class="dw-perm-box">
+	<span><input id="perm" name="perm_name" type="checkbox"><label for="perm"> Keep me signed in.</label></span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('signin_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select
+ information in your profile (name, country/region, and company) is 
+displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to 
+developerWorks, a profile is created for you, so you need to choose a 
+display name.  Your display name accompanies the content you post on 
+developerWorks.</p>
+<p><strong>Please choose a display name between 3-31 characters</strong>. Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" onkeypress="handleEP(event,this.form);" type="text"></span><span class="ibm-form-note">(Must be between 3 – 31 characters.)</span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide('displayname_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" value="4" type="hidden"><div id="art-rating-module"><p id="submitErr" class="ibm-ind-error" style="display: none;"><strong>Error: Submission failed. Please try again.</strong></p><p><span id="ratingSectUI"><img alt="Average rating 4 stars based on 230 votes" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-4gw.jpg" class="dw-avg-rating"> Average rating (230 votes)</span></p><div class="ibm-container" id="ratingForm"><div class="ibm-container-body dw-container-ratings"><form class="dw-ratings-form" onsubmit="artRating.submitRating(); return false;"><input name="ratingstars" id="rat-1" value="1" type="radio"><label class="rating-label" id="star1" for="rat-1">1 star</label><img id="rat-1-img" alt="1 star" title="1 star" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-1w.jpg" class="rating-image"><span class="dw-rating-text">1 star</span><br><input name="ratingstars" id="rat-2" value="2" type="radio"><label class="rating-label" id="star2" for="rat-2">2 stars</label><img id="rat-2-img" alt="2 stars" title="2 stars" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-2w.jpg" class="rating-image2"><span class="dw-rating-text">2 stars</span><br><input name="ratingstars" id="rat-3" value="3" type="radio"><label class="rating-label" id="star3" for="rat-3">3 stars</label><img id="rat-3-img" alt="3 stars" title="3 stars" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-3w.jpg" class="rating-image2"><span class="dw-rating-text">3 stars</span><br><input name="ratingstars" id="rat-4" value="4" type="radio"><label class="rating-label" id="star4" for="rat-4">4 stars</label><img id="rat-4-img" alt="4 stars" title="4 stars" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-4w.jpg" class="rating-image2"><span class="dw-rating-text">4 stars</span><br><input name="ratingstars" id="rat-5" value="5" type="radio"><label class="rating-label" id="star5" for="rat-5">5 stars</label><img id="rat-5-img" alt="5 stars" title="5 stars" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stars120x20-5w.jpg" class="rating-image2"><span class="dw-rating-text">5 stars</span><div class="ibm-buttons-row"><p class="ibm-first"><input value="Submit" name="ibm-submit" class="ibm-btn-arrow-pri dw-ratings-submit" type="submit"></p></div></form></div></div></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<div id="threadShow"><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><p id="cmtHead"><label for="newCmt"><strong>Add comment:</strong></label></p><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect"> <a onclick="showSignIn();return false;" href="#">Sign in</a> or <a href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&amp;lang=en&amp;d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F%23icomments">register</a>  to leave a comment.</p><p>Note: HTML elements are not supported within comments.</p><span id="infoCmt"></span><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form"><p><textarea disabled="disabled" cols="120" rows="5" name="newCmt" id="newCmt" class="dw-inoperable"></textarea><br></p><span class="ibm-input-group"><input value="1" name="comment_notification" id="comment_notification" disabled="disabled" type="checkbox"><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">Notify me when a comment is added</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount"><span id="charCount">1000</span> characters left</span><br><br><p></p><p class="ibm-buttons-row"><input disabled="disabled" value="Post" jquery1275054459750="11" name="postCmt" id="postCmt" class="ibm-btn-arrow-sec dw-btn-arrow-sec" alt="Post your comment" type="button"><br><br></p></form></div></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style=""><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label" style="display:none"><strong>Total comments (<span id="numCmts">19</span>)</strong></span><span><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="" height="10" width="100"></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts"><label for="howManyComments">Show:</label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option><option value="all">All comments</option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>There
+ is a freely downloadable project I have written for the same purpose. 
+https://github.com/swapnildipankar/java_jersey_spring_hibernate_maven<br><br>Please
+ follow the steps as is and you should be able to get your WS started in
+ minutes - creates RESTful WS using Java, Jersey WS, Spring, Hibernate, 
+Maven, Liquibase. Sample code for integrating with Hibernate/MySQL</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">Posted by <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/SwapnilDipankar">SwapnilDipankar</a></strong> on 23 January 2013</p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=en&amp;referingURL=http://www.ibm.com/developerworks/library/wa-aj-tomcat/&amp;mymessage=Comment:%20There%20is%20a%20freely%20downloadable%20project%20I%20have%20written%20for%20the%20same%20purpose.%20https%3A%2F%2Fgithub.com%2Fswapnildipankar%2Fjava_jersey_spring_hibernate_mavenPlease%20follow%20the%20steps%20as%20is%20and%20you%20should%20be%20able%20to%20get%20your%20WS%20started%20in%20minutes%20-%20creates%20RESTful%20WS%20using%20Java%2C%20Jersey%20WS%2C%20Spring%2C%20Hibernate%2C%20Maven%2C%20Liquibase.%20Sample%20code%20for%20integrating%20with%20Hibernate%2FMySQL%0DPosted%20by%20SwapnilDipankar%20on%2023%20January%202013%0D%0D---%20Add%20any%20comments%20below%20this%20line%20---" target="_newtab">Report abuse</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>for deleting a record from store,hw URI should be passed?</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">Posted by <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/narenspeed3">narenspeed3</a></strong> on 27 November 2012</p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=en&amp;referingURL=http://www.ibm.com/developerworks/library/wa-aj-tomcat/&amp;mymessage=Comment:%20for%20deleting%20a%20record%20from%20store%2Chw%20URI%20should%20be%20passed%3F%0DPosted%20by%20narenspeed3%20on%2027%20November%202012%0D%0D---%20Add%20any%20comments%20below%20this%20line%20---" target="_newtab">Report abuse</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>The
+ class Contact and the class Address must be on the client to the 
+server, or both? I think in the two, but this way are repeated, , is 
+this bad design?</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">Posted by <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/galache">galache</a></strong> on 08 November 2012</p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=en&amp;referingURL=http://www.ibm.com/developerworks/library/wa-aj-tomcat/&amp;mymessage=Comment:%20The%20class%20Contact%20and%20the%20class%20Address%20must%20be%20on%20the%20client%20to%20the%20server%2C%20or%20both%3F%20I%20think%20in%20the%20two%2C%20but%20this%20way%20are%20repeated%2C%20%2C%20is%20this%20bad%20design%3F%0DPosted%20by%20galache%20on%2008%20November%202012%0D%0D---%20Add%20any%20comments%20below%20this%20line%20---" target="_newtab">Report abuse</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>Really Good Article for Beginers. Thanks a lot.</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">Posted by <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/NiravJoshiJ2ee">NiravJoshiJ2ee</a></strong> on 04 April 2012</p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=en&amp;referingURL=http://www.ibm.com/developerworks/library/wa-aj-tomcat/&amp;mymessage=Comment:%20Really%20Good%20Article%20for%20Beginers.%20Thanks%20a%20lot.%0DPosted%20by%20NiravJoshiJ2ee%20on%2004%20April%202012%0D%0D---%20Add%20any%20comments%20below%20this%20line%20---" target="_newtab">Report abuse</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>Check this short tutorial here:<br>http://sportechno.wordpress.com/2011/08/09/creating-a-restful-web-services-using-jersey/</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">Posted by <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/sportechno">sportechno</a></strong> on 09 August 2011</p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=en&amp;referingURL=http://www.ibm.com/developerworks/library/wa-aj-tomcat/&amp;mymessage=Comment:%20Check%20this%20short%20tutorial%20here%3Ahttp%3A%2F%2Fsportechno.wordpress.com%2F2011%2F08%2F09%2Fcreating-a-restful-web-services-using-jersey%2F%0DPosted%20by%20sportechno%20on%2009%20August%202011%0D%0D---%20Add%20any%20comments%20below%20this%20line%20---" target="_newtab">Report abuse</a></p><div class="dw-clear-both"></div></div></div></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label" style="display:none"><strong>Total comments (<span id="numCmts2">19</span>)</strong></span><span><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="" height="10" width="100"></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts2"><label for="howManyComments2">Show:</label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option><option value="all">All comments</option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div></div>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="#ibm-pcon">Back to top</a></p>
+
+<!-- Overlays -->
+
+</div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Web development</div><div class="metavalue">ArticleID=431860</div><div class="metavalue">ArticleTitle=Build a RESTful Web service using Jersey and Apache Tomcat</div><div class="metavalue">publish-date=09242009</div><div class="metavalue">author1-email=huangyim@cn.ibm.com</div><div class="metavalue">author1-email-cc=</div><div class="metavalue">author2-email=wudongf@cn.ibm.com</div><div class="metavalue">author2-email-cc=</div><div class="metavalue">author3-email=qingguo@cn.ibm.com</div><div class="metavalue">author3-email-cc=</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g, '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/library/wa-aj-tomcat/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c.gif" height="1" width="1"><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="#N10098">RESTful Web service introduction</a></li><li><a class="ibm-feature-link" href="#N10125">JSR 311 (JAX-RS) and Jersey</a></li><li><a class="ibm-feature-link" href="#N10140">Build a RESTful Web service</a></li><li><a class="ibm-feature-link" href="#N101D5">Resources</a></li><li><a class="ibm-feature-link" href="#N10251">Method</a></li><li><a class="ibm-feature-link" href="#4.Clients%20that%20communicate%20with%20REST%20services%7Coutline">Clients that communicate with REST services</a></li><li><a class="ibm-feature-link" href="#N103F0">Conclusion</a></li><li><a class="ibm-feature-link" href="#download">Download</a></li><li><a class="ibm-feature-link" href="#resources">Resources</a></li><li><a class="ibm-feature-link" href="#author">About the authors</a></li><li><a class="ibm-feature-link" href="#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-nextsteps.xsl--><div class="ibm-container"><h2>Next steps from IBM</h2><div class="ibm-container-body"><img alt="" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/spot-nextsteps.jpg" border="0" height="58" width="188"><p>Create rich Internet applications using WebSphere Portal Express Web 2.0
+   technologies.</p><div class="ibm-rule"><hr></div><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/downloads/ls/wpe/" class="ibm-feature-link">Try: WebSphere Portal Express</a></li><li><a href="http://www.ibm.com/developerworks/websphere/library/techarticles/0606_bishop/0606_bishop.html" class="ibm-feature-link">Article: Get started using Ajax and WebSphere Portal Express</a></li><li><a href="http://www.ibm.com/developerworks/websphere/library/tutorials/0608_bishop/0608_bishop.html" class="ibm-feature-link">Tutorial: Quickly build a an Ajax-enabled WebSphere Portal Express Web application</a></li><li><a href="http://www.ibm.com/developerworks/offers/lp/demos/summary/ajax.html" class="ibm-feature-link">Demo: Architecture, design, and construction using the IBM Rational Software Delivery Platform: AJAX</a></li><li><a href="http://www.ibm.com/software/genservers/portalexpress/portalexpress-popup.html" class="ibm-feature-link">Buy: WebSphere Portal Express</a></li></ul></div></div>
+
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Web development on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/web/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/web/newto/" class="ibm-forward-link">New to Web development</a></li><li><a href="http://www.ibm.com/developerworks/web/find/projects/" class="ibm-forward-link">Open source projects</a></li><li><a href="http://www.ibm.com/developerworks/web/library/" class="ibm-forward-link">Technical library (articles, tutorials, training, and more)</a></li><li><a href="http://www.ibm.com/developerworks/forums/dw_waforums.jsp" class="ibm-forward-link">Forums</a></li><li><a href="http://www.ibm.com/developerworks/web/find/events/" class="ibm-forward-link">Events</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>Try IBM PureSystems. No charge.</h2><div class="ibm-container-body"><img alt="IBM PureSystems on a kaleideoscope background" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/hiviz-168x64-troy.jpg" border="0" height="70" width="188"><p>Experience today!</p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a href="https://www.ibm.com/developerworks/puresystems/try/?ca=dti-hivis-troy" class="ibm-forward-link">Get started with the cloud-based trial and pattern development kit.</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/demos/"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/tile_v16_ondemanddemos.gif" alt="On demand demos: An easy way to watch and learn" border="0" height="50" width="158"></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/aboutdw/dwa/?ca=dti-dwarp"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/tile_v16_dwaarp.gif" alt="Get recognized! W Author Program" border="0" height="50" width="158"></a></p><p class="dw-special-offers"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/tile_v16_cloudzoneA.gif" alt="Cloud Computing resources for IT professionals" border="0" height="50" width="158"></a></p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-footer">
+<!-- IBM footer container; disabled -->
+</div>
+
+<div id="ibm-page-tools-dw">
+	<div id="dw-footer-top-row">
+		<ul id="dw-foot-options">
+			<li id="dw-print"><a class="ibm-print-link" href="#">Print this page</a></li>
+		</ul>
+		<ul id="ibm-foot-options-dw">
+			<li id="dw-foot-0"><a href="#">Share this page</a></li>
+			<li id="dw-foot-1"><a href="#">Follow developerWorks</a></li>
+		</ul>
+	</div>
+
+	<!-- TOP ROW SLIDER -->
+    <div id="dw-page-tools-menu">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Share this page -->			
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-3-1">
+                        <h2>Share this page:</h2>                       
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-0-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;t=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Facebook</a></li>
+							<li><a class="ibm-linkedin-link" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;title=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">LinkedIn</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F%20-%20Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-2">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-delicious-link" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;title=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Delicious</a></li>
+							<li><a class="ibm-digg-link" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;title=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Digg</a></li>
+							<li><a class="ibm-stumbleupon" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;title=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">StumbleUpon</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-3">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-email-link" href="#">Email this page</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-share"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                <!-- Follow developerWorks -->
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-1-1">
+                        <h2>Follow developerWorks:</h2>
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-1-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F&amp;t=Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Facebook</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Flibrary%2Fwa-aj-tomcat%2F%20-%20Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-follow"><a href="#"><img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/c_002.gif" alt="Close [x]" border="0" height="10" width="20"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/">About</a></li>
+				<li><a href="https://www.ibm.com/developerworks/feedback">Help</a></li>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/contacts.html">Contact us</a></li>
+				<li><a href="https://www.ibm.com/developerworks/ideas">Submit content</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/feeds/">Feeds</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/community/report/">Report abuse</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms/">Terms of use</a></li>
+				<li><a href="http://www.ibm.com/privacy/">IBM privacy</a></li>
+				<li><a href="http://www.ibm.com/accessibility/">IBM accessibility</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/university/academicinitiative/">Faculty</a></li>
+				<li><a href="http://www.ibm.com/developerworks/university/students/">Students</a></li>
+				<li><a href="http://www.ibm.com/isv/">Business Partners</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-5">
+		</div>
+		<div class="dw-footer-col-6-6">
+			<img src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dwn-ibm-logo-v16.png" alt="IBM®" height="46" width="100">
+			<img class="dw-preload" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/arrow-down-active.gif" alt="" height="1" width="1">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	<div id="dw-footer-selectlang">
+		<h2><a name="SELECTLANG">Select a language:</a></h2>
+		<ul>
+			<li><a href="http://www.ibm.com/developerworks/">English</a></li>
+			<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+			<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+			<li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+			<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+			<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+			<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+		</ul>
+	</div>
+	</noscript>
+</div><!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+<div id="ibm-overlay-top"></div></div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/jquery_004.js"></script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/jquery_003.js"></script>
+<!-- xM Masthead/Footer -->
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/jquery_002.js">//</script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/jquery.js">//</script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dw_v16.js">//</script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/flash-detect.js">//</script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/dwsi.js">//</script>
+<script type="text/javascript" language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/showcomments.js">//</script>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		rBHash = {};
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/overlay.js" type="text/javascript"></script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=-&ibmRole=-&ibmCmaId=431860&ibmContentAreas=web";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="Build%20a%20RESTful%20Web%20service%20using%20Jersey%20and%20Apache%20Tomcat_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+<div style="position: absolute; z-index: 95; display: none;" id="cluetip-waitimage"></div><div style="z-index: 96; display: none; position: absolute;" id="cluetip"><div style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="position: relative; z-index: 97;" id="cluetip-outer"><div id="cluetip-title"></div><div id="cluetip-inner"></div></div><div id="cluetip-extra"></div><div style="z-index: 97;" id="cluetip-arrows" class="cluetip-arrows"></div></div></body></html>
